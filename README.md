@@ -1,5 +1,2 @@
 # GameJam2022
-
-test de commit pour tout init
-
-test update web hook
+(si qqn a la foi pour le readme qu'il n'hesite pas surtout)

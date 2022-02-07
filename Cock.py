@@ -5,6 +5,7 @@ from pygame.sprite import AbstractGroup
 class Cock(pygame.sprite.Sprite):
     def __init__(self, *groups: AbstractGroup) -> None:
         super().__init__(*groups)
+        self.index = 0
         self.id = 0
         self.name = ""
         self.intelligence = 0
@@ -31,8 +32,11 @@ class Cock(pygame.sprite.Sprite):
     def lay_egg(self, new_name):
         pass
 
-    def update(self, *args: Any, **kwargs: Any) -> None:
-        pass
+    def update(self):
+        self.index += 1
+        if self.index >= len(self.images):
+            self.index = 0
+        self.image = self.images[self.index]
 
     def draw(self):
         pass

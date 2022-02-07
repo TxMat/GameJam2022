@@ -19,10 +19,6 @@ def frames_from_spritesheet(img_name, xstart, ystart, height, width, frame_nb) -
     for f in range(frame_nb):
         rect = pygame.Rect(xstart + f * width, ystart, height, width)
         frames.append(sheet.subsurface(rect))
-    if want_flip:
-        for f in range(frame_nb):
-            rect = pygame.Rect(xstart + f * width, ystart, height, width)
-            frames.append(pygame.transform.flip(sheet.subsurface(rect), True, False))
     return frames
 
 

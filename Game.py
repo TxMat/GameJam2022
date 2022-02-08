@@ -37,10 +37,17 @@ class Game:
         self.screen.blit(text_surface, text_rect)
 
     def check_events(self):
+                
+        class level():
+            pass
+        debug_level = level()
+        debug_level.ores = ['fer','alu']
+        debug_level.dna = ['poulet-cochon','poulet-loutre']
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running, self.playing = False, False
             if event.type == pygame.MOUSEBUTTONDOWN:
-                exped = Expedition(self)
+                exped = Expedition(self,debug_level)
                 exped.avancement()
 

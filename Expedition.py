@@ -1,34 +1,41 @@
+from pickle import NONE
 import pygame
 import random
 
 class Expedition():
-    def __init__(self,game):
+    def __init__(self,game,level = None):
         self.strat = 0
-        self.map_name = ""
-        self.length =  random.randint(1, 8)
+        self.level = level
+        self.length =  random.randint(3, 10)
         self.layout = None
         self.game = game
         self.mid_w, self.mid_h = game.WIDTH /2, game.HEIGHT /2 
         self.run_display = True
         self.background_img = pygame.image.load("Assets/backgound_day.png")
+        self.minerai = {}
+        for ores in level.ores:
+            self.minerai[ores]=0
+        self.dna = {}
+        for dnas in level.dna:
+            self.dna[dnas]=0
 
     def blit_screen(self):
         self.game.screen.blit(self.game.display,(0, 0))
         pygame.display.update()
 
     def avancement(self):
+        print("le donjon fait"+ str(self.length))
         for i in range(self.length):
             rand = random.randint(0,3)
             if  rand == 1:
-                EventOre(self.game,self).Display_ore()
+                self.minerai[random.choice(list(self.minerai))] += EventOre(self.game,self).display()
             elif rand ==2:
-                EventGaz(self.game,self).Display_gaz()
+                EventGaz(self.game,self).display()
             elif rand ==3:
-                EventRituel(self.game,self).Display_rituel()
+                EventRituel(self.game,self).display()
             else:
                 print("pas de minerai")
         
-
 
 class EventOre():
     def __init__(self, game,expedition):
@@ -36,7 +43,7 @@ class EventOre():
         self.expedition = expedition
 
 
-    def Display_ore(self):
+    def display(self):
         print("affiche event ore")
         self.run_display = True
         while self.run_display:
@@ -50,6 +57,7 @@ class EventOre():
                     self.run_display = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.run_display = False
+        return random.randint(1,8)
 
 
 class EventGaz():
@@ -58,7 +66,7 @@ class EventGaz():
         self.expedition = expedition
 
 
-    def Display_gaz(self):
+    def display(self):
         print("affiche event gaz")
         self.run_display = True
         while self.run_display:
@@ -80,7 +88,7 @@ class EventRituel():
         self.expedition = expedition
 
 
-    def Display_rituel(self):
+    def display(self):
         print("affiche event rituel")
         self.run_display = True
         while self.run_display:

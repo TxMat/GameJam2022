@@ -6,7 +6,23 @@ MAX_HUNGER = 100
 STAT_INHERITANCE = 0.33
 
 class Cock(pygame.sprite.Sprite):
-    def __init__(self, *groups: AbstractGroup, id, name, intelligence = 1, strength = 1, stamina = 1, perks = set(), traits = set(), rituals = set(), fertile = True, maturation = 0, child = 0, parent = 0, hunger = MAX_HUNGER, tree = None, inheritance = STAT_INHERITANCE) -> None:
+    def __init__(self,
+                id,
+                name,
+                intelligence = 1,
+                strength = 1,
+                stamina = 1,
+                perks = set(),
+                traits = set(),
+                rituals = set(),
+                fertile = True,
+                maturation = 0,
+                child = 0,
+                parent = 0,
+                hunger = MAX_HUNGER,
+                tree = None,
+                inheritance = STAT_INHERITANCE,
+                *groups: AbstractGroup) -> None:
         super().__init__(*groups)
         self.index = 0
         self.id = id
@@ -26,6 +42,28 @@ class Cock(pygame.sprite.Sprite):
         self.tree = tree
         self.inheritance = inheritance
 
+    def info_cock(self):
+        print("index: " + str(self.index))
+        print("id: " + str(self.id))
+        print("name: " + str(self.name))
+        print("int: " + str(self.intel))
+        print("str: " + str(self.strength))
+        print("sta: " + str(self.stamina))
+        print("perks: " + str(self.perks))
+        print("traits: " + str(self.traits))
+        print("rituals: " + str(self.rituals))
+        print("fertile: " + str(self.fertile))
+        print("matur: " + str(self.maturation))
+        print("child: " + str(self.child))
+        print("parent: " + str(self.parent))
+        print("hunger: " + str(self.hunger))
+        print("fed: " + str(self.fed))
+        print("tree: " + str(self.tree))
+        print("inheritance: " + str(self.inheritance))
+        print("intel(): " + str(self.g_intel()))
+        print("str(): " + str(self.g_strength()))
+        print("sta(): " + str(self.g_stamina()))
+
     def feed(self, grain_name, grain_dict, quantity) -> None:
         grain = grain_dict[grain_name]
         if grain_name not in self.fed.keys():
@@ -40,7 +78,7 @@ class Cock(pygame.sprite.Sprite):
             self.stamina += grain.sta_bonus
         self.maturation
 
-    def intel(self):
+    def g_intel(self):
         intel = self.intel
         for rit in self.rituals:
             ritual = ritual_dict[rit]
@@ -52,7 +90,7 @@ class Cock(pygame.sprite.Sprite):
             intek += perk.int_mod
         return intel
             
-    def strength(self):
+    def g_strength(self):
         strength = self.strength
         for rit in self.rituals:
             ritual = ritual_dict[rit]
@@ -64,7 +102,7 @@ class Cock(pygame.sprite.Sprite):
             strength += perk.str_mod
         return strength
 
-    def stamina(self):
+    def g_stamina(self):
         stam = self.intel
         for rit in self.rituals:
             ritual = ritual_dict[rit]
@@ -76,22 +114,24 @@ class Cock(pygame.sprite.Sprite):
             stam += perk.sta_mod
         return stam
 
-    def add_perk(self, perk_name) -> None:
+    def add_perk(self, perk_name, perk_dict) -> None:
         self.perks.add(perk_name)
         perk_dict[perk_bame].action(self)
 
-    def add_ritual(self, ritual_name) -> None:
+    def add_ritual(self, ritual_name, rit_dict) -> None:
         self.rituals.add(ritual_name)
         ritual_dict[ritual_name].action(self)
 
-    def lay_egg(self, new_name, new_id): -> Cock
+    def lay_egg(self, new_id, new_name):
         if(self.fertile == True):
-            return Cock(id,
-                        name,
-                        self.intel()*self.inheritance,
-                        self.strength()*self.inheritance,
-                        self.stamina()*self.inheritance)
             self.fertile = False
+            self.child = new_id
+            return Cock(new_id,
+                        new_name,
+                        int(self.g_intel()*self.inheritance),
+                        int(self.g_strength()*self.inheritance),
+                        int(self.g_stamina()*self.inheritance),
+                        parent=self.id)
 
     def update(self):
         self.index += 1

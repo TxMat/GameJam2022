@@ -116,11 +116,11 @@ class Cock(pygame.sprite.Sprite):
 
     def add_perk(self, perk_name, perk_dict) -> None:
         self.perks.add(perk_name)
-        perk_dict[perk_bame].action(self)
+        perk_dict[perk_bame].actions(self)
 
     def add_ritual(self, ritual_name, rit_dict) -> None:
         self.rituals.add(ritual_name)
-        ritual_dict[ritual_name].action(self)
+        ritual_dict[ritual_name].actions(self)
 
     def lay_egg(self, new_id, new_name):
         if(self.fertile == True):

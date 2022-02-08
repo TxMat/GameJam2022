@@ -3,6 +3,7 @@ import this
 from time import sleep
 import pygame
 from Farm import Farm
+from Expedition import Expedition
 
 
 class Game:
@@ -40,5 +41,6 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running, self.playing = False, False
             if event.type == pygame.MOUSEBUTTONDOWN:
-                farm = Farm()
+                exped = Expedition(self)
+                exped.avancement()
 

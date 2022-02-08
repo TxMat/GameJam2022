@@ -21,9 +21,10 @@ class Game:
     def game_loop(self):
         while self.playing:
             self.check_events()
-            self.display.fill(self.BLACK)
-            self.draw_text("cock Digger",100,self.WIDTH/2,self.HEIGHT/2,self.WHITE)
-            self.screen.blit(self.display,(0,0))
+            background_img = pygame.image.load("Assets/backgound_day.png")
+            self.screen.blit(background_img, (0, 0))
+            self.draw_text("cock Digger",80,self.WIDTH/2,70,self.BLACK)
+            # self.screen.blit(self.display,(0,0))
             pygame.display.update()
 
 
@@ -32,7 +33,7 @@ class Game:
         text_surface = font.render(text, True,color)
         text_rect = text_surface.get_rect()
         text_rect.center = (x, y)
-        self.display.blit(text_surface, text_rect)
+        self.screen.blit(text_surface, text_rect)
 
     def check_events(self):
         for event in pygame.event.get():

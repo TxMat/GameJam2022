@@ -3,23 +3,32 @@ import pygame
 import random
 
 
+
 class Expedition():
-    def __init__(self, game, level=None, cock_list={}, strat=0):
-        self.strat = 0
-        self.cock_list = cock_list
+    def __init__(self,
+                strat: int = 0,
+                cock_dic: dict() = {}
+                level: Level = None,
+                length: int = random.randint(3, 10),
+                layout = None,
+                game = None,
+                background_img = pygame.image.load("Assets/backgound_day.png")) None:
+        self.strat = strat
+        self.cock_dic = cock_dic
         self.level = level
-        self.length = random.randint(3, 10)
-        self.layout = None
+        self.length = length
+        self.layout = layout
         self.game = game
         self.mid_w, self.mid_h = game.WIDTH / 2, game.HEIGHT / 2
         self.run_display = True
-        self.background_img = pygame.image.load("Assets/backgound_day.png")
-        self.minerai = {}
-        for ores in level.ores:
-            self.minerai[ores] = 0
+        self.bg_img = background_img
+        self.loot_ores = {}
+        self.loot_dna = {}
+        for ore in level.ores:
+            self.loot_ores[ores] = 0
         self.dna = {}
-        for dnas in level.dna:
-            self.dna[dnas] = 0
+        for dna in level.dnas:
+            self.loot_dna[dnas] = 0
 
     def blit_screen(self):
         self.game.screen.blit(self.game.display, (0, 0))

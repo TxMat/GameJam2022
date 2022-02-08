@@ -20,7 +20,7 @@ class Cock(pygame.sprite.Sprite):
         self.parent = 0
         self.hunger = 100
 
-    def feed(self, gran_name):
+    def feed(self, grain_name):
         pass
 
     def add_perk(self, perk_name):
@@ -40,3 +40,4 @@ class Cock(pygame.sprite.Sprite):
 
     def draw(self):
         pass
+    

@@ -1,4 +1,4 @@
-class State():
+class State:
     def __init__(self, game):
         self.game = game
         self.prev_state = None
@@ -16,3 +16,4 @@ class State():
 
     def exit_state(self):
         self.game.state_stack.pop()
+

@@ -1,4 +1,5 @@
 import pygame
+from Farm import Farm
 
 
 class Game:
@@ -6,8 +7,8 @@ class Game:
         pygame.init()
         self.running, self.playing = True, False
         self.clock = pygame.time.Clock()
-        self.HEIGHT = 1024
-        self.WIDTH = 768
+        self.WIDTH = 1024
+        self.HEIGHT = 768
         self.display = pygame.Surface((self.WIDTH, self.HEIGHT))
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
         self.font_name = pygame.font.get_default_font()
@@ -21,11 +22,13 @@ class Game:
         font = pygame.font.Font(self.font_name, size)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
-        text_rect.center = (x,y)
-        self.display.blit(text_surface,text_rect)
-
+        text_rect.center = (x, y)
+        self.display.blit(text_surface, text_rect)
 
     def check_events(self):
         for event in pygame.event.get():
-             if event.type == pygame.QUIT:
-                 self.running, self.playing = False, False
+            if event.type == pygame.QUIT:
+                self.running, self.playing = False, False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                farm = Farm()
+

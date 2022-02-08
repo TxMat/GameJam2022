@@ -2,7 +2,7 @@ from unicodedata import name
 import Expedition
 
 class Player():
-    def __init__(self
+    def __init__(self,
                 name,
                 day = 1,
                 cock_dict = {},

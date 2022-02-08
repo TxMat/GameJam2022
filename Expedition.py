@@ -1,18 +1,18 @@
 from pickle import NONE
 import pygame
 import random
-
+import Level
 
 
 class Expedition():
     def __init__(self,
                 strat: int = 0,
-                cock_dic: dict() = {}
+                cock_dic: dict = {},
                 level: Level = None,
                 length: int = random.randint(3, 10),
                 layout = None,
                 game = None,
-                background_img = pygame.image.load("Assets/backgound_day.png")) None:
+                background_img = pygame.image.load("Assets/backgound_day.png")) -> None:
         self.strat = strat
         self.cock_dic = cock_dic
         self.level = level

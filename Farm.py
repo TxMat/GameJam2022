@@ -1,4 +1,6 @@
 import pygame
+
+from Button import Button
 from State import State
 from Utils import *
 
@@ -13,13 +15,15 @@ class Farm(State):
 
     def update(self, delta_time, actions):
         self.sun.update(delta_time)
+        self.HUD.update()
 
     def render(self, surface):
         surface.blit(self.background_img, (0, 0))
         self.sun.render(surface)
+        self.HUD.render(surface)
 
 
-class Sun():
+class Sun:
     def __init__(self, game):
         self.game = game
         self.curr_frame, self.last_frame_update = 0, 0
@@ -43,16 +47,22 @@ class Sun():
 
 class HUD:
     def __init__(self, game):
+        self.game = game
         self.plyr_name = ""
         self.day = 1
         self.money = 0
         self.cock_number = 0
-        # btn invoke
+        self.background_img = pygame.image.load("Assets/hud_lol.png")
+        self.inv = Button(game, 400, 100, "inventaire")
+        # btn inv
         # btn cocks
         # btn last expedition
+        self.menu_rect = self.background_img.get_rect()
+        self.menu_rect.center = (self.game.WIDTH/2, 60)
 
     def update(self):
-        pass
+        self.inv.update()
 
     def render(self, surface):
-        pass
+        surface.blit(self.background_img, self.menu_rect)
+        self.inv.render(surface)

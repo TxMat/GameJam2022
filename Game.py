@@ -39,14 +39,6 @@ class Game:
         surface.blit(text_surface, text_rect)
 
     def check_events(self):
-
-        class level():
-            pass
-
-        debug_level = level()
-        debug_level.ores = ['fer', 'alu']
-        debug_level.dna = ['poulet-cochon', 'poulet-loutre']
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running, self.playing = False, False
@@ -70,7 +62,7 @@ class Game:
                     self.actions["left"] = False
                 if event.key == pygame.K_RIGHT:
                     self.actions["right"] = False
-                if event.key == pygame.K_RETURN or pygame.K_SPACE:
+                if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
                     self.actions["ok"] = False
 
     def load_states(self):

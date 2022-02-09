@@ -139,14 +139,5 @@ class Cock(pygame.sprite.Sprite):
             self.index = 0
         self.image = self.images[self.index]
 
-        # img = Utils.frames_from_spritesheet("Assets/cock_walk.png", 0, 0, 48, 48, 6)
-        ## anim ##
-        # curr_img = 0
-        #     finalrdr = pygame.transform.scale(img[curr_img%len(img)], (48*5,48*5))
-        #     screen.blit(pygame.transform.flip(finalrdr, False, False), (200, 200))
-        #     pygame.display.update()
-        #     curr_img += 1
-        #     time.sleep(0.17)
-
     def draw(self):
         pass

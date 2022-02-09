@@ -10,6 +10,7 @@ from Expedition import Expedition
 
 class Game:
     def __init__(self):
+        self.title_screen = None
         pygame.init()
         self.running, self.playing = True, True
         self.clock = pygame.time.Clock()
@@ -22,6 +23,7 @@ class Game:
         self.dt, self.prev_time = 0, 0
         self.actions = {"left": False, "right": False, "up": False, "down": False, "ok": False}
         self.BLACK, self.WHITE = (0, 0, 0), (255, 255, 255)
+        self.events = None
         self.load_states()
 
     def game_loop(self):
@@ -31,7 +33,7 @@ class Game:
             self.update()
             self.draw()
 
-    def draw_text(self, surface, text, size, x, y, color):
+    def draw_text(self, surface, text, size, x, y, color=(200, 200, 200)):
         font = pygame.font.Font(self.font_loc, size)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
@@ -39,15 +41,8 @@ class Game:
         surface.blit(text_surface, text_rect)
 
     def check_events(self):
-
-        class level():
-            pass
-
-        debug_level = level()
-        debug_level.ores = ['fer', 'alu']
-        debug_level.dna = ['poulet-cochon', 'poulet-loutre']
-
-        for event in pygame.event.get():
+        self.events = pygame.event.get()
+        for event in self.events:
             if event.type == pygame.QUIT:
                 self.running, self.playing = False, False
             if event.type == pygame.KEYDOWN:
@@ -70,7 +65,7 @@ class Game:
                     self.actions["left"] = False
                 if event.key == pygame.K_RIGHT:
                     self.actions["right"] = False
-                if event.key == pygame.K_RETURN or pygame.K_SPACE:
+                if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
                     self.actions["ok"] = False
 
     def load_states(self):

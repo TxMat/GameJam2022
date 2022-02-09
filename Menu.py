@@ -1,14 +1,16 @@
+from Player import Player
 from State import State
-from Farm import  Farm
+from Farm import Farm
 
 
 class Menu(State):
     def __init__(self, game):
         State.__init__(self, game)
+        self.player = Player()
 
     def update(self, dt, actions):
         if actions["ok"]:
-            new_state = Farm(self.game)
+            new_state = Farm(self.game, self.player)
             new_state.enter_state()
         self.game.reset_keys()
 

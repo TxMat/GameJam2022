@@ -133,7 +133,7 @@ class Cock(pygame.sprite.Sprite):
         self.ritual_dict[ritual_name].action(self)
 
     def lay_egg(self, new_id, new_name):
-        if(self.fertile == True):
+        if self.fertile:
             self.fertile = False
             self.child = new_id
             return Cock(new_id,

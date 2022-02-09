@@ -53,8 +53,9 @@ class HUD:
         self.money = 0
         self.cock_number = 0
         self.background_img = pygame.image.load("Assets/hud_lol.png")
-        self.inv = Button(game, 400, 100, "inventaire")
-        # btn inv
+        self.inv = Button(game, 260, 90, "Inventaire", 30)
+        self.last_exp = Button(game, 475, 90, "Derniere expedition", 30)
+        self.cocks = Button(game, 730, 90, "Liste des poulets", 30)
         # btn cocks
         # btn last expedition
         self.menu_rect = self.background_img.get_rect()
@@ -62,7 +63,11 @@ class HUD:
 
     def update(self):
         self.inv.update(self.game.events)
+        self.last_exp.update(self.game.events)
+        self.cocks.update(self.game.events)
 
     def render(self, surface):
         surface.blit(self.background_img, self.menu_rect)
         self.inv.render(surface)
+        self.last_exp.render(surface)
+        self.cocks.render(surface)

@@ -24,7 +24,7 @@ class Button(pygame.sprite.Sprite):
         if hover:
             self.btn = self.hoover_btn
         for event in events:
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN and hover:
                 print("clicked")
 
 

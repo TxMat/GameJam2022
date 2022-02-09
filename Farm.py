@@ -66,7 +66,7 @@ class HUD:
     def draw_day(self, surface):
         self.day = Player.get_day
         self.game.draw_text(surface, "Jour :", 20, 400, 30)
-        self.game.draw_text(surface, str(self.day), 20, 420, 30)
+        self.game.draw_text(surface, self.day, 20, 420, 30)
 
     def draw_money(self, surface):
         self.money = Player.get_money

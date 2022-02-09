@@ -22,6 +22,7 @@ class Game:
         self.dt, self.prev_time = 0, 0
         self.actions = {"left": False, "right": False, "up": False, "down": False, "ok": False}
         self.BLACK, self.WHITE = (0, 0, 0), (255, 255, 255)
+        self.events = None
         self.load_states()
 
     def game_loop(self):
@@ -39,7 +40,8 @@ class Game:
         surface.blit(text_surface, text_rect)
 
     def check_events(self):
-        for event in pygame.event.get():
+        self.events = pygame.event.get()
+        for event in self.events:
             if event.type == pygame.QUIT:
                 self.running, self.playing = False, False
             if event.type == pygame.KEYDOWN:

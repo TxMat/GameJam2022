@@ -18,11 +18,15 @@ class Button(pygame.sprite.Sprite):
         self.hoover_btn = text_surface
         self.btn = self.base_btn
 
-    def update(self):
+    def update(self, events):
         hover = self.text_rect.collidepoint(pygame.mouse.get_pos())
         self.btn = self.base_btn
         if hover:
             self.btn = self.hoover_btn
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                print("clicked")
+
 
     def render(self, surface):
         surface.blit(self.btn, self.text_rect)

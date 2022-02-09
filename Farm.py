@@ -61,7 +61,7 @@ class HUD:
         self.menu_rect.center = (self.game.WIDTH/2, 60)
 
     def update(self):
-        self.inv.update()
+        self.inv.update(self.game.events)
 
     def render(self, surface):
         surface.blit(self.background_img, self.menu_rect)

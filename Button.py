@@ -17,15 +17,17 @@ class Button(pygame.sprite.Sprite):
         text_surface = font.render(text, True, (200, 30, 30))
         self.hoover_btn = text_surface
         self.btn = self.base_btn
+        self.ispressed = False
 
     def update(self, events):
         hover = self.text_rect.collidepoint(pygame.mouse.get_pos())
         self.btn = self.base_btn
+        self.ispressed = False
         if hover:
             self.btn = self.hoover_btn
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN and hover:
-                print("clicked")
+                self.ispressed = True
 
     def render(self, surface):
         surface.blit(self.btn, self.text_rect)

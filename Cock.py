@@ -1,8 +1,12 @@
+import random
+
 import pygame
 from Grain import Grain
 from Events import ritual
 from Perks import Perks
 from pygame.sprite import AbstractGroup
+
+from Utils import frames_from_spritesheet, scale
 
 MAX_MATURATION = 200
 MAX_HUNGER = 100
@@ -31,7 +35,8 @@ class Cock(pygame.sprite.Sprite):
                 grain_dict = {"default grain":Grain(name="default grain")},
                 ritual_dict = {"default ritual":ritual(name="default ritual")}) -> None:
         super().__init__(*groups)
-        self.index = 0
+        self.anim_mode = 0
+        self.scale = 1
         self.id = id
         self.name = name
         self.intel = intelligence
@@ -52,10 +57,22 @@ class Cock(pygame.sprite.Sprite):
         self.perk_dict = perk_dict
         self.grain_dict = grain_dict
         self.ritual_dict = ritual_dict
+        self.curr_frame, self.last_frame_update = 0, 0
+        self.walk_frame_list = frames_from_spritesheet("Assets/cock_walk.png", 0, 0, 48, 48, 6)
+        self.idle_frame_list = frames_from_spritesheet("Assets/cock_idle.png", 0, 0, 48, 48, 6)
+        self.run_frame_list = frames_from_spritesheet("Assets/cock_run.png", 0, 0, 48, 48, 2)
+        self.curr_frame_list = self.idle_frame_list
+        self.frame_to_show = scale(self.idle_frame_list[0], self.scale)
+        self.frame_to_show_hover = scale(self.frame_to_show, 2)
+        self.cock_rect = self.frame_to_show.get_rect()
+        self.ispressed = False
+        self.curr_y = y = random.randint(420, 550)
+        tmp = int(130/102 * (y - 420))
+        self.curr_x = random.randint(240 - tmp, 600 - tmp)
+        self.cock_rect.center = (self.curr_x, self.curr_y)
 
 
     def info_cock(self):
-        print("index: " + str(self.index))
         print("id: " + str(self.id))
         print("name: " + str(self.name))
         print("int: " + str(self.intel))
@@ -135,7 +152,7 @@ class Cock(pygame.sprite.Sprite):
         self.ritual_dict[ritual_name].action(self)
 
     def lay_egg(self, new_id, new_name, nb_cocks):
-        if(self.fertile and nb_cocks < 20):
+        if self.fertile and nb_cocks < 20:
             self.fertile = False
             self.child = new_id
             return Cock(new_id,
@@ -148,11 +165,32 @@ class Cock(pygame.sprite.Sprite):
             print("Conditions infavorables à la ponte")
             return 1
 
-    def update(self):
-        self.index += 1
-        if self.index >= len(self.images):
-            self.index = 0
-        self.image = self.images[self.index]
+    def update(self, delta_time, events):
+        self.animate(delta_time)
+        self.cock_rect = self.frame_to_show.get_rect()
+        hover = self.cock_rect.collidepoint(pygame.mouse.get_pos())
+        self.ispressed = False
+        if hover:
+            self.frame_to_show = self.frame_to_show_hover
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN and hover:
+                self.ispressed = True
+                print("clicked")
 
-    def draw(self):
-        pass
+    def animate(self, delta_time):
+        if self.anim_mode == 0:
+            pass # later
+        self.curr_frame_list = self.idle_frame_list
+        self.last_frame_update += delta_time
+        if self.last_frame_update > .15:
+            self.curr_frame = (self.curr_frame + 1) % len(self.curr_frame_list)
+            self.frame_to_show = self.curr_frame_list[self.curr_frame]
+            self.frame_to_show = scale(self.frame_to_show, self.scale)
+            self.last_frame_update = 0
+        self.anim_mode = random.randint(0, 2)
+
+    def render(self, surface):
+        surface.blit(self.frame_to_show, (self.curr_x, self.curr_y))
+
+
+

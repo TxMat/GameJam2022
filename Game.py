@@ -21,7 +21,7 @@ class Game:
         self.font_loc = "Assets/font.ttf"
         self.state_stack = []
         self.dt, self.prev_time = 0, 0
-        self.actions = {"left": False, "right": False, "up": False, "down": False, "ok": False}
+        self.actions = {"left": False, "right": False, "up": False, "down": False, "ok": False, "esc":False}
         self.BLACK, self.WHITE = (0, 0, 0), (255, 255, 255)
         self.events = None
         self.load_states()
@@ -54,6 +54,8 @@ class Game:
                     self.actions["left"] = True
                 if event.key == pygame.K_RIGHT:
                     self.actions["right"] = True
+                if event.key == pygame.K_ESCAPE:
+                    self.actions["esc"] = True
                 if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
                     self.actions["ok"] = True
             if event.type == pygame.KEYUP:
@@ -65,6 +67,8 @@ class Game:
                     self.actions["left"] = False
                 if event.key == pygame.K_RIGHT:
                     self.actions["right"] = False
+                if event.key == pygame.K_ESCAPE:
+                    self.actions["esc"] = False
                 if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
                     self.actions["ok"] = False
 

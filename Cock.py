@@ -115,7 +115,7 @@ class Cock(pygame.sprite.Sprite):
         return strength
 
     def g_stamina(self):
-        stam = self.stam
+        stam = self.stamina
         for rit in self.rituals:
             ritual = self.ritual_dict[rit]
             stam *= ritual.sta_mult

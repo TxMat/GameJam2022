@@ -23,6 +23,7 @@ class Cock(pygame.sprite.Sprite):
                 child = 0,
                 parent = 0,
                 hunger = MAX_HUNGER,
+                max_hunger = MAX_HUNGER,
                 tree = None,
                 inheritance = STAT_INHERITANCE,
                 *groups: AbstractGroup,
@@ -44,6 +45,7 @@ class Cock(pygame.sprite.Sprite):
         self.child = child
         self.parent = parent
         self.hunger = hunger
+        self.max_hunger = max_hunger
         self.fed = {}
         self.tree = tree
         self.inheritance = inheritance

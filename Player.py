@@ -1,6 +1,7 @@
 from unicodedata import name
 import Expedition
 from Cock import Cock
+from Consts import *
 
 
 class Player():
@@ -25,10 +26,10 @@ class Player():
         self.last_exp = last_exp
 
     def buy_cock(self, id, cock_name):
-        if (self.money < 50):
+        if self.money < 50:
             print("Not enough money")
             return 1
-        if (len(self.cocks) == 20):
+        if len(self.cocks) == MAX_COCKS:
             print("Too many cocks")
             return 2
         self.money -= 50

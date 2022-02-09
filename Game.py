@@ -3,6 +3,7 @@ import this
 import time
 import pygame
 
+from Consts import *
 from Menu import Menu
 from Farm import Farm
 from Expedition import Expedition
@@ -14,15 +15,15 @@ class Game:
         pygame.init()
         self.running, self.playing = True, True
         self.clock = pygame.time.Clock()
-        self.WIDTH = 1024
-        self.HEIGHT = 768
+        self.WIDTH = WIDTH
+        self.HEIGHT = HEIGHT
         self.display = pygame.Surface((self.WIDTH, self.HEIGHT))
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
         self.font_loc = "Assets/font.ttf"
         self.state_stack = []
         self.dt, self.prev_time = 0, 0
         self.actions = {"left": False, "right": False, "up": False, "down": False, "ok": False, "esc":False}
-        self.BLACK, self.WHITE = (0, 0, 0), (255, 255, 255)
+        self.BLACK, self.WHITE = BLACK, WHITE
         self.events = None
         self.load_states()
 
@@ -33,7 +34,7 @@ class Game:
             self.update()
             self.draw()
 
-    def draw_text(self, surface, text, size, x, y, color=(200, 200, 200)):
+    def draw_text(self, surface, text, size, x, y, color=(79, 32, 15)):
         font = pygame.font.Font(self.font_loc, size)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()

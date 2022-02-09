@@ -23,7 +23,7 @@ class Farm(State):
             cock.update(delta_time, self.game.events)
         if self.HUD.cocks.ispressed:
             self.player.money *= 2
-            self.player.buy_cock(self.player.money, "xd")
+            self.player.buy_cock(self.player.money, "Emmanuel")
             new_state = CockList(self.game, self.player)
             new_state.enter_state()
         if self.HUD.last_exp.ispressed:
@@ -85,7 +85,7 @@ class HUD:
 
     def draw_cock_number(self, surface):
         self.game.draw_text(surface, "Nombre de Coqs :", 30, 700, 35)
-        self.game.draw_text(surface, str(len(self.player.cocks)) + "/20", 30, 700, 60)
+        self.game.draw_text(surface, str(len(self.player.cocks)) + "/10", 30, 700, 60)
 
     def update(self):
         self.inv.update(self.game.events)

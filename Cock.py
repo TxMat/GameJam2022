@@ -1,17 +1,14 @@
 import random
 
 import pygame
+
+from Consts import *
 from Grain import Grain
 from Events import ritual
 from Perks import Perks
 from pygame.sprite import AbstractGroup
 
 from Utils import frames_from_spritesheet, scale
-
-MAX_MATURATION = 200
-MAX_HUNGER = 100
-STAT_INHERITANCE = 0.33
-
 
 class Cock(pygame.sprite.Sprite):
     def __init__(self,
@@ -171,7 +168,7 @@ class Cock(pygame.sprite.Sprite):
         self.ritual_dict[ritual_name].action(self)
 
     def lay_egg(self, new_id, new_name, nb_cocks = 1):
-        if self.fertile and nb_cocks < 20:
+        if self.fertile and nb_cocks < MAX_COCKS:
             self.fertile = False
             self.child = new_id
             return Cock(new_id,

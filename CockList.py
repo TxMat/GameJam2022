@@ -20,4 +20,7 @@ class CockList(State):
         self.prev_state.render(surface)
         surface.fill((100, 100, 100, 100), None, pygame.BLEND_RGBA_MULT)
         surface.blit(self.background_img, self.background_rect)
+        self.draw_title(surface)
 
+    def draw_title(self, surface):
+        self.game.draw_text(surface, "Liste Des Coqs", 100, self.game.WIDTH / 2, 100)

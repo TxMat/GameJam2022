@@ -3,7 +3,7 @@ import Utils
 from State import State
 
 class LastExp(State):
-    def __init__(self, game, player):
+    def __init__(self, game, player, summary = None):
         super().__init__(game)
         self.debug_grid = pygame.image.load("Assets/alpha_grid.png")
         self.background_img = pygame.image.load("Assets/menubg.png")
@@ -30,7 +30,9 @@ class LastExp(State):
             self.game.draw_text(surface, "Vous n'etes pas encore", 40, 512, 300)
             self.game.draw_text(surface, "parti en expedition !", 40, 512, 335)
         else:
+            # Niveau / dna / minerais / equipe
             self.game.draw_text(surface, "Resultats :", 30, 250, 250)
+
         if(self.grid > 0):
             surface.blit(self.debug_grid, (0, 0))
         #surface.blit(self)

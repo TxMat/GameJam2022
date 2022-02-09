@@ -25,3 +25,7 @@ def frames_from_spritesheet(img_name, xstart, ystart, height, width, frame_nb) -
 def scale(frame, scale):
     fscale = (frame.get_height() * scale, frame.get_width() * scale)
     return pygame.transform.scale(frame, fscale)
+
+
+def draw_line(surface, start_pos, end_pos, width=1, color=(79, 32, 15)):
+    pygame.draw.line(surface, color, start_pos, end_pos, width)

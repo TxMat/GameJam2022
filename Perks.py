@@ -1,8 +1,8 @@
-from Cock import *
+
 
 class Perks():
     def __init__(self,
-                name: str ,
+                name: str = "",
                 icon = None,
                 tier: int = 1,
                 description: str = "",
@@ -23,6 +23,6 @@ class Perks():
         self.sta_mod = sta_mod
         self.sta_mult = sta_mult
 
-    def action(self, cock: Cock) -> None:
+    def action(self, cock) -> None:
         #overridden by each perk
         pass

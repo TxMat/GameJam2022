@@ -67,7 +67,7 @@ def test_perk():
 a = test_cock()
 b = test_grain()
 c = test_perk()
-a[0].add_perk("fireproof",{"fireproof":c[0]})
+#a[0].add_perk("fireproof",{"fireproof":c[0]})
 
 print("TODO: \n\
     dummy events\n\

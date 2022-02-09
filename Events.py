@@ -2,10 +2,10 @@ import random
 
 
 class Events():
-    def __init__(self):
-        self.name = ""
-        self.description = ""
-        self.type = ""
+    def __init__(self, name = "", description = "", e_type = ""):
+        self.name = name
+        self.description = description
+        self.e_type = e_type
         # self.scene = ???
 
 
@@ -13,12 +13,18 @@ class Events():
         pass
 
 class ritual(Events):
-    def __init__(self):
+    def __init__(self, name = "", description = "", e_type = ""):
         super().__init__()
         self.type="ritual"
+        self.int_mod = 0
+        self.int_mult = 1
+        self.str_mod = 0
+        self.str_mult = 1
+        self.sta_mod = 0
+        self.sta_mult = 1
 
 class satanique(ritual):
-    def __init__(self):
+    def __init__(self, name = "", description = "", e_type = ""):
         super().__init__()
         self.name ="satanique"
         self.description = "ne peux plus pondre, buff de stats"
@@ -31,7 +37,7 @@ class satanique(ritual):
         cock.stamina = cock.stamina*2,
 
 class goy_ish(ritual):
-    def __init__(self):
+    def __init__(self, name = "", description = "", e_type = ""):
         super().__init__()
         self.name ="goy_ish"
         self.description = "plus de luck"
@@ -41,7 +47,7 @@ class goy_ish(ritual):
         pass
 
 class cursed(ritual):
-    def __init__(self):
+    def __init__(self, name = "", description = "", e_type = ""):
         super().__init__()
         self.name ="cursed"
         self.description = "creuse une tombe, meurt dans 3 jours"
@@ -53,12 +59,12 @@ class cursed(ritual):
  
         
 class gaz(Events):
-    def __init__(self):
+    def __init__(self, name = "", description = "", e_type = ""):
         super().__init__()
         self.type="gaz"
 
 class inflammable(gaz):
-    def __init__(self):
+    def __init__(self, name = "", description = "", e_type = ""):
         super().__init__()
         self.name ="inflammable"
         self.description="peut exploser, arrête l'expédition si triggered"
@@ -76,7 +82,7 @@ class inflammable(gaz):
         
 
 class toxic(gaz):
-    def __init__(self):
+    def __init__(self, name = "", description = "", e_type = ""):
         super().__init__()
         self.name =""
         self.description="rend les poulets fous, stat aléatoire rendue à 0 pendant X cases"
@@ -94,7 +100,7 @@ class toxic(gaz):
         pass
 
 class soporifique(gaz):
-    def __init__(self):
+    def __init__(self, name = "", description = "", e_type = ""):
         super().__init__()
         self.name ="soporifique"
         self.description="endort, arrête l'expédition si non résisté"
@@ -111,7 +117,7 @@ class soporifique(gaz):
             pass
     
 class ore(Events):
-    def __init__(self):
+    def __init__(self, name = "", description = "", e_type = ""):
         super().__init__()
         self.type="ore"
         self.name= "minerai"
@@ -123,7 +129,7 @@ class ore(Events):
 
     
 class dna(Events):
-    def __init__(self):
+    def __init__(self, name = "", description = "", e_type = ""):
         super().__init__()
         self.type="dna"
         self.name="trouvaille d'ADN"

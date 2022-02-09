@@ -24,19 +24,23 @@ class CockList(State):
         self.update_btns()
         if actions["esc"]:
             self.exit_state()
+        if self.buy_btn.ispressed:
+            pass
         self.game.reset_keys()
 
     def render(self, surface):
         self.prev_state.render(surface)
-        surface.fill((70 , 70, 70, 100), None, pygame.BLEND_RGBA_MULT)
+        surface.fill((70, 70, 70, 100), None, pygame.BLEND_RGBA_MULT)
         surface.blit(self.background_img, self.background_rect)
         self.draw_menu(surface)
         self.render_btns(surface)
-        surface.blit(self.debug_grid, (0, 0))
+        # surface.blit(self.debug_grid, (0, 0))
 
     def draw_menu(self, surface):
-        self.draw_title(surface)
-        Utils.draw_line(surface, (WIDTH/2, 200), (WIDTH/2, 600), 2)
+        if len(self.player.cocks) > 10:
+            self.buy_btn.color = (20, 20, 20)
+        self.draw_text(surface)
+        Utils.draw_line(surface, (WIDTH / 2, 200), (WIDTH / 2, 600), 2)
         Utils.draw_line(surface, (100, 150), (920, 150), 2)
         self.buy_btn.render(surface)
 
@@ -62,5 +66,9 @@ class CockList(State):
         for button in self.btn_array:
             button.update(self.game.events)
 
-    def draw_title(self, surface):
+    def draw_text(self, surface):
+        cost = 0
+        if len(self.player.cocks):
+            cost = 50
         self.game.draw_text(surface, "Liste Des Coqs", 100, WIDTH / 2, 110)
+        self.game.draw_text(surface, "Cout : " + str(cost) + " $", 25, WIDTH / 2, 695)

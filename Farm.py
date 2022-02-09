@@ -27,7 +27,6 @@ class Farm(State):
             new_state = CockList(self.game, self.player)
             new_state.enter_state()
         if self.HUD.last_exp.ispressed:
-            self.player.money += 1
             new_state = LastExp(self.game, self.player)
             new_state.enter_state()
 

@@ -35,6 +35,14 @@ class Expedition():
      #   self.game.screen.blit(self.game.display, (0, 0))
      #   pygame.display.update()
 
+    def gen_summary(self):
+        summary = {}
+        summary['ores'] = self.loot_ores
+        summary['dnas'] = self.loot_dnas
+        summary['level'] = self.level.name
+        summary['party'] = list(self.cock_dic.keys())
+        return summary
+
     def get_party_stats(self):
         stats = {"strength":0, "intel":0, "stamina":0}
         for cock in cock_dic.values():

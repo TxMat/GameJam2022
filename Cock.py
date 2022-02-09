@@ -12,28 +12,30 @@ MAX_MATURATION = 200
 MAX_HUNGER = 100
 STAT_INHERITANCE = 0.33
 
+
 class Cock(pygame.sprite.Sprite):
     def __init__(self,
-                id,
-                name,
-                intelligence = 1,
-                strength = 1,
-                stamina = 1,
-                perks = set(),
-                traits = set(),
-                rituals = set(),
-                fertile = True,
-                maturation = 0,
-                child = 0,
-                parent = 0,
-                hunger = MAX_HUNGER,
-                max_hunger = MAX_HUNGER,
-                tree = None,
-                inheritance = STAT_INHERITANCE,
-                *groups: AbstractGroup,
-                perk_dict = {"default perk":Perks(name="default perk")},
-                grain_dict = {"default grain":Grain(name="default grain")},
-                ritual_dict = {"default ritual":ritual(name="default ritual")}) -> None:
+                 player,
+                 id,
+                 name,
+                 intelligence=1,
+                 strength=1,
+                 stamina=1,
+                 perks=set(),
+                 traits=set(),
+                 rituals=set(),
+                 fertile=True,
+                 maturation=0,
+                 child=0,
+                 parent=0,
+                 hunger=MAX_HUNGER,
+                 max_hunger=MAX_HUNGER,
+                 tree=None,
+                 inheritance=STAT_INHERITANCE,
+                 *groups: AbstractGroup,
+                 perk_dict={"default perk": Perks(name="default perk")},
+                 grain_dict={"default grain": Grain(name="default grain")},
+                 ritual_dict={"default ritual": ritual(name="default ritual")}) -> None:
         super().__init__(*groups)
         self.anim_mode = 0
         self.scale = 1
@@ -63,13 +65,30 @@ class Cock(pygame.sprite.Sprite):
         self.run_frame_list = frames_from_spritesheet("Assets/cock_run.png", 0, 0, 48, 48, 2)
         self.curr_frame_list = self.idle_frame_list
         self.frame_to_show = scale(self.idle_frame_list[0], self.scale)
-        self.frame_to_show_hover = scale(self.frame_to_show, 2)
+        self.frame_to_show_hover = scale(self.frame_to_show, 1)
         self.cock_rect = self.frame_to_show.get_rect()
         self.ispressed = False
-        self.curr_y = y = random.randint(420, 550)
-        tmp = int(130/102 * (y - 420))
-        self.curr_x = random.randint(240 - tmp, 600 - tmp)
-        self.cock_rect.center = (self.curr_x, self.curr_y)
+        self.isvalidspawn = False
+        self.curr_y = None
+        self.curr_x = None
+        colided_count = 0
+
+        def spawn_box():
+            self.curr_y = random.randint(390, 560)
+            tmp = int(135 / 102 * (self.curr_y - 420))
+            self.curr_x = random.randint(260 - tmp, 580 - tmp)
+            self.cock_rect.center = (self.curr_x + 24, self.curr_y + 24)
+
+        while not self.isvalidspawn:
+            spawn_box()
+            collided = False
+            for cocks in player.cocks.values():
+                if self.cock_rect.colliderect(cocks.cock_rect):
+                    collided = True
+                    colided_count += 1 # removes soft lock
+            if not collided or colided_count > 100000:
+                self.isvalidspawn = True
+
 
 
     def info_cock(self):
@@ -98,7 +117,7 @@ class Cock(pygame.sprite.Sprite):
         if grain_name not in self.fed.keys():
             self.fed[grain_name] = 0
         self.fed[grain_name] += quantity
-        self.hunger += grain.hunger*quantity
+        self.hunger += grain.hunger * quantity
         if self.hunger > MAX_HUNGER:
             self.hunger = MAX_HUNGER
         if self.maturation < MAX_MATURATION:
@@ -118,7 +137,7 @@ class Cock(pygame.sprite.Sprite):
             intel *= perk.int_mult
             intel += perk.int_mod
         return intel
-            
+
     def g_strength(self):
         strength = self.strength
         for rit in self.rituals:
@@ -157,9 +176,9 @@ class Cock(pygame.sprite.Sprite):
             self.child = new_id
             return Cock(new_id,
                         new_name,
-                        int(self.g_intel()*self.inheritance),
-                        int(self.g_strength()*self.inheritance),
-                        int(self.g_stamina()*self.inheritance),
+                        int(self.g_intel() * self.inheritance),
+                        int(self.g_strength() * self.inheritance),
+                        int(self.g_stamina() * self.inheritance),
                         parent=self.id)
         else:
             print("Conditions infavorables à la ponte")
@@ -167,11 +186,12 @@ class Cock(pygame.sprite.Sprite):
 
     def update(self, delta_time, events):
         self.animate(delta_time)
-        self.cock_rect = self.frame_to_show.get_rect()
+        # self.cock_rect = self.frame_to_show.get_rect()
+        # self.cock_rect.center = (self.curr_x, self.curr_y)
         hover = self.cock_rect.collidepoint(pygame.mouse.get_pos())
         self.ispressed = False
-        if hover:
-            self.frame_to_show = self.frame_to_show_hover
+        # if hover:
+        #    self.frame_to_show = self.frame_to_show_hover later
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN and hover:
                 self.ispressed = True
@@ -179,7 +199,7 @@ class Cock(pygame.sprite.Sprite):
 
     def animate(self, delta_time):
         if self.anim_mode == 0:
-            pass # later
+            pass  # later
         self.curr_frame_list = self.idle_frame_list
         self.last_frame_update += delta_time
         if self.last_frame_update > .15:
@@ -191,6 +211,3 @@ class Cock(pygame.sprite.Sprite):
 
     def render(self, surface):
         surface.blit(self.frame_to_show, (self.curr_x, self.curr_y))
-
-
-

@@ -30,7 +30,7 @@ class Player():
             print("Too many cocks")
             return 2
         self.money -= 50
-        self.cocks[id] = Cock(id, cock_name)
+        self.cocks[id] = Cock(self, id, cock_name)
         return 0
 
     def set_adn(self, name, quant):

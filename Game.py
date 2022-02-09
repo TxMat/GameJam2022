@@ -10,6 +10,7 @@ from Expedition import Expedition
 
 class Game:
     def __init__(self):
+        self.title_screen = None
         pygame.init()
         self.running, self.playing = True, True
         self.clock = pygame.time.Clock()

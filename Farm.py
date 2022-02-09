@@ -7,10 +7,11 @@ from Utils import *
 
 
 class Farm(State):
-    def __init__(self, game):
+    def __init__(self, game, player):
         State.__init__(self, game)
+        self.player = player
         self.isNight = False
-        self.HUD = HUD(self.game)
+        self.HUD = HUD(self.game, self.player)
         self.background_img = pygame.image.load("Assets/backgound_day.png").convert()
         self.sun = Sun(self.game)
 
@@ -47,12 +48,9 @@ class Sun:
 
 
 class HUD:
-    def __init__(self, game):
+    def __init__(self, game, player):
+        self.player = player
         self.game = game
-        self.plyr_name = ""
-        self.day = 1
-        self.money = 0
-        self.cock_number = 0
         self.background_img = pygame.image.load("Assets/hud_lol.png")
         self.inv = Button(game, 260, 90, "Inventaire", 30)
         self.last_exp = Button(game, 475, 90, "Derniere expedition", 30)
@@ -64,19 +62,19 @@ class HUD:
         pass
 
     def draw_day(self, surface):
-        self.day = Player.get_day
-        self.game.draw_text(surface, "Jour :", 20, 400, 30)
-        self.game.draw_text(surface, self.day, 20, 420, 30)
+        self.game.draw_text(surface, "Jour :", 30, 470, 35)
+        self.game.draw_text(surface, str(self.player.day), 30, 520, 35)
 
     def draw_money(self, surface):
-        self.money = Player.get_money
-        self.game.draw_text(surface, "Argent :", 20, 20, 30)
-        self.game.draw_text(surface, str(self.money), 20, 20, 30)
+        self.game.draw_text(surface, "Argent :", 30, 260, 35)
+        self.game.draw_text(surface, str(self.player.money), 30, 340, 35)
 
     def draw_cock_number(self, surface):
-        self.cock_number = Player.get_cocks_nb
-        self.game.draw_text(surface, "Nombre de Coqs :", 20, 20, 30)
-        self.game.draw_text(surface, str(self.cock_number), 20, 20, 30)
+        self.game.draw_text(surface, "Nombre de Coqs :", 30, 700, 35)
+        if len(self.player.cocks) < 20:
+            self.game.draw_text(surface, str(len(self.player.cocks)), 30, 820, 35)
+        else:
+            self.game.draw_text(surface, "MAX", 30, 820, 35)
 
     def update(self):
         self.inv.update(self.game.events)

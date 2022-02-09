@@ -5,7 +5,7 @@ from Cock import Cock
 
 class Player():
     def __init__(self,
-                 name,
+                 name="",
                  day=1,
                  cock_dict={},
                  inventory_grain={"base": 100},
@@ -65,16 +65,4 @@ class Player():
         # exped = Expedition(game,level,strat,cock_list)
         length = level.gen_len
         return Expedition.Expedition(strat=strat, level=level, cock_dic=cock_dic, length=length)
-
-    @property
-    def get_money(self):
-        return self.money
-
-    @property
-    def get_day(self):
-        return self.day
-
-    @property
-    def get_cocks_nb(self):
-        return len(self.cocks)
 

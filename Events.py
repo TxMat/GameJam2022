@@ -26,20 +26,22 @@ class ritual(Events):
 class satanique(ritual):
     def __init__(self, name = "", description = "", e_type = ""):
         super().__init__()
+        self.int_mult = 2        
+        self.str_mult = 2       
+        self.sta_mult = 2
+
         self.name ="satanique"
         self.description = "ne peux plus pondre, buff de stats"
 
     def action(self,cock):
         # ne peux plus pondre, buff de stats
         cock.fertile = False
-        cock.intelligence = cock.intelligence*2,
-        cock.strength =  cock.strength*2,
-        cock.stamina = cock.stamina*2,
 
-class goy_ish(ritual):
+class luck_up(ritual):
     def __init__(self, name = "", description = "", e_type = ""):
         super().__init__()
-        self.name ="goy_ish"
+        self.int_mult = 4  
+        self.name ="luck up"
         self.description = "plus de luck"
 
     def action(self,cock):
@@ -49,11 +51,15 @@ class goy_ish(ritual):
 class cursed(ritual):
     def __init__(self, name = "", description = "", e_type = ""):
         super().__init__()
+        self.int_mult = 0.5      
+        self.str_mult = 0.5      
+        self.sta_mult = 0.5
         self.name ="cursed"
-        self.description = "creuse une tombe, meurt dans 3 jours"
+        self.description = "creuse une tombe, baisse les stats"
 
     def action(self,cock):
-        # creuse une tombe, meurt dans 3 jours
+        # creuse une tombe,  baisse les stats
+        
         pass
 
  
@@ -72,13 +78,12 @@ class inflammable(gaz):
     def action(self,expedition):
         # peut exploser, arrête l'expédition si triggered
         resistance =  False
-        for i in expedition.cock_dic:
+        for i in expedition.cock_dic.values():
             for y in i.perks:
-                if y == "Perk_protection_fire":
+                if y == "fireproof":
                     resistance = True
         if resistance == False:
-            #expedition.stop()
-            pass
+            expedition.end()
         
 
 class toxic(gaz):
@@ -90,14 +95,12 @@ class toxic(gaz):
     def action(self,expedition):
         # rend les poulets fous, stat aléatoire rendue à 0 pendant X cases
         resistance =  False
-        for i in expedition.cock_dic:
+        for i in expedition.cock_dic.values():
             for y in i.perks:
-                if y == "Perk_protection_gaz":
+                if y == "gasproof":
                     resistance = True
         if resistance == False:
-            #expedition.stop()
-            pass
-        pass
+            expedition.end()
 
 class soporifique(gaz):
     def __init__(self, name = "", description = "", e_type = ""):
@@ -108,12 +111,12 @@ class soporifique(gaz):
     def action(self,expedition):
         # endort, arrête l'expédition si non résisté        
         resistance =  False
-        for cock in expedition.cock_dic:
+        for cock in expedition.cock_dic.values():
             for y in cock.perks:
-                if y == "Perk_protection_gaz":
+                if y == "gasproof":
                     resistance = True
         if resistance == False:
-            #expedition.stop()
+            expedition.end()
             pass
     
 class ore(Events):
@@ -124,9 +127,7 @@ class ore(Events):
 
     def action(self,expedition):
         # ajoute une quant random d'un minerai random
-        expedition.loot_ores[random.choice(list(expedition.loot_ores))] += random.randint(1,3)
-
-
+        expedition.loot_ores[random.choice(list(expedition.loot_ores))] += random.randint(1,20)
     
 class dna(Events):
     def __init__(self, name = "", description = "", e_type = ""):

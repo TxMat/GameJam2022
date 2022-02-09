@@ -1,4 +1,7 @@
 import pygame
+from Grain import Grain
+from Events import ritual
+from Perks import Perks
 from pygame.sprite import AbstractGroup
 
 MAX_MATURATION = 200
@@ -22,7 +25,10 @@ class Cock(pygame.sprite.Sprite):
                 hunger = MAX_HUNGER,
                 tree = None,
                 inheritance = STAT_INHERITANCE,
-                *groups: AbstractGroup) -> None:
+                *groups: AbstractGroup,
+                perk_dict = {"default perk":Perks(name="default perk")},
+                grain_dict = {"default grain":Grain(name="default grain")},
+                ritual_dict = {"default ritual":ritual(name="default ritual")}) -> None:
         super().__init__(*groups)
         self.index = 0
         self.id = id
@@ -41,6 +47,10 @@ class Cock(pygame.sprite.Sprite):
         self.fed = {}
         self.tree = tree
         self.inheritance = inheritance
+        self.perk_dict = perk_dict
+        self.grain_dict = grain_dict
+        self.ritual_dict = ritual_dict
+
 
     def info_cock(self):
         print("index: " + str(self.index))
@@ -64,8 +74,8 @@ class Cock(pygame.sprite.Sprite):
         print("str(): " + str(self.g_strength()))
         print("sta(): " + str(self.g_stamina()))
 
-    def feed(self, grain_name, grain_dict, quantity) -> None:
-        grain = grain_dict[grain_name]
+    def feed(self, grain_name, quantity) -> None:
+        grain = self.grain_dict[grain_name]
         if grain_name not in self.fed.keys():
             self.fed[grain_name] = 0
         self.fed[grain_name] += quantity
@@ -81,23 +91,23 @@ class Cock(pygame.sprite.Sprite):
     def g_intel(self):
         intel = self.intel
         for rit in self.rituals:
-            ritual = ritual_dict[rit]
+            ritual = self.ritual_dict[rit]
             intel *= ritual.int_mult
             intel += ritual.int_mod
         for perks in self.perks:
-            perk = perk_dict[perks]
+            perk = self.perk_dict[perks]
             intel *= perk.int_mult
-            intek += perk.int_mod
+            intel += perk.int_mod
         return intel
             
     def g_strength(self):
         strength = self.strength
         for rit in self.rituals:
-            ritual = ritual_dict[rit]
+            ritual = self.ritual_dict[rit]
             strength *= ritual.str_mult
             strength += ritual.str_mod
         for perks in self.perks:
-            perk = perk_dict[perks]
+            perk = self.perk_dict[perks]
             strength *= perk.str_mult
             strength += perk.str_mod
         return strength
@@ -105,22 +115,22 @@ class Cock(pygame.sprite.Sprite):
     def g_stamina(self):
         stam = self.intel
         for rit in self.rituals:
-            ritual = ritual_dict[rit]
+            ritual = self.ritual_dict[rit]
             stam *= ritual.sta_mult
             stam += ritual.sta_mod
         for perks in self.perks:
-            perk = perk_dict[perks]
+            perk = self.perk_dict[perks]
             stam *= perk.sta_mult
             stam += perk.sta_mod
         return stam
 
-    def add_perk(self, perk_name, perk_dict) -> None:
+    def add_perk(self, perk_name) -> None:
         self.perks.add(perk_name)
-        perk_dict[perk_name].action(self)
+        self.perk_dict[perk_name].action(self)
 
-    def add_ritual(self, ritual_name, rit_dict) -> None:
+    def add_ritual(self, ritual_name) -> None:
         self.rituals.add(ritual_name)
-        ritual_dict[ritual_name].action(self)
+        self.ritual_dict[ritual_name].action(self)
 
     def lay_egg(self, new_id, new_name):
         if(self.fertile == True):

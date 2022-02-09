@@ -34,11 +34,18 @@ class Game:
             self.update()
             self.draw()
 
-    def draw_text(self, surface, text, size, x, y, color=(79, 32, 15)):
+    def draw_text(self, surface, text, size, x, y, color=(79, 32, 15), align = "center"):
         font = pygame.font.Font(self.font_loc, size)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
-        text_rect.center = (x, y)
+        if(align == "center"):
+            text_rect.center = (x, y)
+        elif(align == "left"):
+            text_rect.left = x
+            text_rect.centery = y
+        elif(align == "right"):
+            text_rect.right = x
+            text_rect.centery = y
         surface.blit(text_surface, text_rect)
 
     def check_events(self):

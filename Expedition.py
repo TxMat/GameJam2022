@@ -2,7 +2,7 @@ from pickle import NONE
 import pygame
 import random
 import Level
-
+import Events
 
 class Expedition():
     def __init__(self,
@@ -19,21 +19,21 @@ class Expedition():
         self.length = length
         self.end = False
         self.layout = layout
-        self.game = game
-        self.mid_w, self.mid_h = game.WIDTH / 2, game.HEIGHT / 2
+        #self.game = game
+        #self.mid_w, self.mid_h = game.WIDTH / 2, game.HEIGHT / 2
         #self.run_display = True
         #self.bg_img = background_img
         self.loot_ores = {}
         self.loot_dna = {}
         for ore in level.ores:
-            self.loot_ores[ores] = 0
+            self.loot_ores[ore] = 0
         self.dna = {}
         for dna in level.dnas:
-            self.loot_dna[dnas] = 0
+            self.loot_dna[dna] = 0
     #legacy content
-    def blit_screen(self):
-        self.game.screen.blit(self.game.display, (0, 0))
-        pygame.display.update()
+   # def blit_screen(self):
+     #   self.game.screen.blit(self.game.display, (0, 0))
+     #   pygame.display.update()
 
 
     def stop(self): # stop l"expedition , retire les ressources si y a pas la perks
@@ -50,30 +50,37 @@ class Expedition():
         self.end = True
 
     def avancement(self):
+
         ore_luck = 0
         dna_luck = 0
         if self.strat == 1:  # minerai
             ore_luck = 2
         if self.strat == 2:  # dna
             dna_luck == 1
+
         print("le donjon fait " + str(self.length))
         for i in range(self.length):
+            print("case :"+ str(i))
             if self.end:
                 break
             rand = random.randint(0, 9)
             if rand in [1, 3 + ore_luck]:
-                self.minerai[random.choice(list(self.minerai))] += EventOre(self.game, self).display()
+                print("ore")
+                Events.ore().action(self)
             elif rand in [8 - dna_luck, 8]:
-                self.dna[random.choice(list(self.dna))] += EventDna(self.game, self).display()
+                print("dna")
+                Events.dna().action(self)
             elif rand in [6, 7]:
-                EventGaz(self.game, self).display()
+                print("gas")
+                random.choice(Events.gen_gas()).values().action(self)
             elif rand == 9:
-                EventRituel(self.game, self).display()
+                print("rituel")
+                random.choice(Events.gen_rituals()).values().action(random.choice(list(self.cock_list.values())))
             else:
-                print("pas de minerai")
+                print("il ce passe rien")
 
 
-
+'''
 # legacy content
 class EventOre():
     def __init__(self, game, expedition):
@@ -161,3 +168,4 @@ class EventRituel():
                     self.run_display = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.run_display = False
+'''

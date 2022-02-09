@@ -83,8 +83,7 @@ class inflammable(gaz):
                 if y == "fireproof":
                     resistance = True
         if resistance == False:
-            expedition.end()
-        
+            expedition.end()        
 
 class toxic(gaz):
     def __init__(self, name = "", description = "", e_type = ""):
@@ -118,6 +117,15 @@ class soporifique(gaz):
         if resistance == False:
             expedition.end()
             pass
+
+def gen_gas():
+    gas = {}
+    gas["soporifique"] = soporifique()
+    gas["inflammable"] = inflammable()
+    gas["toxic"] = toxic()
+
+    return gas
+
     
 class ore(Events):
     def __init__(self, name = "", description = "", e_type = ""):

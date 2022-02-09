@@ -115,7 +115,7 @@ class Cock(pygame.sprite.Sprite):
         return strength
 
     def g_stamina(self):
-        stam = self.intel
+        stam = self.stamina
         for rit in self.rituals:
             ritual = self.ritual_dict[rit]
             stam *= ritual.sta_mult
@@ -144,7 +144,7 @@ class Cock(pygame.sprite.Sprite):
                         int(self.g_strength()*self.inheritance),
                         int(self.g_stamina()*self.inheritance),
                         parent=self.id)
-        else
+        else:
             print("Conditions infavorables à la ponte")
             return 1
 

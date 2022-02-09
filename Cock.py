@@ -134,8 +134,8 @@ class Cock(pygame.sprite.Sprite):
         self.rituals.add(ritual_name)
         self.ritual_dict[ritual_name].action(self)
 
-    def lay_egg(self, new_id, new_name):
-        if self.fertile:
+    def lay_egg(self, new_id, new_name, nb_cocks):
+        if(self.fertile and nb_cocks < 20):
             self.fertile = False
             self.child = new_id
             return Cock(new_id,
@@ -144,6 +144,9 @@ class Cock(pygame.sprite.Sprite):
                         int(self.g_strength()*self.inheritance),
                         int(self.g_stamina()*self.inheritance),
                         parent=self.id)
+        else
+            print("Conditions infavorables à la ponte")
+            return 1
 
     def update(self):
         self.index += 1

@@ -1,6 +1,7 @@
 import pygame
 
 from Button import Button
+from Player import Player
 from State import State
 from Utils import *
 
@@ -56,10 +57,26 @@ class HUD:
         self.inv = Button(game, 260, 90, "Inventaire", 30)
         self.last_exp = Button(game, 475, 90, "Derniere expedition", 30)
         self.cocks = Button(game, 730, 90, "Liste des poulets", 30)
-        # btn cocks
-        # btn last expedition
         self.menu_rect = self.background_img.get_rect()
-        self.menu_rect.center = (self.game.WIDTH/2, 60)
+        self.menu_rect.center = (self.game.WIDTH / 2, 60)
+
+    def draw_plyr_name(self):
+        pass
+
+    def draw_day(self, surface):
+        self.day = Player.get_day
+        self.game.draw_text(surface, "Jour :", 20, 400, 30)
+        self.game.draw_text(surface, str(self.day), 20, 420, 30)
+
+    def draw_money(self, surface):
+        self.money = Player.get_money
+        self.game.draw_text(surface, "Argent :", 20, 20, 30)
+        self.game.draw_text(surface, str(self.money), 20, 20, 30)
+
+    def draw_cock_number(self, surface):
+        self.cock_number = Player.get_cocks_nb
+        self.game.draw_text(surface, "Nombre de Coqs :", 20, 20, 30)
+        self.game.draw_text(surface, str(self.cock_number), 20, 20, 30)
 
     def update(self):
         self.inv.update(self.game.events)
@@ -71,3 +88,6 @@ class HUD:
         self.inv.render(surface)
         self.last_exp.render(surface)
         self.cocks.render(surface)
+        self.draw_day(surface)
+        self.draw_money(surface)
+        self.draw_cock_number(surface)

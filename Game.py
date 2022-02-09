@@ -32,7 +32,7 @@ class Game:
             self.update()
             self.draw()
 
-    def draw_text(self, surface, text, size, x, y, color):
+    def draw_text(self, surface, text, size, x, y, color=(200, 200, 200)):
         font = pygame.font.Font(self.font_loc, size)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()

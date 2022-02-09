@@ -27,6 +27,5 @@ class Button(pygame.sprite.Sprite):
             if event.type == pygame.MOUSEBUTTONDOWN and hover:
                 print("clicked")
 
-
     def render(self, surface):
         surface.blit(self.btn, self.text_rect)

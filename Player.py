@@ -12,7 +12,8 @@ class Player():
                  inventory_ore={"metal 1": 50, "metal 2": 75, "metal 3": 100},
                  inventory_dna={"adn 1": 33, "adn 2": 66, "adn 3": 99},
                  money=100,
-                 relation_monsanto=1):
+                 relation_monsanto=1,
+                 last_exp = {}):
         self.name = name
         self.day = day
         self.cocks = cock_dict
@@ -21,6 +22,7 @@ class Player():
         self.inv_dna = inventory_dna
         self.money = money
         self.rel = relation_monsanto
+        self.last_exp = last_exp
 
     def buy_cock(self, id, cock_name):
         if (self.money < 50):

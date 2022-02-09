@@ -1,6 +1,7 @@
 import pygame
 from Button import Button
 from CockList import CockList
+from state_last_exp import LastExp 
 from State import State
 from Utils import *
 
@@ -24,6 +25,10 @@ class Farm(State):
             self.player.money *= 2
             self.player.buy_cock(self.player.money, "xd")
             new_state = CockList(self.game, self.player)
+            new_state.enter_state()
+        if self.HUD.last_exp.ispressed:
+            self.player.money += 1
+            new_state = LastExp(self.game, self.player)
             new_state.enter_state()
 
     def render(self, surface):

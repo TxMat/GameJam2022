@@ -17,11 +17,12 @@ class Expedition():
         self.cock_dic = cock_dic
         self.level = level
         self.length = length
+        self.end = False
         self.layout = layout
         self.game = game
         self.mid_w, self.mid_h = game.WIDTH / 2, game.HEIGHT / 2
-        self.run_display = True
-        self.bg_img = background_img
+        #self.run_display = True
+        #self.bg_img = background_img
         self.loot_ores = {}
         self.loot_dna = {}
         for ore in level.ores:
@@ -29,10 +30,24 @@ class Expedition():
         self.dna = {}
         for dna in level.dnas:
             self.loot_dna[dnas] = 0
-
+    #legacy content
     def blit_screen(self):
         self.game.screen.blit(self.game.display, (0, 0))
         pygame.display.update()
+
+
+    def stop(self): # stop l"expedition , retire les ressources si y a pas la perks
+        save_ressources = False
+        for cock in self.cock_dic:
+            for perk in cock.perks:
+                if perk == "1up":
+                    save_ressources= True
+        if not save_ressources:
+            for ore in self.loot_ores:
+                self.loot_ores[ore] = 0  
+            for dna in self.loot_dna:
+                self.loot_dna[dna] = 0
+        self.end = True
 
     def avancement(self):
         ore_luck = 0
@@ -43,6 +58,8 @@ class Expedition():
             dna_luck == 1
         print("le donjon fait " + str(self.length))
         for i in range(self.length):
+            if self.end:
+                break
             rand = random.randint(0, 9)
             if rand in [1, 3 + ore_luck]:
                 self.minerai[random.choice(list(self.minerai))] += EventOre(self.game, self).display()
@@ -56,6 +73,8 @@ class Expedition():
                 print("pas de minerai")
 
 
+
+# legacy content
 class EventOre():
     def __init__(self, game, expedition):
         self.game = game

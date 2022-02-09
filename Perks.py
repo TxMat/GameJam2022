@@ -27,8 +27,9 @@ class Perks():
         pass
 
 class IronStomach(Perks):
-    def __init__():
+    def __init__(self,description = ""):
         super().__init__(name="iron stomach")
+        self.description = description
 
     def action(self, cock) -> None:
         cock.max_hunger = 300

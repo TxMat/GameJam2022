@@ -138,3 +138,11 @@ class dna(Events):
     def action(self,expedition):
         # ajoute une quant random d'un minerai 
         expedition.loot_dna[random.choice(list(expedition.loot_dna))] += random.randint(1,3)
+
+def gen_rituals():
+    rituals = {}
+    rituals["luck up"] = luck_up()
+    rituals["cursed"] = cursed()
+    rituals["satanique"] = satanique()
+
+    return rituals

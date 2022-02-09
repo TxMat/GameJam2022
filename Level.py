@@ -34,3 +34,4 @@ class Level():
         level ["mine d'or"] = Level(name="mine d'or", ore_list=["cuivre","or","émeraude"] ,dna_list=["l5z5","b1t3","u8x1"],description="Sûrment une des plus vielle que la terre est portée",danger_lvl=2,length_range=(10,15))        
         level ["mine de diamant"] = Level(name="mine de diamant", ore_list=["fer","platine","diamant"] ,dna_list=["y2w3","c0c5","e9y5"],description="elle brille meme de l'exterieur",danger_lvl=13,length_range=(3,15))
         level ["mine de l'extreme"] = Level(name="mine de l'extreme", ore_list=["sable argileux","plomb","francium"] ,dna_list=["e8t1","h8k3","i2y4"],description="vous etes sûr de vouloir renter",danger_lvl=67,length_range=(3,15))
+        return level

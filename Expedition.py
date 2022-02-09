@@ -35,6 +35,13 @@ class Expedition():
      #   self.game.screen.blit(self.game.display, (0, 0))
      #   pygame.display.update()
 
+    def get_party_stats(self):
+        stats = {"strength":0, "intel":0, "stamina":0}
+        for cock in cock_dic.values():
+            stats["strength"] += cock.g_strength()
+            stats["intel"] += cock.g_intel()
+            stats["stamina"] += cock.g_stamina()
+        return stats
 
     def stop(self): # stop l"expedition , retire les ressources si y a pas la perks
         save_ressources = False
@@ -65,19 +72,22 @@ class Expedition():
                 break
             rand = random.randint(0, 9)
             if rand in [1, 3 + ore_luck]:
-                print("ore")
+                print("minerais")
                 Events.ore().action(self)
             elif rand in [8 - dna_luck, 8]:
-                print("dna")
+                print("adn")
                 Events.dna().action(self)
             elif rand in [6, 7]:
-                print("gas")
-                random.choice(Events.gen_gas()).values().action(self)
+                print("gaz")
+                random.choice(list(Events.gen_gas().values())).action(self)
             elif rand == 9:
                 print("rituel")
-                random.choice(Events.gen_rituals()).values().action(random.choice(list(self.cock_list.values())))
+                random.choice(list(Events.gen_rituals()).values()).action(random.choice(list(self.cock_list.values())))
             else:
-                print("il ce passe rien")
+                print("il se passe rien")
+
+        print("minerais : " + str(self.loot_ores))
+        print("adn : " + str(self.loot_dna))
 
 
 '''

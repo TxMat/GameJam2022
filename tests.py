@@ -8,6 +8,14 @@ from Level import *
 from Perks import *
 from Player import *
 from Tree import *
+from random import randint, choice
+
+def test_player():
+    player = Player()
+    player.money = 50000
+    for i in range(12):
+        player.buy_cock(i,"nom " + str(i))
+    return player
 
 def test_cock():
     print("Creation coq 1\n")
@@ -64,16 +72,27 @@ def test_perk():
     perks[13].tier = 5
     return perks
 
-a = test_cock()
-b = test_grain()
-c = test_perk()
+cocks = test_cock()
+grains = test_grain()
+perks = test_perk()
+player = test_player()
+cock_dic = {}
+levels = Level.gen_level()
+i = 0
+for cock in player.cocks:
+    if(i == 4):
+        break
+    cock_dic[cock] = player.cocks[cock]
+    i += 1
+
+exp = Expedition.Expedition(cock_dic = cock_dic, level = choice(list(levels.values())))
 #a[0].add_perk("fireproof",{"fireproof":c[0]})
 
-print("TODO: \n\
+"""print("TODO: \n\
     dummy events\n\
     dummy perks\n\
     dummy levels\n\
     dummy player\n\
     dummy tree\n\
-    dummy expedition")
+    dummy expedition")"""
 

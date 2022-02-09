@@ -83,7 +83,9 @@ class inflammable(gaz):
                 if y == "fireproof":
                     resistance = True
         if resistance == False:
-            expedition.end()        
+            #TODO
+            #expedition.end()        
+            expedition.end = True
 
 class toxic(gaz):
     def __init__(self, name = "", description = "", e_type = ""):

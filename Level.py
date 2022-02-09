@@ -3,7 +3,7 @@ from random import randint
 
 class Level():
     def __init__(self,
-                name: str,
+                name: str = "",
                 background_img = None,
                 icon = None,
                 ore_list: list = ["metal 1", "metal 2", "metal 3"],

@@ -13,27 +13,30 @@ class Expedition():
                 layout = None,
                 game = None,
                 background_img = pygame.image.load("Assets/backgound_day.png")) -> None:
-        self.strat = strat
         self.cock_dic = cock_dic
         self.level = level
         self.length = length
         self.end = False
         self.layout = layout
+        self.pos = 0
         #self.game = game
         #self.mid_w, self.mid_h = game.WIDTH / 2, game.HEIGHT / 2
         #self.run_display = True
         #self.bg_img = background_img
         self.loot_ores = {}
         self.loot_dna = {}
+        self.ore_luck = 0
+        self.dna_luck = 0
         for ore in level.ores:
             self.loot_ores[ore] = 0
         self.dna = {}
         for dna in level.dnas:
             self.loot_dna[dna] = 0
-    #legacy content
-   # def blit_screen(self):
-     #   self.game.screen.blit(self.game.display, (0, 0))
-     #   pygame.display.update()
+        if strat == 1:  # minerai
+            self.ore_luck = 2
+        elif strat == 2:  # dna
+            self.dna_luck == 1
+        print("Taille donjon : " + str(self.length))
 
     def gen_summary(self):
         summary = {}
@@ -53,7 +56,7 @@ class Expedition():
 
     def stop(self): # stop l"expedition , retire les ressources si y a pas la perks
         save_ressources = False
-        for cock in self.cock_dic:
+        for cock in self.cock_dic.values() :
             for perk in cock.perks:
                 if perk == "1up":
                     save_ressources= True
@@ -65,37 +68,36 @@ class Expedition():
         self.end = True
 
     def avancement(self):
-
-        ore_luck = 0
-        dna_luck = 0
-        if self.strat == 1:  # minerai
-            ore_luck = 2
-        if self.strat == 2:  # dna
-            dna_luck == 1
-
-        print("le donjon fait " + str(self.length))
-        for i in range(self.length):
-            print("case :"+ str(i))
+        if self.pos < self.length:
+            print("case :"+ str(self.pos))
             if self.end:
-                break
+                self.pos = self.length
             rand = random.randint(0, 9)
-            if rand in [1, 3 + ore_luck]:
+            if rand in [1, 3 + self.ore_luck]:
                 print("minerais")
                 Events.ore().action(self)
-            elif rand in [8 - dna_luck, 8]:
+                return "ores"
+            elif rand in [8 - self.dna_luck, 8]:
                 print("adn")
                 Events.dna().action(self)
+                return "dna"
             elif rand in [6, 7]:
                 print("gaz")
                 random.choice(list(Events.gen_gas().values())).action(self)
+                return "gas"
             elif rand == 9:
                 print("rituel")
-                random.choice(list(Events.gen_rituals()).values()).action(random.choice(list(self.cock_list.values())))
+                if(self.cock_dic): #DEBUG
+                    random.choice(list(Events.gen_rituals().values())).action(random.choice(list(self.cock_dic.values())))
+                return "ritual"
             else:
                 print("il se passe rien")
-
-        print("minerais : " + str(self.loot_ores))
-        print("adn : " + str(self.loot_dna))
+                return "none"
+            self.pos += 1 
+        else:
+            print("minerais : " + str(self.loot_ores))
+            print("adn : " + str(self.loot_dna))
+            return "done"
 
 
 '''

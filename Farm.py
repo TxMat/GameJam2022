@@ -2,7 +2,9 @@ import pygame
 from Button import Button
 from CockList import CockList
 from CockView import CockView
-from state_last_exp import LastExp 
+from state_last_exp import LastExp
+from state_levels import StateLevel
+from state_Expedition import ExpState
 from State import State
 from Utils import *
 
@@ -18,6 +20,8 @@ class Farm(State):
         self.sun = Sun(self.game)
         self.mosanto_collide = pygame.rect.Rect((0, 150), (160, 270))
         self.cave_collide = pygame.rect.Rect((700, 220), (280, 200))
+        self.exp_chosen = []
+        self.chosen_cocks = []
 
     def update(self, delta_time, actions):
         events = self.game.events
@@ -41,7 +45,21 @@ class Farm(State):
             if event.type == pygame.MOUSEBUTTONDOWN and mosanto_hover:
                 print("mosanto")
             if event.type == pygame.MOUSEBUTTONDOWN and cave_hover:
+                new_state = StateLevel(self.game, self.exp_chosen)
+                new_state.enter_state()
                 print("cave")
+        if(self.exp_chosen):
+
+
+            # DEBUG
+
+            self.chosen_cocks = self.player.cocks
+
+            # DEBUG
+                
+            new_state = ExpState(self.game, self.exp_chosen[0], self.exp_chosen[1], self.chosen_cocks)
+            new_state.enter_state()
+            self.exp_chosen.clear()
 
     def render(self, surface):
         surface.blit(self.background_img, (0, 0))

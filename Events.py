@@ -101,7 +101,7 @@ class toxic(gaz):
                 if y == "gasproof":
                     resistance = True
         if resistance == False:
-            expedition.end()
+            expedition.stop()
 
 class soporifique(gaz):
     def __init__(self, name = "", description = "", e_type = ""):
@@ -117,7 +117,7 @@ class soporifique(gaz):
                 if y == "gasproof":
                     resistance = True
         if resistance == False:
-            expedition.end()
+            expedition.stop()
             pass
 
 def gen_gas():

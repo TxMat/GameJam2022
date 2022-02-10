@@ -30,6 +30,8 @@ class Player():
     def buy_cock(self, id, cock_name):
         if len(cock_name) == 0:
             cock_name = "Coq sans nom"
+        elif len(cock_name) > 12:
+            cock_name = cock_name[:12]
         if self.money < 50:
             print("Not enough money")
             return 1

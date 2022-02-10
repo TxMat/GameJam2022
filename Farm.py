@@ -13,11 +13,14 @@ class Farm(State):
         self.player = player
         self.isNight = False
         self.HUD = HUD(self.game, self.player)
+        self.debug_grid = pygame.image.load("Assets/debug_grid.png")
         self.background_img = pygame.image.load("Assets/backgound_day.png").convert()
         self.sun = Sun(self.game)
-        self.fence_boundary = [(240, 420), (630, 420), (110, 592), (490, 592)]
+        self.mosanto_collide = pygame.rect.Rect((0, 150), (160, 270))
+        self.cave_collide = pygame.rect.Rect((700, 220), (280, 200))
 
     def update(self, delta_time, actions):
+        events = self.game.events
         self.sun.update(delta_time)
         self.HUD.update()
         for cock in self.player.cocks.values():
@@ -32,6 +35,13 @@ class Farm(State):
         if self.HUD.last_exp.ispressed:
             new_state = LastExp(self.game, self.player)
             new_state.enter_state()
+        mosanto_hover = self.mosanto_collide.collidepoint(pygame.mouse.get_pos())
+        cave_hover = self.cave_collide.collidepoint(pygame.mouse.get_pos())
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN and mosanto_hover:
+                print("mosanto")
+            if event.type == pygame.MOUSEBUTTONDOWN and cave_hover:
+                print("cave")
 
     def render(self, surface):
         surface.blit(self.background_img, (0, 0))
@@ -39,6 +49,7 @@ class Farm(State):
         self.HUD.render(surface)
         for cock in self.player.cocks.values():
             cock.render(surface)
+        surface.blit(self.debug_grid, (0, 0))
 
 
 class Sun:

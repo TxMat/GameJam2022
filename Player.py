@@ -15,7 +15,7 @@ class Player():
                  money=100,
                  relation_monsanto=1,
                  last_exp = {},
-                 cockid = 0):
+                 cock_id = 0):
         self.name = name
         self.day = day
         self.cocks = cock_dict

@@ -38,6 +38,7 @@ class ExpState(State):
             self.grid *= -1
         self.game.reset_keys()
         if(self.ongoing):
+            wait(2000)
             self.step()
 
     def render(self, surface):
@@ -56,7 +57,21 @@ class ExpState(State):
             elif event == "ritual":
                 surface.blit(self.s_rit, (pos))
             counter += 1
-
+        
+        if self.cases:
+            if not self.ongoing:
+                self.game.draw_text(surface,"Fin de l'expedition",40, 512, 540)
+            elif self.cases[-1] == "gas":
+                self.game.draw_text(surface,"vous etes tombes sur une poche de gaz",40, 512, 540)
+            elif self.cases[-1] == "ritual":
+                self.game.draw_text(surface,"Vos poules font un rituel....",40, 512, 540)
+            elif self.cases[-1] == "dna":
+                self.game.draw_text(surface,"vous trouvez de L'ADN !!",40, 512, 540)
+            elif self.cases[-1] == "none":
+                self.game.draw_text(surface,"Il ne se passe rien, le vide",40, 512, 540)
+            elif self.cases[-1] == "ores":
+                self.game.draw_text(surface,"vous trouvez un minerai",40, 512, 540 )
+            
         if(self.grid > 0):
             surface.blit(self.debug_grid, (0, 0))
 
@@ -69,3 +84,7 @@ class ExpState(State):
         
 
 
+def wait(delay):
+    print("debut du wait")
+    pygame.time.delay(delay)
+    print("fin du wait")

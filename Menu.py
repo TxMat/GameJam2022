@@ -3,6 +3,7 @@ from Consts import *
 from Player import Player
 from State import State
 from Farm import Farm
+from Credits import Credits
 
 
 class Menu(State):

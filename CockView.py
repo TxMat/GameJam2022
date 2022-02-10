@@ -8,14 +8,17 @@ from Button import Button
 from Cock import Cock
 from Consts import *
 from State import State
+from state_Feeding import Feeding
 
 
 class CockView(State):
-    def __init__(self, game, cock):
+    def __init__(self, game, cock, player = None):
         super().__init__(game)
+        #print(player)
         self.game = game
         self.cock = cock
-        self.debug_grid = pygame.image.load("Assets/debug_grid.png")
+        self.player = player
+        self.debug_grid = pygame.image.load("Assets/alpha_grid.png")
         self.background_img = pygame.image.load("Assets/menubg.png")
         self.background_rect = self.background_img.get_rect()
         self.background_rect.center = (WIDTH / 2, HEIGHT / 2)
@@ -24,14 +27,22 @@ class CockView(State):
         self.dummy_cock.curr_y = 70
         self.dummy_cock.display_health_bar = False
         self.dummy_cock.anim_mode = random.randint(0, 2)
+        self.close_btn = Button(self.game, 910, 90, "X")
+        self.feed_btn = Button(self.game, 512, 660, "Nourrir")
         self.grid = -1
 
     def update(self, delta_time, actions):
+        self.close_btn.update(self.game.events)
+        self.feed_btn.update(self.game.events)
         self.dummy_cock.update(delta_time, self.game.events)
-        if actions["esc"]:
+        if actions["esc"] or self.close_btn.ispressed:
             self.prev_state.need_refresh = True
             self.exit_state()
-        if actions["right"] or actions["ok"]:
+        if self.feed_btn.ispressed:
+            print("nourrir")
+            new_state = Feeding(self.game, self.cock, self.player)
+            new_state.enter_state()
+        if actions["right"] or actions["ok"]: #DEBUG
             self.grid *= -1
         self.game.reset_keys()
 
@@ -43,6 +54,8 @@ class CockView(State):
             surface.blit(self.debug_grid, (0, 0))
         self.draw_text(surface)
         self.draw_lines(surface)
+        self.feed_btn.render(surface)
+        self.close_btn.render(surface)
 
     def draw_lines(self, surface):
         Utils.draw_line(surface, (WIDTH / 2, 200), (WIDTH / 2, 600), 2)

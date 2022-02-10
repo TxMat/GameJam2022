@@ -39,7 +39,7 @@ class Farm(State):
         for cock in self.player.cocks.values():
             cock.update(delta_time, self.game.events)
             if cock.ispressed:
-                new_state = CockView(self.game, cock)
+                new_state = CockView(self.game, cock, self.player)
                 new_state.enter_state()
         if self.HUD.cocks.ispressed:
             self.player.money *= 2

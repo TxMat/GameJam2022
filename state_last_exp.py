@@ -49,7 +49,7 @@ class LastExp(State):
                                     "g2z3":16426,
                                     },
                             "level":"le niveau ouais ouais",
-                            "party":["michel", "mahmud", "herve", "emmanuel"]
+                            "party":["michel", "martin", "herve", "emmanuel"]
                             }"""
             # DEBUG
 
@@ -64,7 +64,7 @@ class LastExp(State):
                 for name in self.summary['dnas']:
                     self.game.draw_text(surface, name + " : " + str(self.summary['dnas'][name]), 30, 600, 400 + i, align="left")
                     i += 50
-            cock_names = "   ".join([name for name in self.summary["party"]] )
+            cock_names = "   ".join([str(name) for name in self.summary["party"]] )
             self.game.draw_text(surface, cock_names, 40, 512, 625)
         self.close_btn.render(surface)
         if(self.grid > 0):

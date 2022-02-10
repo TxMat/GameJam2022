@@ -12,9 +12,9 @@ from Utils import frames_from_spritesheet, scale
 
 class Cock(pygame.sprite.Sprite):
     def __init__(self,
-                 player,
-                 id,
-                 name,
+                 player = None,
+                 id = -1,
+                 name = "debug_cock",
                  intelligence=1,
                  strength=1,
                  stamina=1,

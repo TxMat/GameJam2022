@@ -7,7 +7,6 @@ from State import State
 class Feeding(State):
     def __init__(self, game = None, cock = None, player = None):
         super().__init__(game)
-        print(player) # Otherwise, garbage collector has fun at your expense
         self.game = game
         self.cock = cock
         self.player = player

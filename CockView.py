@@ -14,7 +14,6 @@ from state_Feeding import Feeding
 class CockView(State):
     def __init__(self, game, cock, player = None):
         super().__init__(game)
-        #print(player)
         self.game = game
         self.cock = cock
         self.player = player

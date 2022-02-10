@@ -14,7 +14,8 @@ class Player():
                  inventory_dna={"adn 1": 33, "adn 2": 66, "adn 3": 99},
                  money=100,
                  relation_monsanto=1,
-                 last_exp = {}):
+                 last_exp = {},
+                 cockid = 0):
         self.name = name
         self.day = day
         self.cocks = cock_dict
@@ -24,6 +25,7 @@ class Player():
         self.money = money
         self.rel = relation_monsanto
         self.last_exp = last_exp
+        self.cock_id = cock_id
 
     def buy_cock(self, id, cock_name):
         if self.money < 50:
@@ -34,6 +36,7 @@ class Player():
             return 2
         self.money -= 50
         self.cocks[id] = Cock(self, id, cock_name)
+        self.cock_id += 1
         return 0
 
     def set_adn(self, name, quant):

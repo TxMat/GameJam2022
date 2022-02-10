@@ -10,11 +10,13 @@ from pygame.sprite import AbstractGroup
 
 from Utils import frames_from_spritesheet, scale
 
+
 class Cock(pygame.sprite.Sprite):
     def __init__(self,
                  player = None,
                  id = -1,
                  name = "debug_cock",
+                 scalex=1,
                  intelligence=1,
                  strength=1,
                  stamina=1,
@@ -35,7 +37,7 @@ class Cock(pygame.sprite.Sprite):
                  ritual_dict={"default ritual": ritual(name="default ritual")}) -> None:
         super().__init__(*groups)
         self.anim_mode = 0
-        self.scale = 1
+        self.scale = scalex
         self.id = id
         self.name = name
         self.intel = intelligence
@@ -76,17 +78,59 @@ class Cock(pygame.sprite.Sprite):
             self.curr_x = random.randint(260 - tmp, 580 - tmp)
             self.cock_rect.center = (self.curr_x + 24, self.curr_y + 24)
 
-        while not self.isvalidspawn:
+        while not self.isvalidspawn and player:
             spawn_box()
             collided = False
             for cocks in player.cocks.values():
                 if self.cock_rect.colliderect(cocks.cock_rect):
                     collided = True
-                    colided_count += 1 # removes soft lock
+                    colided_count += 1  # removes soft lock
             if not collided or colided_count > 100000:
                 self.isvalidspawn = True
 
+        self.image = pygame.Surface((40, 40))
+        self.image.fill((200, 30, 30))
+        self.rect = self.image.get_rect(center=(400, 400))
+        self.current_health = 0
+        self.target_health = MAX_HUNGER * 10
+        self.max_health = MAX_HUNGER * 10
+        self.health_bar_length = 50
+        self.health_ratio = self.max_health / self.health_bar_length
+        self.health_change_speed = 5
+        self.display_health_bar = True
 
+    def loose_hunger(self, amount):
+        if self.target_health > 0:
+            self.target_health -= amount
+        if self.target_health < 0:
+            self.target_health = 0
+
+    def get_hunger(self, amount):
+        if self.target_health < self.max_health:
+            self.target_health += amount
+        if self.target_health > self.max_health:
+            self.target_health = self.max_health
+
+    def advanced_health(self, display):
+        transition_width = 0
+        transition_color = (255, 0, 0)
+
+        if self.current_health < self.target_health:
+            self.current_health += self.health_change_speed
+            transition_width = int((self.target_health - self.current_health) / self.health_ratio)
+            transition_color = (0, 0, 0)
+
+        if self.current_health > self.target_health:
+            self.current_health -= self.health_change_speed
+            transition_width = int((self.target_health - self.current_health) / self.health_ratio)
+            transition_color = (255, 255, 0)
+
+        health_bar_width = int(self.current_health / self.health_ratio)
+        health_bar = pygame.Rect(self.curr_x, self.curr_y, health_bar_width, 3)
+        transition_bar = pygame.Rect(health_bar.right, self.curr_y, transition_width, 3)
+
+        pygame.draw.rect(display, (230, 230, 100), health_bar)
+        pygame.draw.rect(display, transition_color, transition_bar)
 
     def info_cock(self):
         print("id: " + str(self.id))
@@ -167,7 +211,7 @@ class Cock(pygame.sprite.Sprite):
         self.rituals.add(ritual_name)
         self.ritual_dict[ritual_name].action(self)
 
-    def lay_egg(self, new_id = 0, new_name = "", nb_cocks = 1):
+    def lay_egg(self, new_id=0, new_name="", nb_cocks=1):
         if self.fertile and nb_cocks < MAX_COCKS:
             self.fertile = False
             self.child = new_id
@@ -196,15 +240,19 @@ class Cock(pygame.sprite.Sprite):
 
     def animate(self, delta_time):
         if self.anim_mode == 0:
-            pass  # later
-        self.curr_frame_list = self.idle_frame_list
+            self.curr_frame_list = self.idle_frame_list
+        elif self.anim_mode == 1:
+            self.curr_frame_list = self.walk_frame_list
+        elif self.anim_mode == 2:
+            self.curr_frame_list = self.run_frame_list
         self.last_frame_update += delta_time
         if self.last_frame_update > .15:
             self.curr_frame = (self.curr_frame + 1) % len(self.curr_frame_list)
             self.frame_to_show = self.curr_frame_list[self.curr_frame]
             self.frame_to_show = scale(self.frame_to_show, self.scale)
             self.last_frame_update = 0
-        self.anim_mode = random.randint(0, 2)
 
     def render(self, surface):
+        if self.display_health_bar:
+            self.advanced_health(surface)
         surface.blit(self.frame_to_show, (self.curr_x, self.curr_y))

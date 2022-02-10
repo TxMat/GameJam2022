@@ -1,4 +1,6 @@
 import pygame
+
+from Consts import *
 from Button import Button
 from CockList import CockList
 from CockView import CockView
@@ -13,16 +15,22 @@ from Utils import *
 class Farm(State):
     def __init__(self, game, player):
         State.__init__(self, game)
+        self.wantDay = False
         self.player = player
         self.isNight = False
+        self.wantNight = False
         self.HUD = HUD(self.game, self.player)
         self.debug_grid = pygame.image.load("Assets/debug_grid.png")
-        self.background_img = pygame.image.load("Assets/backgound_day.png").convert()
+        self.night_transition_background = pygame.image.load("Assets/transition.png")
+        self.background_img_night = pygame.image.load("Assets/backgound_night.png")
+        self.background_img_day = pygame.image.load("Assets/backgound_day.png").convert()
+        self.background_img = self.background_img_day
         self.sun = Sun(self.game)
         self.mosanto_collide = pygame.rect.Rect((0, 150), (160, 270))
         self.cave_collide = pygame.rect.Rect((700, 220), (280, 200))
         self.exp_chosen = []
         self.chosen_cocks = []
+        self.pos_trans_x = WIDTH
 
     def update(self, delta_time, actions):
         events = self.game.events
@@ -56,22 +64,44 @@ class Farm(State):
 
 
             # DEBUG
-
             self.chosen_cocks = self.player.cocks
-
             # DEBUG
-                
-            new_state = ExpState(self.game, self.exp_chosen[0], self.exp_chosen[1], self.chosen_cocks, self.player.last_exp)
-            new_state.enter_state()
-            self.exp_chosen.clear()
+            if not self.wantNight:
+                new_state = ExpState(self.game, self.exp_chosen[0], self.exp_chosen[1], self.chosen_cocks, self.player.last_exp)
+                new_state.enter_state()
+                self.exp_chosen.clear()
+
 
     def render(self, surface):
         surface.blit(self.background_img, (0, 0))
-        self.sun.render(surface)
+        if not self.isNight:
+            self.sun.render(surface)
         self.HUD.render(surface)
         for cock in self.player.cocks.values():
             cock.render(surface)
         surface.blit(self.debug_grid, (0, 0))
+        self.lanui(surface)
+
+    def lanui(self, surface):
+        if self.wantNight or self.wantDay:
+            surface.blit(self.night_transition_background, (self.pos_trans_x, 0))
+            self.pos_trans_x -= 30
+        if self.wantNight:
+            if self.pos_trans_x <= 0 and not self.isNight:
+                self.background_img = self.background_img_night
+                self.isNight = True
+            if self.pos_trans_x <= -WIDTH*2:
+                self.wantNight = False
+                self.pos_trans_x = WIDTH
+        elif self.wantDay:
+            if self.pos_trans_x <= 0 and self.isNight:
+                self.background_img = self.background_img_day
+                self.isNight = False
+            if self.pos_trans_x <= -WIDTH*2:
+                self.wantDay = False
+                self.pos_trans_x = WIDTH
+
+
 
 
 class Sun:

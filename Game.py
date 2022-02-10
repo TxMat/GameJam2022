@@ -26,6 +26,7 @@ class Game:
         self.BLACK, self.WHITE = BLACK, WHITE
         self.events = None
         self.music_player = pygame.mixer
+        self.music_player.pre_init(44100, -16, 2, 2048)
         self.music_player.init()
         self.music_player.music.set_volume(0.20)
         self.load_states()
@@ -57,6 +58,7 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running, self.playing = False, False
             if event.type == pygame.KEYDOWN:
+                # self.music_player.Channel(0).play(pygame.mixer.Sound("Assets/Sounds/mouse_click.mp3"))
                 if event.key == pygame.K_DOWN:
                     self.actions["down"] = True
                 if event.key == pygame.K_UP:

@@ -19,6 +19,8 @@ class Inventory(State):
             self.exit_state()
 
     def render(self, surface):
+        self.prev_state.render(surface)
+        surface.fill((70, 70, 70, 100), None, pygame.BLEND_RGBA_MULT)
         surface.blit(self.background_img, self.background_rect)
         counter = 0
         self.game.draw_text(surface, "Minerais :", 40, 150, 200+50*counter, align="left")

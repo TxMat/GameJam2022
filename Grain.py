@@ -45,7 +45,7 @@ def gen_grain():
     grain["h1n1"]= Grain("h1n1",10,4000,hunger=10,int_b=2,sta_b=2,str_b=2)
     grain["b5r3"]= Grain("b5r3",20,8000,hunger=10,int_b=2,sta_b=54,str_b=2)
     grain["d1c3"]= Grain("d1c3",50,12000,hunger=10,int_b=100,sta_b=0,str_b=0)
-    grain["n1g6"]= Grain("n1g6",80,50000,hunger=0,int_b=0,sta_b=40,str_b=0)
+    grain["n1g8"]= Grain("n1g8",80,50000,hunger=0,int_b=0,sta_b=40,str_b=0)
     grain["i8a5"]= Grain("i8a5",100,400000,hunger=10,int_b=5,sta_b=7,str_b=23)
     grain["z9g1"]= Grain("z9g1",200,400000,hunger=10,int_b=12,sta_b=22,str_b=100)
     grain["l5z5"]= Grain("l5z5",350,400000,hunger=10,int_b=13,sta_b=12,str_b=34)

@@ -25,6 +25,8 @@ class Game:
         self.actions = {"left": False, "right": False, "up": False, "down": False, "ok": False, "esc":False}
         self.BLACK, self.WHITE = BLACK, WHITE
         self.events = None
+        self.music_player = pygame.mixer
+        self.music_player.init()
         self.load_states()
 
     def game_loop(self):

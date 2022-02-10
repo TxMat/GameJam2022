@@ -40,8 +40,9 @@ class Expedition():
 
     def gen_summary(self):
         summary = {}
+        print(self.level.name)
         summary['ores'] = self.loot_ores
-        summary['dnas'] = self.loot_dnas
+        summary['dnas'] = self.loot_dna
         summary['level'] = self.level.name
         summary['party'] = list(self.cock_dic.keys())
         return summary

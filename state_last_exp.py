@@ -12,7 +12,7 @@ class LastExp(State):
         self.background_rect.center = (self.game.WIDTH / 2, self.game.HEIGHT / 2)
         self.grid = -1
         self.player = player
-        self.summary = summary
+        self.summary = self.player.last_exp
         self.close_btn = Button(self.game, 910, 90, "X")
 
     def update(self, delta_time, actions):

@@ -5,6 +5,7 @@ from CockView import CockView
 from state_last_exp import LastExp
 from state_levels import StateLevel
 from state_Expedition import ExpState
+from state_Inventory import Inventory
 from State import State
 from Utils import *
 
@@ -39,6 +40,9 @@ class Farm(State):
         if self.HUD.last_exp.ispressed:
             new_state = LastExp(self.game, self.player)
             new_state.enter_state()
+        if self.HUD.inv.ispressed:
+            new_state = Inventory(self.game,self.player)
+            new_state.enter_state()
         mosanto_hover = self.mosanto_collide.collidepoint(pygame.mouse.get_pos())
         cave_hover = self.cave_collide.collidepoint(pygame.mouse.get_pos())
         for event in events:
@@ -57,7 +61,7 @@ class Farm(State):
 
             # DEBUG
                 
-            new_state = ExpState(self.game, self.exp_chosen[0], self.exp_chosen[1], self.chosen_cocks)
+            new_state = ExpState(self.game, self.exp_chosen[0], self.exp_chosen[1], self.chosen_cocks, self.player.last_exp)
             new_state.enter_state()
             self.exp_chosen.clear()
 

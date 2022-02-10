@@ -6,7 +6,7 @@ import Utils
 from State import State
 
 class ExpState(State):
-    def __init__(self, game, level, strat, cock_dic):
+    def __init__(self, game, level, strat, cock_dic, summary):
         super().__init__(game)
         self.level = level
         self.strat = strat
@@ -24,9 +24,14 @@ class ExpState(State):
         self.grid = -1
         self.cases = []
         self.ongoing = True
+        self.summary = summary
 
     def update(self, delta_time, actions):
         if(actions["esc"]):
+            self.summary.clear()
+            summ = self.Expedition.gen_summary()
+            for key in summ:
+                self.summary[key] = summ[key]
             self.exit_state()
         if actions["right"]:
             self.grid *= -1

@@ -11,7 +11,6 @@ class Menu(State):
         self.bgm()
 
     def update(self, dt, actions):
-        self.change_music()
         if actions["ok"]:
             new_state = Farm(self.game, self.player)
             new_state.enter_state()
@@ -24,9 +23,4 @@ class Menu(State):
     def bgm(self):
         self.game.music_player.music.load("Assets/first.mp3")
         self.game.music_player.music.play(1)
-
-    def change_music(self):
-        if not self.game.music_player.music.get_busy() and not self.looping:
-            self.game.music_player.music.load("Assets/loopv3.mp3")
-            self.game.music_player.music.play(-1)
-            self.looping = True
+        self.game.music_player.music.queue("Assets/loopv3.mp3", "", -1)

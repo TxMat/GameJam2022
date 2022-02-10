@@ -20,8 +20,8 @@ class CockView(State):
         self.background_rect = self.background_img.get_rect()
         self.background_rect.center = (WIDTH / 2, HEIGHT / 2)
         self.dummy_cock = Cock(None, -1, "dummy", 3)
-        self.dummy_cock.curr_x = 80
-        self.dummy_cock.curr_y = 50
+        self.dummy_cock.curr_x = 110
+        self.dummy_cock.curr_y = 70
         self.dummy_cock.display_health_bar = False
         self.dummy_cock.anim_mode = random.randint(0, 2)
         self.grid = -1

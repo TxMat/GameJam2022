@@ -19,7 +19,7 @@ class Cock(pygame.sprite.Sprite):
                  player = None,
                  id = -1,
                  name = "debug_cock",
-                 scalex=1,
+                 scalex=1.5,
                  intelligence=1,
                  strength=1,
                  stamina=1,
@@ -62,9 +62,9 @@ class Cock(pygame.sprite.Sprite):
         self.grain_dict = grain_dict
         self.ritual_dict = ritual_dict
         self.curr_frame, self.last_frame_update = 0, 0
-        self.walk_frame_list = frames_from_spritesheet("Assets/cock_walk.png", 0, 0, 48, 48, 6)
-        self.idle_frame_list = frames_from_spritesheet("Assets/cock_idle.png", 0, 0, 48, 48, 6)
-        self.run_frame_list = frames_from_spritesheet("Assets/cock_run.png", 0, 0, 48, 48, 2)
+        self.walk_frame_list = frames_from_spritesheet("Assets/cock_walk.png", 0, 0, 28, 29, 6)
+        self.idle_frame_list = frames_from_spritesheet("Assets/cock_idle.png", 0, 0, 25, 29, 6)
+        self.run_frame_list = frames_from_spritesheet("Assets/cock_run.png", 0, 0, 30, 29, 2)
         self.curr_frame_list = self.idle_frame_list
         self.frame_to_show = scale(self.idle_frame_list[0], self.scale)
         self.frame_to_show_hover = scale(self.frame_to_show, 1)

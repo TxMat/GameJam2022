@@ -79,7 +79,7 @@ class Farm(State):
         self.HUD.render(surface)
         for cock in self.player.cocks.values():
             cock.render(surface)
-        surface.blit(self.debug_grid, (0, 0))
+        # surface.blit(self.debug_grid, (0, 0))
         self.lanui(surface)
 
     def lanui(self, surface):

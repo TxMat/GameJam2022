@@ -24,18 +24,23 @@ class CockView(State):
         self.dummy_cock.curr_y = 50
         self.dummy_cock.display_health_bar = False
         self.dummy_cock.anim_mode = random.randint(0, 2)
+        self.grid = -1
 
     def update(self, delta_time, actions):
         self.dummy_cock.update(delta_time, self.game.events)
         if actions["esc"]:
             self.prev_state.need_refresh = True
             self.exit_state()
+        if actions["right"] or actions["ok"]:
+            self.grid *= -1
         self.game.reset_keys()
 
     def render(self, surface):
         self.prev_state.render(surface)
         surface.blit(self.background_img, self.background_rect)
         self.dummy_cock.render(surface)
+        if self.grid > 0:
+            surface.blit(self.debug_grid, (0, 0))
         self.draw_text(surface)
         self.draw_lines(surface)
 
@@ -44,5 +49,24 @@ class CockView(State):
         Utils.draw_line(surface, (100, 170), (920, 170), 2)
 
     def draw_text(self, surface):
+        x = 150
         self.game.draw_text(surface, self.cock.name, 100, WIDTH / 2, 120)
-        self.game.draw_text(surface, "", 25, WIDTH / 2, 695)
+        self.game.draw_text(surface, "Intelligence : " + str(self.cock.g_intel()), 40, x, 280, align="left")
+        self.game.draw_text(surface, "Force : " + str(self.cock.g_strength()), 40, x, 320, align="left")
+        self.game.draw_text(surface, "Endurance : " + str(self.cock.g_stamina()), 40, x, 360, align="left")
+        self.game.draw_text(surface, "Satiete : " + str(self.cock.hunger) + " / " + str(self.cock.max_hunger), 40, x, 430, align="left")
+        txt = "Enfant : Aucun"
+        if self.cock.child:
+            txt = str(self.cock.child)
+        self.game.draw_text(surface, txt, 40, x, 500, align="left")
+        txt = "Parent : Aucun"
+        if self.cock.parent:
+            txt = str(self.cock.parent)
+        self.game.draw_text(surface, txt, 40, x, 540, align="left")
+        txt = "Fertile : Non"
+        if self.cock.fertile:
+            txt = "Fertile : Oui"
+        self.game.draw_text(surface, txt, 40, x, 580, align="left")
+
+
+

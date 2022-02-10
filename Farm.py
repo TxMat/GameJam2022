@@ -1,6 +1,7 @@
 import pygame
 from Button import Button
 from CockList import CockList
+from CockView import CockView
 from state_last_exp import LastExp 
 from State import State
 from Utils import *
@@ -21,6 +22,9 @@ class Farm(State):
         self.HUD.update()
         for cock in self.player.cocks.values():
             cock.update(delta_time, self.game.events)
+            if cock.ispressed:
+                new_state = CockView(self.game, cock)
+                new_state.enter_state()
         if self.HUD.cocks.ispressed:
             self.player.money *= 2
             new_state = CockList(self.game, self.player)

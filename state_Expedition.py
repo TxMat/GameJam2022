@@ -32,6 +32,7 @@ class ExpState(State):
             summ = self.Expedition.gen_summary()
             for key in summ:
                 self.summary[key] = summ[key]
+            self.prev_state.wantDay = True
             self.exit_state()
         if actions["right"]:
             self.grid *= -1

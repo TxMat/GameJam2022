@@ -28,21 +28,25 @@ class StateLevel(State):
         
         
     def update(self, delta_time, actions):
+        if actions["esc"]:
+            self.exit_state()
         for key in self.btn_dict:
             self.btn_dict[key].update(self.game.events)
             if self.btn_dict[key].ispressed:
                 self.choice = self.levels[key]
-                # Il faut renvoyer un truc pour que la méthode où la StateLevel est créée dans farm s'occupe ensuite de créer une StateExpedition (après être passée à la nuit et avoir fait l'anim)
+            # Il faut renvoyer un truc pour que la méthode où la StateLevel est créée dans farm s'occupe ensuite de créer une StateExpedition (après être passée à la nuit et avoir fait l'anim)
             # Dans la StateExpedition, on affiche et fait se dérouler pas à pas l'expédition, puis on finit par
             # renvoyer un récapitulatif, à partir duquel on change l'inventaire du joueur. Aussi, on affiche la vue du récap
             # ERRATUM : en fait non lol, mais c'est laid, mon dieu c'est laid. J'ai envie de vomir.
         if(self.choice):
             self.exp_chosen.append(self.choice)
             self.exp_chosen.append(self.strat)
+            self.prev_state.wantNight = True
             self.exit_state()
 
     def render(self, surface):
-        surface.fill((70,70,70, 100), None, pygame.BLEND_RGBA_MULT)
+        self.prev_state.render(surface)
+        surface.fill((70, 70, 70, 100), None, pygame.BLEND_RGBA_MULT)
         surface.blit(self.background_img, self.background_rect)
         for btn in self.btn_dict.values():
             btn.render(surface)

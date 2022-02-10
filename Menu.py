@@ -12,6 +12,7 @@ class Menu(State):
 
     def update(self, dt, actions):
         if actions["ok"]:
+            self.game.music_player.music.fadeout(4000)
             new_state = Farm(self.game, self.player)
             new_state.enter_state()
         self.game.reset_keys()

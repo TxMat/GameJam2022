@@ -22,6 +22,7 @@ class Menu(State):
         self.game.draw_text(display, "coucou", 100, 500, 200, (180, 180, 180))
 
     def bgm(self):
+
         self.game.music_player.music.load("Assets/first.mp3")
         self.game.music_player.music.play(1)
         self.game.music_player.music.queue("Assets/loopv3.mp3", "", -1)

@@ -27,6 +27,7 @@ class Game:
         self.events = None
         self.music_player = pygame.mixer
         self.music_player.init()
+        self.music_player.music.set_volume(0.20)
         self.load_states()
 
     def game_loop(self):

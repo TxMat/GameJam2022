@@ -12,7 +12,8 @@ class Grain():
         self.name = name
         self.price = price
         self.res_cost = res_cost
-        self.res_mat = res_mat
+        #self.res_mat = res_mat
+        self.res_mat = name # DEBUG
         self.hunger = hunger
         self.int_bonus = int_b
         self.sta_bonus = sta_b
@@ -42,6 +43,7 @@ def debug_grain(nb = 1) -> [Grain]:
 
 def gen_grain():
     grain = {}
+    grain["base"]= Grain("base",5,0,hunger=2,unlocked=True)
     grain["h1n1"]= Grain("h1n1",10,400,hunger=10,int_b=2,sta_b=2,str_b=2)
     grain["b5r3"]= Grain("b5r3",20,800,hunger=10,int_b=2,sta_b=54,str_b=2)
     grain["d1c3"]= Grain("d1c3",50,1200,hunger=10,int_b=100,sta_b=0,str_b=0)

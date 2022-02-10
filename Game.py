@@ -6,6 +6,7 @@ import pygame
 from Consts import *
 from Menu import Menu
 from Farm import Farm
+import Grain
 from Expedition import Expedition
 
 
@@ -30,6 +31,7 @@ class Game:
         self.music_player.init()
         self.music_player.music.set_volume(0.20)
         self.load_states()
+        self.grains = Grain.gen_grain()
 
     def game_loop(self):
         while self.playing:

@@ -4,12 +4,15 @@ import pygame
 
 from Consts import *
 from Grain import Grain
-from Events import ritual
-from Perks import Perks
+from Events import ritual, gen_rituals
+from Perks import Perks, gen_perks
 from pygame.sprite import AbstractGroup
 
 from Utils import frames_from_spritesheet, scale
 
+perk_dict = gen_perks()
+ritual_dict = gen_rituals()
+print(ritual_dict.keys())
 
 class Cock(pygame.sprite.Sprite):
     def __init__(self,

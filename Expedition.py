@@ -68,32 +68,30 @@ class Expedition():
         self.end = True
 
     def avancement(self):
-        if self.pos < self.length:
-            print("case :"+ str(self.pos))
-            if self.end:
-                self.pos = self.length
+        if self.pos < self.length and not self.end:
+            print("case : "+ str(self.pos))
+            self.pos += 1 
             rand = random.randint(0, 9)
             if rand in [1, 3 + self.ore_luck]:
                 print("minerais")
-                Events.ore().action(self)
+                print(Events.ore().action(self))
                 return "ores"
             elif rand in [8 - self.dna_luck, 8]:
                 print("adn")
-                Events.dna().action(self)
+                print(Events.dna().action(self))
                 return "dna"
             elif rand in [6, 7]:
                 print("gaz")
-                random.choice(list(Events.gen_gas().values())).action(self)
+                print(random.choice(list(Events.gen_gas().values())).action(self))
                 return "gas"
             elif rand == 9:
                 print("rituel")
                 if(self.cock_dic): #DEBUG
-                    random.choice(list(Events.gen_rituals().values())).action(random.choice(list(self.cock_dic.values())))
+                    print(random.choice(list(Events.gen_rituals().values())).action(random.choice(list(self.cock_dic.values()))))
                 return "ritual"
             else:
                 print("il se passe rien")
                 return "none"
-            self.pos += 1 
         else:
             print("minerais : " + str(self.loot_ores))
             print("adn : " + str(self.loot_dna))

@@ -23,8 +23,8 @@ class Cock(pygame.sprite.Sprite):
                  rituals=set(),
                  fertile=True,
                  maturation=0,
-                 child=0,
-                 parent=0,
+                 child="",
+                 parent="",
                  hunger=MAX_HUNGER,
                  max_hunger=MAX_HUNGER,
                  tree=None,
@@ -170,13 +170,13 @@ class Cock(pygame.sprite.Sprite):
     def lay_egg(self, new_id = 0, new_name = "", nb_cocks = 1):
         if self.fertile and nb_cocks < MAX_COCKS:
             self.fertile = False
-            self.child = new_id
+            self.child = new_name
             return Cock(new_id,
                         new_name,
                         int(self.g_intel() * self.inheritance),
                         int(self.g_strength() * self.inheritance),
                         int(self.g_stamina() * self.inheritance),
-                        parent=self.id)
+                        parent=self.name)
         else:
             print("Conditions infavorables à la ponte")
             return 1

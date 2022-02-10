@@ -4,12 +4,15 @@ import pygame
 
 from Consts import *
 from Grain import Grain
-from Events import ritual
-from Perks import Perks
+from Events import ritual, gen_rituals
+from Perks import Perks, gen_perks
 from pygame.sprite import AbstractGroup
 
 from Utils import frames_from_spritesheet, scale
 
+perk_dict = gen_perks()
+ritual_dict = gen_rituals()
+print(ritual_dict.keys())
 
 class Cock(pygame.sprite.Sprite):
     def __init__(self,
@@ -170,46 +173,46 @@ class Cock(pygame.sprite.Sprite):
     def g_intel(self):
         intel = self.intel
         for rit in self.rituals:
-            ritual = self.ritual_dict[rit]
+            ritual = ritual_dict[rit]
             intel *= ritual.int_mult
             intel += ritual.int_mod
         for perks in self.perks:
-            perk = self.perk_dict[perks]
+            perk = perk_dict[perks]
             intel *= perk.int_mult
             intel += perk.int_mod
-        return intel
+        return int(intel)
 
     def g_strength(self):
         strength = self.strength
         for rit in self.rituals:
-            ritual = self.ritual_dict[rit]
+            ritual = ritual_dict[rit]
             strength *= ritual.str_mult
             strength += ritual.str_mod
         for perks in self.perks:
-            perk = self.perk_dict[perks]
+            perk = perk_dict[perks]
             strength *= perk.str_mult
             strength += perk.str_mod
-        return strength
+        return int(strength)
 
     def g_stamina(self):
         stam = self.stamina
         for rit in self.rituals:
-            ritual = self.ritual_dict[rit]
+            ritual = ritual_dict[rit]
             stam *= ritual.sta_mult
             stam += ritual.sta_mod
         for perks in self.perks:
-            perk = self.perk_dict[perks]
+            perk = perk_dict[perks]
             stam *= perk.sta_mult
             stam += perk.sta_mod
-        return stam
+        return int(stam)
 
     def add_perk(self, perk_name) -> None:
         self.perks.add(perk_name)
-        self.perk_dict[perk_name].action(self)
+        #perk_dict[perk_name].action(self)
 
     def add_ritual(self, ritual_name) -> None:
         self.rituals.add(ritual_name)
-        self.ritual_dict[ritual_name].action(self)
+        #ritual_dict[ritual_name].action(self)
 
     def lay_egg(self, new_id=0, new_name="", nb_cocks=1):
         if self.fertile and nb_cocks < MAX_COCKS:

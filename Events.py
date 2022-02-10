@@ -36,6 +36,8 @@ class satanique(ritual):
     def action(self,cock):
         # ne peux plus pondre, buff de stats
         cock.fertile = False
+        cock.add_ritual(self.name)
+        return str(cock.name) + " " +str(self.name)
 
 class luck_up(ritual):
     def __init__(self, name = "", description = "", e_type = ""):
@@ -46,7 +48,8 @@ class luck_up(ritual):
 
     def action(self,cock):
         # plus de luck
-        pass
+        cock.add_ritual(self.name)
+        return str(cock.name) + " " +str(self.name)
 
 class cursed(ritual):
     def __init__(self, name = "", description = "", e_type = ""):
@@ -58,10 +61,9 @@ class cursed(ritual):
         self.description = "creuse une tombe, baisse les stats"
 
     def action(self,cock):
-        # creuse une tombe,  baisse les stats
-        
-        pass
-
+        # creuse une tombe,  baisse les stats 
+        cock.add_ritual(self.name)
+        return str(cock.name) + " " +str(self.name) 
  
         
 class gaz(Events):
@@ -86,6 +88,7 @@ class inflammable(gaz):
             #TODO
             #expedition.end()        
             expedition.end = True
+        return "inflammable"
 
 class toxic(gaz):
     def __init__(self, name = "", description = "", e_type = ""):
@@ -102,6 +105,7 @@ class toxic(gaz):
                     resistance = True
         if resistance == False:
             expedition.stop()
+        return "toxique"
 
 class soporifique(gaz):
     def __init__(self, name = "", description = "", e_type = ""):
@@ -118,7 +122,7 @@ class soporifique(gaz):
                     resistance = True
         if resistance == False:
             expedition.stop()
-            pass
+        return "soporifique"
 
 def gen_gas():
     gas = {}
@@ -137,7 +141,10 @@ class ore(Events):
 
     def action(self,expedition):
         # ajoute une quant random d'un minerai random
-        expedition.loot_ores[random.choice(list(expedition.loot_ores))] += random.randint(1,20)
+        chosen_ore = random.choice(list(expedition.loot_ores))
+        quantity = random.randint(1,20)
+        expedition.loot_ores[chosen_ore] += quantity
+        return str(chosen_ore) + " " + str(quantity)
     
 class dna(Events):
     def __init__(self, name = "", description = "", e_type = ""):
@@ -146,13 +153,15 @@ class dna(Events):
         self.name="trouvaille d'ADN"
   
     def action(self,expedition):
-        # ajoute une quant random d'un minerai 
-        expedition.loot_dna[random.choice(list(expedition.loot_dna))] += random.randint(1,3)
+        # ajoute une quant random d'un adn
+        chosen_dna = random.choice(list(expedition.loot_dna))
+        quantity = random.randint(1,3)
+        expedition.loot_dna[chosen_dna] += quantity
+        return str(chosen_dna) + " " + str(quantity)
 
 def gen_rituals():
     rituals = {}
     rituals["luck up"] = luck_up()
     rituals["cursed"] = cursed()
     rituals["satanique"] = satanique()
-
     return rituals

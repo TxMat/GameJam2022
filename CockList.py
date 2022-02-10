@@ -3,6 +3,7 @@ from builtins import super
 import pygame.image
 
 from CockCreate import CockCreate
+from CockView import CockView
 from Consts import *
 import Utils
 from Button import Button
@@ -28,12 +29,15 @@ class CockList(State):
         if self.need_refresh:
             self.create_btns()
             self.need_refresh = False
-        if actions["esc"] or  self.close_btn.ispressed:
+        if actions["esc"] or self.close_btn.ispressed:
             self.exit_state()
         if self.buy_btn.ispressed:
             new_state = CockCreate(self.game, self.player)
             new_state.enter_state()
-            # self.player.buy_cock(self.player.money, "Emmanuel")
+        for btn in self.btn_array:
+            if btn.ispressed:
+                new_state = CockView(self.game, self.player.cocks[btn.cock_id])
+                new_state.enter_state()
         self.update_btns()
         self.game.reset_keys()
 
@@ -57,11 +61,13 @@ class CockList(State):
         self.buy_btn.render(surface)
 
     def create_btns(self):
+        self.btn_array = []
         x = 300
         y = 200
         count = 0
-        for cocks in self.player.cocks.values():
-            self.btn_array.append(Button(self.game, x, y, cocks.name))
+        for cock in self.player.cocks.values():
+            self.btn_array.append(Button(self.game, x, y, cock.name))
+            self.btn_array[count].cock_id = cock.id
             count += 1
             if count == 5:
                 x += 420
@@ -80,7 +86,7 @@ class CockList(State):
 
     def draw_text(self, surface):
         cost = 0
-        if 1 <= len(self.player.cocks) <= MAX_COCKS-1:
+        if 1 <= len(self.player.cocks) <= MAX_COCKS - 1:
             cost = 50
         elif len(self.player.cocks) == MAX_COCKS:
             cost = "---"

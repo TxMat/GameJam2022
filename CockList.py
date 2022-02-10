@@ -21,12 +21,14 @@ class CockList(State):
         self.btn_array = []
         self.create_btns()
         self.buy_btn = Button(self.game, WIDTH / 2, 670, "Acheter")
+        self.close_btn = Button(self.game, 910, 90, "X")
 
     def update(self, delta_time, actions):
+        self.close_btn.update(self.game.events)
         if self.need_refresh:
             self.create_btns()
             self.need_refresh = False
-        if actions["esc"]:
+        if actions["esc"] or  self.close_btn.ispressed:
             self.exit_state()
         if self.buy_btn.ispressed:
             new_state = CockCreate(self.game, self.player)
@@ -41,6 +43,7 @@ class CockList(State):
         surface.blit(self.background_img, self.background_rect)
         self.draw_menu(surface)
         self.render_btns(surface)
+        self.close_btn.render(surface)
         # surface.blit(self.debug_grid, (0, 0))
 
     def draw_menu(self, surface):

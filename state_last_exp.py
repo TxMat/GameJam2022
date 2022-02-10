@@ -1,7 +1,7 @@
 import pygame.image
 import Utils
 from State import State
-
+from Button import Button
 
 class LastExp(State):
     def __init__(self, game, player, summary = {'ores':[], 'dnas':[], 'level':[], 'party':[]}):
@@ -13,9 +13,11 @@ class LastExp(State):
         self.grid = -1
         self.player = player
         self.summary = summary
+        self.close_btn = Button(self.game, 910, 90, "X")
 
-    def update(self, delata_time, actions):
-        if actions["esc"]:
+    def update(self, delta_time, actions):
+        self.close_btn.update(self.game.events)
+        if actions["esc"] or self.close_btn.ispressed:
             self.exit_state()
         if actions["right"]:
             self.grid *= -1
@@ -64,6 +66,7 @@ class LastExp(State):
                     i += 50
             cock_names = "   ".join([name for name in self.summary["party"]] )
             self.game.draw_text(surface, cock_names, 40, 512, 625)
+        self.close_btn.render(surface)
         if(self.grid > 0):
             surface.blit(self.debug_grid, (0, 0))
         # surface.blit(self)

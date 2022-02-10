@@ -19,7 +19,7 @@ class Game:
         self.HEIGHT = HEIGHT
         self.display = pygame.Surface((self.WIDTH, self.HEIGHT))
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
-        self.font_loc = "Assets/font.ttf"
+        self.font_loc = FONT_LOC
         self.state_stack = []
         self.dt, self.prev_time = 0, 0
         self.actions = {"left": False, "right": False, "up": False, "down": False, "ok": False, "esc":False}

@@ -23,7 +23,6 @@ class Farm(State):
             cock.update(delta_time, self.game.events)
         if self.HUD.cocks.ispressed:
             self.player.money *= 2
-            self.player.buy_cock(self.player.money, "Emmanuel")
             new_state = CockList(self.game, self.player)
             new_state.enter_state()
         if self.HUD.last_exp.ispressed:

@@ -62,15 +62,15 @@ class ExpState(State):
             if not self.ongoing:
                 self.game.draw_text(surface, "Fin de l'expedition", 40, 512, 540)
             elif self.cases[-1] == "gas":
-                self.game.draw_text(surface, "vous etes tombes sur une poche de gaz", 40, 512, 540)
+                self.game.draw_text(surface, "Vous etes tombes sur une poche de gaz", 40, 512, 540)
             elif self.cases[-1] == "ritual":
-                self.game.draw_text(surface, "Vos poules font un rituel....", 40, 512, 540)
+                self.game.draw_text(surface, "Vos coqs font un rituel....", 40, 512, 540)
             elif self.cases[-1] == "dna":
-                self.game.draw_text(surface, "vous trouvez de L'ADN !!", 40, 512, 540)
+                self.game.draw_text(surface, "Vous trouvez de L'ADN !", 40, 512, 540)
             elif self.cases[-1] == "none":
-                self.game.draw_text(surface, "Il ne se passe rien, le vide", 40, 512, 540)
+                self.game.draw_text(surface, "Rien ne se passe", 40, 512, 540)
             elif self.cases[-1] == "ores":
-                self.game.draw_text(surface, "vous trouvez un minerai", 40, 512, 540)
+                self.game.draw_text(surface, "Vous trouvez un minerai", 40, 512, 540)
 
         if (self.grid > 0):
             surface.blit(self.debug_grid, (0, 0))

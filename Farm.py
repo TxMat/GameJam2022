@@ -57,7 +57,7 @@ class Farm(State):
                 new_state = Monsanto(self.game, self.exp_chosen)
                 new_state.enter_state()
             if event.type == pygame.MOUSEBUTTONDOWN and cave_hover:
-                new_state = StateLevel(self.game, self.exp_chosen)
+                new_state = StateLevel(self.game, len(self.player.cocks), self.exp_chosen)
                 new_state.enter_state()
                 print("cave")
         if (self.exp_chosen):
@@ -79,21 +79,21 @@ class Farm(State):
         for cock in self.player.cocks.values():
             cock.render(surface)
         # surface.blit(self.debug_grid, (0, 0))
-        self.lanui(surface)
+        self.update_dn_cycle(surface)
 
-    def lanui(self, surface):
+    def update_dn_cycle(self, surface):
         if self.wantNight or self.wantDay:
             surface.blit(self.night_transition_background, (self.pos_trans_x, 0))
             self.pos_trans_x -= 30
         if self.wantNight:
-            if self.pos_trans_x <= 0 and not self.isNight:
+            if self.pos_trans_x <= -50 and not self.isNight:
                 self.background_img = self.background_img_night
                 self.isNight = True
             if self.pos_trans_x <= -WIDTH * 2:
                 self.wantNight = False
                 self.pos_trans_x = WIDTH
         elif self.wantDay:
-            if self.pos_trans_x <= 0 and self.isNight:
+            if self.pos_trans_x <= -50 and self.isNight:
                 self.background_img = self.background_img_day
                 self.isNight = False
             if self.pos_trans_x <= -WIDTH * 2:

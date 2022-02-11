@@ -82,23 +82,24 @@ class Expedition():
         if self.pos < self.length and not self.end:
             print("case : " + str(self.pos))
             self.pos += 1
-            rand = random.randint(0, 9)
-            if rand in [1, 3 + self.ore_luck]:
+            rand = random.randint(0, 99)
+            print(rand)
+            if rand in range(0, 30 + self.ore_luck * 10):
                 self.hunger_cost(4)
                 print("minerais")
                 print(Events.ore().action(self))
                 return "ores"
-            elif rand in [8 - self.dna_luck, 8]:
+            elif rand in range(80 - self.dna_luck * 10, 85):
                 self.hunger_cost(4)
                 print("adn")
                 print(Events.dna().action(self))
                 return "dna"
-            elif rand in [6, 7]:
+            elif rand in range(60, 65):
                 self.hunger_cost(8)
                 print("gaz")
                 print(random.choice(list(Events.gen_gas().values())).action(self))
                 return "gas"
-            elif rand == 9:
+            elif rand in range(94, 99):
                 self.hunger_cost(8)
                 print("rituel")
                 if (self.cock_dic):  # DEBUG

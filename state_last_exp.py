@@ -12,7 +12,6 @@ class LastExp(State):
         self.background_img = pygame.image.load("Assets/menubg.png")
         self.background_rect = self.background_img.get_rect()
         self.background_rect.center = (self.game.WIDTH / 2, self.game.HEIGHT / 2)
-        self.grid = -1
         self.player = player
         self.summary = self.player.last_exp
         self.close_btn = Button(self.game, 910, 90, "X")
@@ -21,8 +20,6 @@ class LastExp(State):
         self.close_btn.update(self.game.events)
         if actions["esc"] or self.close_btn.ispressed:
             self.exit_state()
-        if actions["right"]:
-            self.grid *= -1
         self.game.reset_keys()
 
     def render(self, surface):
@@ -39,21 +36,6 @@ class LastExp(State):
             Utils.draw_line(surface, (512, 300), (512, 550), 2)
             self.game.draw_text(surface, "Minerais :", 35, 225, 350, align="left")
             self.game.draw_text(surface, "Adn :", 35, 600, 350, align="left")
-
-            # DEBUG
-            """self.summary = {"ores":{"alu":5,
-                                    "fer":6,
-                                    "ardite":5648
-                                    },
-                            "dnas":{"h1n1":8,
-                                    "h3q4":10,
-                                    "g2z3":16426,
-                                    },
-                            "level":"le niveau de test",
-                            "party":["michel", "martin", "herve", "emmanuel"]
-                            }"""
-            # DEBUG
-
             self.game.draw_text(surface, self.summary["level"], 40, 512, 250)
             if (len(self.summary['ores']) > 0):
                 i = 0
@@ -70,6 +52,3 @@ class LastExp(State):
             cock_names = "   ".join([str(name) for name in self.summary["party"]])
             self.game.draw_text(surface, cock_names, 40, 512, 625)
         self.close_btn.render(surface)
-        if (self.grid > 0):
-            surface.blit(self.debug_grid, (0, 0))
-        # surface.blit(self)

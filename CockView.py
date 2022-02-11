@@ -17,7 +17,6 @@ class CockView(State):
         self.game = game
         self.cock = cock
         self.player = player
-        self.debug_grid = pygame.image.load("Assets/alpha_grid.png")
         self.background_img = pygame.image.load("Assets/menubg.png")
         self.background_rect = self.background_img.get_rect()
         self.background_rect.center = (WIDTH / 2, HEIGHT / 2)
@@ -28,7 +27,6 @@ class CockView(State):
         self.dummy_cock.anim_mode = random.randint(0, 2)
         self.close_btn = Button(self.game, 910, 90, "X")
         self.feed_btn = Button(self.game, 512, 660, "Nourrir")
-        self.grid = -1
 
     def update(self, delta_time, actions):
         self.close_btn.update(self.game.events)
@@ -41,16 +39,12 @@ class CockView(State):
             print("nourrir")
             new_state = Feeding(self.game, self.cock, self.player)
             new_state.enter_state()
-        if actions["right"] or actions["ok"]:  # DEBUG
-            self.grid *= -1
         self.game.reset_keys()
 
     def render(self, surface):
         self.prev_state.render(surface)
         surface.blit(self.background_img, self.background_rect)
         self.dummy_cock.render(surface)
-        if self.grid > 0:
-            surface.blit(self.debug_grid, (0, 0))
         self.draw_text(surface)
         self.draw_lines(surface)
         self.feed_btn.render(surface)

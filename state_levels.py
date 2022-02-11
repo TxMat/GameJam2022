@@ -46,8 +46,6 @@ class StateLevel(State):
                 self.exp_chosen.append(self.strat)
                 self.prev_state.wantNight = True
                 self.exit_state()
-        if actions["right"]:
-            self.grid *= -1
         self.game.reset_keys()
 
     def render(self, surface):

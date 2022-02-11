@@ -256,7 +256,6 @@ class Cock(pygame.sprite.Sprite):
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN and hover:
                 self.ispressed = True
-                print("clicked")  # debug
 
     def animate(self, delta_time):
         if self.anim_mode == 0:

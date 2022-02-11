@@ -102,9 +102,6 @@ class Expedition():
             elif rand in range(94, 99):
                 self.hunger_cost(8)
                 print("rituel")
-                if (self.cock_dic):  # DEBUG
-                    print(random.choice(list(Events.gen_rituals().values())).action(
-                        random.choice(list(self.cock_dic.values()))))
                 return "ritual"
             else:
                 self.hunger_cost(1)

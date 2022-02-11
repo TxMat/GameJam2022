@@ -22,7 +22,6 @@ class Farm(State):
         self.isMusicLoaded = False
         self.isInTransition = False
         self.HUD = HUD(self.game, self.player)
-        self.debug_grid = pygame.image.load("Assets/debug_grid.png")
         self.night_transition_background = pygame.image.load("Assets/transition.png")
         self.background_img_night = pygame.image.load("Assets/backgound_night.png")
         self.background_img_day = pygame.image.load("Assets/backgound_day.png").convert()
@@ -68,9 +67,6 @@ class Farm(State):
                     print("cave")
         if self.exp_chosen:
 
-            # DEBUG
-            self.chosen_cocks = self.player.cocks
-            # DEBUG
             if not self.wantNight:
                 new_state = ExpState(self.game, self.player, self.exp_chosen[0], self.exp_chosen[1], self.chosen_cocks,
                                      self.player.last_exp)
@@ -87,7 +83,6 @@ class Farm(State):
         self.HUD.render(surface)
         for cock in self.player.cocks.values():
             cock.render(surface)
-        # surface.blit(self.debug_grid, (0, 0))
         self.update_dn_cycle(surface)
 
     def update_dn_cycle(self, surface):

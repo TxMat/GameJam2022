@@ -22,8 +22,6 @@ class ExpState(State):
         self.s_gas = pygame.image.load("Assets/gaz.png")
         self.background_rect = self.background_img.get_rect()
         self.background_rect.center = (WIDTH / 2, HEIGHT / 2)
-        self.debug_grid = pygame.image.load("Assets/alpha_grid.png")
-        self.grid = -1
         self.cases = []
         self.ongoing = True
         self.summary = summary
@@ -79,9 +77,6 @@ class ExpState(State):
                 self.game.draw_text(surface, "Rien ne se passe", 40, 512, 540)
             elif self.cases[-1] == "ores":
                 self.game.draw_text(surface, "Vous trouvez un minerai", 40, 512, 540)
-
-        if (self.grid > 0):
-            surface.blit(self.debug_grid, (0, 0))
 
     def step(self):
         resultat = self.Expedition.avancement()

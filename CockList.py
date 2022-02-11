@@ -15,7 +15,6 @@ class CockList(State):
         super().__init__(game)
         self.need_refresh = False
         self.player = player
-        self.debug_grid = pygame.image.load("Assets/debug_grid.png")
         self.background_img = pygame.image.load("Assets/menubg.png")
         self.background_rect = self.background_img.get_rect()
         self.background_rect.center = (WIDTH / 2, HEIGHT / 2)
@@ -48,7 +47,6 @@ class CockList(State):
         self.draw_menu(surface)
         self.render_btns(surface)
         self.close_btn.render(surface)
-        # surface.blit(self.debug_grid, (0, 0))
 
     def draw_menu(self, surface):
         if len(self.player.cocks) == MAX_COCKS:

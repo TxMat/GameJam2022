@@ -13,7 +13,6 @@ class CockCreate(State):
         super().__init__(game)
         self.game = game
         self.player = player
-        self.debug_grid = pygame.image.load("Assets/debug_grid.png")
         self.background_img = pygame.image.load("Assets/menubg.png")
         self.background_rect = self.background_img.get_rect()
         self.background_rect.center = (WIDTH / 2, HEIGHT / 2)

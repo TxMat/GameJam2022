@@ -13,7 +13,7 @@ class Grain():
         self.price = price
         self.res_cost = res_cost
         # self.res_mat = res_mat
-        self.res_mat = name  # DEBUG
+        self.res_mat = name
         self.hunger = hunger
         self.int_bonus = int_b
         self.sta_bonus = sta_b
@@ -30,20 +30,6 @@ class Grain():
         print("sta bonus: " + str(self.sta_bonus))
         print("str bonus: " + str(self.str_bonus))
         print("unlocked : " + str(self.is_unlocked))
-
-
-from random import randint, choice
-
-
-def debug_grain(nb=1) -> [Grain]:
-    grains = []
-    for i in range(nb):
-        grains.append(Grain("Grain " + str(i + 1), randint(100, 5000), randint(1, 50), "ADN " + str(randint(1, 10)),
-                            randint(1, 5), randint(1, 5), randint(1, 5), randint(1, 5), choice((True, False))))
-        grains[i].grain_info()
-        print("")
-    return grains
-
 
 def gen_grain():
     grain = {}

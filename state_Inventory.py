@@ -11,12 +11,10 @@ class Inventory(State):
         super().__init__(game)
         self.player = player
         self.background_img = pygame.image.load("Assets/menubg.png")
-        self.debug_grid = pygame.image.load("Assets/debug_grid.png")
         self.background_rect = self.background_img.get_rect()
         self.background_rect.center = (WIDTH / 2, HEIGHT / 2)
         self.close_btn = Button(self.game, 910, 90, "X")
         self.sell_btn = Button(self.game, WIDTH / 2, 670, "Vendre vos minerais", 30)
-        self.grid = -1
 
     def update(self, delta_time, actions):
         self.sell_btn.update(self.game.events)
@@ -26,8 +24,6 @@ class Inventory(State):
         if self.sell_btn.ispressed:
             print("sell")
             self.player.sell_all()
-        if actions["right"] or actions["ok"]:  # DEBUG
-            self.grid *= -1
         self.game.reset_keys()
 
     def render(self, surface):
@@ -36,8 +32,6 @@ class Inventory(State):
         surface.blit(self.background_img, self.background_rect)
         self.draw_menu(surface)
         self.close_btn.render(surface)
-        if self.grid > 0:
-            surface.blit(self.debug_grid, (0, 0))
 
     def draw_menu(self, surface):
         self.sell_btn.render(surface)

@@ -14,13 +14,11 @@ class Feeding(State):
         self.cock = cock
         self.player = player
         self.close_btn = Button(self.game, 910, 90, "X")
-        self.debug_grid = pygame.image.load("Assets/alpha_grid.png")
         self.background_img = pygame.image.load("Assets/menubg.png")
         self.background_rect = self.background_img.get_rect()
         self.background_rect.center = (WIDTH / 2, HEIGHT / 2)
         self.btn_array = []
         self.init_btn()
-        self.grid = -1
 
     def update(self, delta_time, actions):
         self.close_btn.update(self.game.events)
@@ -33,8 +31,6 @@ class Feeding(State):
             if btn.ispressed:
                 self.cock.feed(btn.grain_name, self.player)
                 self.need_refresh = True
-        if actions["right"] or actions["ok"]:  # DEBUG
-            self.grid *= -1
         self.update_btns()
         self.game.reset_keys()
 
@@ -50,8 +46,6 @@ class Feeding(State):
         self.draw_text(surface)
         self.close_btn.render(surface)
         self.render_btns(surface)
-        if self.grid > 0:
-            surface.blit(self.debug_grid, (0, 0))
 
     def init_btn(self):
         self.btn_array = []

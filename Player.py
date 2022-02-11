@@ -74,3 +74,25 @@ class Player():
         # exped = Expedition(game,level,strat,cock_list)
         length = level.gen_len
         return Expedition.Expedition(strat=strat, level=level, cock_dic=cock_dic, length=length)
+
+    def sell_all(self):
+        price = {}
+        price["metal 1"] = 0
+        price["metal 2"] = 0
+        price["metal 3"] = 0
+        price["cuivre"] = 1
+        price["argent"] = 2
+        price["emeraude"] = 4
+        price["columbite"] = 3
+        price["granit"] = 1
+        price["saphir"] = 8
+        price["or"] = 6
+        price["fer"] = 3
+        price["platine"] = 5
+        price["diamant"] = 15
+        price["sable argileux"] = 20
+        price["plomb"] = 25
+        price["francium"] = 50
+        for ore in self.inv_ore:
+            self.money += price[ore]*self.inv_ore[ore]
+            self.inv_ore[ore] = 0

@@ -18,6 +18,7 @@ class Feeding(State):
         self.background_rect = self.background_img.get_rect()
         self.background_rect.center = (WIDTH / 2, HEIGHT / 2)
         self.btn_array = []
+        self.init_btn()
         self.grid = -1
 
     def update(self, delta_time, actions):
@@ -33,14 +34,14 @@ class Feeding(State):
         self.game.reset_keys()
 
     def render(self, surface):
-        counter = 0
+        # counter = 0
         surface.blit(self.background_img, self.background_rect)
-        self.game.draw_text(surface, "Grains :", 40, 150, 200 + 50 * counter, align="left")
-        counter += 1
-        for grain in self.player.inv_grain:
-            self.game.draw_text(surface, grain + " : " + str(self.player.inv_grain[grain]), 30, 250, 200 + 50 * counter,
-                                align="left")
-            counter += 1
+        # self.game.draw_text(surface, "Grains :", 40, 150, 200 + 50 * counter, align="left")
+        # counter += 1
+        # for grain in self.player.inv_grain:
+        #    self.game.draw_text(surface, grain + " : " + str(self.player.inv_grain[grain]), 30, 250, 200 + 50 * counter,
+        #                        align="left")
+        #    counter += 1
         self.close_btn.render(surface)
         self.render_btns(surface)
         if self.grid > 0:
@@ -53,7 +54,7 @@ class Feeding(State):
         count = 0
         for grain in self.player.inv_grain:
             val = self.player.inv_grain[grain]
-            self.btn_array.append(Button(self.game, x + 85, y, str(grain), 35))
+            self.btn_array.append(Button(self.game, x + 85, y, str(grain) + " : " + str(val), 35))
             self.btn_array[count].grain_name = grain
             count += 1
             if not count % 4:

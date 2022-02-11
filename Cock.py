@@ -167,7 +167,7 @@ class Cock(pygame.sprite.Sprite):
         print("sta(): " + str(self.g_stamina()))
 
     def feed(self, grain_name, player, quantity=1) -> None:
-        if player.inv_grain[grain_name] > quantity:
+        if player.inv_grain[grain_name] >= quantity:
             grain = self.grain_dict[grain_name]
             if grain_name not in self.fed:
                 # for skill tree
@@ -176,7 +176,7 @@ class Cock(pygame.sprite.Sprite):
             self.hunger += grain.hunger * quantity
             if self.hunger > MAX_HUNGER:
                 self.hunger = MAX_HUNGER
-            self.target_health = self.hunger
+            self.target_health = self.hunger*10
             if self.maturation < MAX_MATURATION:
                 self.intel += grain.int_bonus
                 self.strength += grain.str_bonus

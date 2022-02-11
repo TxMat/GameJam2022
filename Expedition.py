@@ -71,6 +71,7 @@ class Expedition():
         self.end = True
 
     def hunger_cost(self, cost):
+        print(self.cock_dic)
         for cock in self.cock_dic.values():
             if cock.hunger <= 0:
                 self.end = 1

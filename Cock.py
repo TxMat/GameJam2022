@@ -234,11 +234,12 @@ class Cock(pygame.sprite.Sprite):
         if self.fertile and nb_cocks < MAX_COCKS:
             self.fertile = False
             self.child = new_name
-            return Cock(new_id,
-                        new_name,
-                        int(self.g_intel() * self.inheritance),
-                        int(self.g_strength() * self.inheritance),
-                        int(self.g_stamina() * self.inheritance),
+            return Cock(id=new_id,
+                        player=None,
+                        name=new_name,
+                        intelligence=int(self.g_intel() * self.inheritance),
+                        strength=int(self.g_strength() * self.inheritance),
+                        stamina=int(self.g_stamina() * self.inheritance),
                         parent=self.name)
         else:
             print("Conditions infavorables à la ponte")

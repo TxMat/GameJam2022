@@ -5,7 +5,7 @@ from pygame.sprite import AbstractGroup
 
 from Consts import *
 from Events import Ritual, gen_rituals
-from Grain import Grain
+from Grain import Grain, gen_grain
 from Perks import Perks, gen_perks
 from Utils import frames_from_spritesheet, scale
 
@@ -36,7 +36,7 @@ class Cock(pygame.sprite.Sprite):
                  inheritance=STAT_INHERITANCE,
                  *groups: AbstractGroup,
                  perk_dict={"default perk": Perks(name="default perk")},
-                 grain_dict={"default grain": Grain(name="default grain")},
+                 grain_dict=gen_grain(),
                  ritual_dict={"default ritual": Ritual(name="default ritual")}) -> None:
         super().__init__(*groups)
         self.anim_mode = 0
@@ -156,19 +156,25 @@ class Cock(pygame.sprite.Sprite):
         print("str(): " + str(self.g_strength()))
         print("sta(): " + str(self.g_stamina()))
 
-    def feed(self, grain_name, quantity) -> None:
-        grain = self.grain_dict[grain_name]
-        if grain_name not in self.fed.keys():
-            self.fed[grain_name] = 0
-        self.fed[grain_name] += quantity
-        self.hunger += grain.hunger * quantity
-        if self.hunger > MAX_HUNGER:
-            self.hunger = MAX_HUNGER
-        if self.maturation < MAX_MATURATION:
-            self.intel += grain.int_bonus
-            self.strength += grain.str_bonus
-            self.stamina += grain.sta_bonus
-        self.maturation
+    def feed(self, grain_name, player, quantity = 1) -> None:
+        if player.inv_grain[grain_name] > quantity:
+            grain = self.grain_dict[grain_name]
+            if grain_name not in self.fed:
+                # for skill tree
+                self.fed[grain_name] = 0
+            self.fed[grain_name] += quantity
+            self.hunger += grain.hunger * quantity
+            if self.hunger > MAX_HUNGER:
+                self.hunger = MAX_HUNGER
+            self.target_health = self.hunger
+            if self.maturation < MAX_MATURATION:
+                self.intel += grain.int_bonus
+                self.strength += grain.str_bonus
+                self.stamina += grain.sta_bonus
+            self.maturation += 1
+            player.inv_grain[grain_name] -= quantity
+        else:
+            print("pas assez de grain")
 
     def g_intel(self):
         intel = self.intel

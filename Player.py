@@ -40,7 +40,6 @@ class Player():
         self.money -= 50
         self.cocks[id] = Cock(self, id, cock_name)
         self.cock_id += 1
-        self.get_loot() # DEBUG
         return 0
 
     def set_adn(self, name, quant):

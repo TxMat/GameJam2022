@@ -25,6 +25,7 @@ class Inventory(State):
             self.exit_state()
         if self.sell_btn.ispressed:
             print("sell")
+            self.player.sell_all()
         if actions["right"] or actions["ok"]:  # DEBUG
             self.grid *= -1
         self.game.reset_keys()

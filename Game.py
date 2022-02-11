@@ -18,6 +18,7 @@ class Game:
         self.display = pygame.Surface((self.WIDTH, self.HEIGHT))
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
         pygame.display.set_caption("𝓒𝓸𝓬𝓴 𝓭𝓲𝓰𝓰𝓮𝓻")
+        pygame.display.set_icon(pygame.image.load("Assets/icon.png"))
         self.font_loc = FONT_LOC
         self.state_stack = []
         self.dt, self.prev_time = 0, 0

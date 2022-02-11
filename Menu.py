@@ -5,6 +5,7 @@ from Consts import *
 from Credits import Credits
 from Farm import Farm
 from Player import Player
+from Rules import Rules
 from State import State
 from Sun import Sun
 
@@ -31,7 +32,7 @@ class Menu(State):
             new_state = Farm(self.game, self.player)
             new_state.enter_state()
         if self.regles_btn.ispressed:
-            new_state = Regles(self.game)
+            new_state = Rules(self.game)
             new_state.enter_state()
         if self.credit_btn.ispressed:
             new_state = Credits(self.game)

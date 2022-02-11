@@ -4,10 +4,9 @@ from Consts import *
 from State import State
 
 
-class Credits(State):
+class Rules(State):
     def __init__(self, game):
         State.__init__(self, game)
-        self.looping = False
         self.img = pygame.image.load("Assets/panneaucredits.png")
         self.bg_rect = self.img.get_rect()
         self.bg_rect.center = (WIDTH / 2, HEIGHT / 2)

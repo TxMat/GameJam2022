@@ -30,14 +30,14 @@ class Level():
 
 def gen_level():
     level = {}
-    level["mine d'argent"] = Level(name="mine d'argent", ore_list=["cuivre", "argent", "émeraude"],
+    level["mine d'argent"] = Level(name="mine d'argent", ore_list=["cuivre", "argent", "emeraude"],
                                    dna_list=["h1n1", "b5r3", "d1c3"],
                                    description="une mine d'argent, rien de plus... rien de moins", danger_lvl=1,
                                    length_range=(3, 8))
-    level["mine dangereuse"] = Level(name="mine dangereuse", ore_list=["Columbite", "granit", "saphir"],
+    level["mine dangereuse"] = Level(name="mine dangereuse", ore_list=["columbite", "granit", "saphir"],
                                      dna_list=["n1g8", "i8a5", "z9g1"], description="une mine pleine de ressources",
                                      danger_lvl=3, length_range=(3, 15))
-    level["mine d'or"] = Level(name="mine d'or", ore_list=["cuivre", "or", "émeraude"],
+    level["mine d'or"] = Level(name="mine d'or", ore_list=["cuivre", "or", "emeraude"],
                                dna_list=["l5z5", "b1t4", "u8x1"],
                                description="Sûrment une des plus vielle que la terre est portée", danger_lvl=2,
                                length_range=(10, 15))

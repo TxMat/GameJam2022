@@ -49,7 +49,7 @@ class LastExp(State):
                                     "h3q4":10,
                                     "g2z3":16426,
                                     },
-                            "level":"le niveau ouais ouais",
+                            "level":"le niveau de test",
                             "party":["michel", "martin", "herve", "emmanuel"]
                             }"""
             # DEBUG

@@ -9,8 +9,8 @@ class Player():
                  day=1,
                  cock_dict={},
                  inventory_grain={"base": 100},
-                 inventory_ore={"metal 1": 50, "metal 2": 75, "metal 3": 100},
-                 inventory_dna={"adn 1": 33, "adn 2": 66, "adn 3": 99},
+                 inventory_ore={"cuivre": 1, "argent": 1, "granit": 1},
+                 inventory_dna={"h1n1": 1, "b5r3": 1, "d1c3": 1},
                  money=100,
                  relation_monsanto=1,
                  last_exp={},
@@ -40,6 +40,7 @@ class Player():
         self.money -= 50
         self.cocks[id] = Cock(self, id, cock_name)
         self.cock_id += 1
+        self.get_loot() # DEBUG
         return 0
 
     def set_adn(self, name, quant):
@@ -75,11 +76,23 @@ class Player():
         length = level.gen_len
         return Expedition.Expedition(strat=strat, level=level, cock_dic=cock_dic, length=length)
 
+    def get_loot(self):
+        if self.last_exp:
+            print("ores :")
+            print(self.last_exp['ores'])
+            print("dnas :")
+            print(self.last_exp['dnas'])
+            for ore in self.last_exp['ores']:
+                if ore not in self.inv_ore:
+                    self.inv_ore[ore] = 0
+                self.inv_ore[ore] += self.last_exp['ores'][ore]
+            for dna in self.last_exp['dnas']:
+                if dna not in self.inv_dna:
+                    self.inv_dna[dna] = 0
+                self.inv_dna[dna] += self.last_exp['dnas'][dna]
+
     def sell_all(self):
         price = {}
-        price["metal 1"] = 0
-        price["metal 2"] = 0
-        price["metal 3"] = 0
         price["cuivre"] = 1
         price["argent"] = 2
         price["emeraude"] = 4

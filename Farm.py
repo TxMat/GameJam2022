@@ -20,6 +20,7 @@ class Farm(State):
         self.isNight = False
         self.wantNight = False
         self.isMusicLoaded = False
+        self.isInTransition = False
         self.HUD = HUD(self.game, self.player)
         self.debug_grid = pygame.image.load("Assets/debug_grid.png")
         self.night_transition_background = pygame.image.load("Assets/transition.png")
@@ -39,32 +40,33 @@ class Farm(State):
             self.isMusicLoaded = True
         events = self.game.events
         self.sun.update(delta_time)
-        self.HUD.update()
-        for cock in self.player.cocks.values():
-            cock.update(delta_time, self.game.events)
-            if cock.ispressed:
-                new_state = CockView(self.game, cock, self.player)
+        if not self.isInTransition:
+            self.HUD.update()
+            for cock in self.player.cocks.values():
+                cock.update(delta_time, self.game.events)
+                if cock.ispressed:
+                    new_state = CockView(self.game, cock, self.player)
+                    new_state.enter_state()
+            if self.HUD.cocks.ispressed:
+                new_state = CockList(self.game, self.player)
                 new_state.enter_state()
-        if self.HUD.cocks.ispressed:
-            new_state = CockList(self.game, self.player)
-            new_state.enter_state()
-        if self.HUD.last_exp.ispressed:
-            new_state = LastExp(self.game, self.player)
-            new_state.enter_state()
-        if self.HUD.inv.ispressed:
-            new_state = Inventory(self.game, self.player)
-            new_state.enter_state()
-        mosanto_hover = self.mosanto_collide.collidepoint(pygame.mouse.get_pos())
-        cave_hover = self.cave_collide.collidepoint(pygame.mouse.get_pos())
-        for event in events:
-            if event.type == pygame.MOUSEBUTTONDOWN and mosanto_hover:
-                new_state = Monsanto(self.game, self.exp_chosen)
+            if self.HUD.last_exp.ispressed:
+                new_state = LastExp(self.game, self.player)
                 new_state.enter_state()
-            if event.type == pygame.MOUSEBUTTONDOWN and cave_hover:
-                new_state = StateLevel(self.game, len(self.player.cocks), self.exp_chosen)
+            if self.HUD.inv.ispressed:
+                new_state = Inventory(self.game, self.player)
                 new_state.enter_state()
-                print("cave")
-        if (self.exp_chosen):
+            mosanto_hover = self.mosanto_collide.collidepoint(pygame.mouse.get_pos())
+            cave_hover = self.cave_collide.collidepoint(pygame.mouse.get_pos())
+            for event in events:
+                if event.type == pygame.MOUSEBUTTONDOWN and mosanto_hover:
+                    new_state = Monsanto(self.game, self.exp_chosen)
+                    new_state.enter_state()
+                if event.type == pygame.MOUSEBUTTONDOWN and cave_hover:
+                    new_state = StateLevel(self.game, len(self.player.cocks), self.exp_chosen)
+                    new_state.enter_state()
+                    print("cave")
+        if self.exp_chosen:
 
             # DEBUG
             self.chosen_cocks = self.player.cocks
@@ -90,6 +92,7 @@ class Farm(State):
 
     def update_dn_cycle(self, surface):
         if self.wantNight or self.wantDay:
+            self.isInTransition = True
             surface.blit(self.night_transition_background, (self.pos_trans_x, 0))
             self.pos_trans_x -= 30
         if self.wantNight:
@@ -99,6 +102,7 @@ class Farm(State):
             if self.pos_trans_x <= -WIDTH * 2:
                 self.wantNight = False
                 self.pos_trans_x = WIDTH
+                self.isInTransition = False
         elif self.wantDay:
             if self.pos_trans_x <= -50 and self.isNight:
                 self.background_img = self.background_img_day
@@ -106,6 +110,7 @@ class Farm(State):
             if self.pos_trans_x <= -WIDTH * 2:
                 self.wantDay = False
                 self.pos_trans_x = WIDTH
+                self.isInTransition = False
 
     def bgm(self):
         self.game.music_player.music.load("Assets/Sounds/day_music.ogg")

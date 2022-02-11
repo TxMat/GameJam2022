@@ -101,4 +101,4 @@ class Monsanto(State):
             button.update(self.game.events)
 
     def draw_text(self, surface):
-        self.game.draw_text(surface, "Monsanto", 100, WIDTH / 2, 110)
+        self.game.draw_text(surface, "Moussanto", 100, WIDTH / 2, 110)

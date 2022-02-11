@@ -51,11 +51,11 @@ class Inventory(State):
         self.game.draw_text(surface, "Inventaire", 100, WIDTH / 2, 110)
         self.game.draw_text(surface, "Grain :", 55, 218, 185, )
         self.game.draw_text(surface, "Minerais :", 55, 230 + 280, 185, )
-        self.game.draw_text(surface, "ADNs :", 55, 218 + 290 + 280, 185, )
+        self.game.draw_text(surface, "ADNs :", 52, 218 + 290 + 280, 185, )
 
     def render_items(self, display):
         x = 130
-        y = 250
+        y = 240
         for i in self.player.inv_grain:
             val = self.player.inv_grain[i]
             self.game.draw_text(display, str(i) + " : " + str(val), 40, x, y, align="left")

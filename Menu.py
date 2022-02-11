@@ -1,9 +1,9 @@
 from Button import Button
 from Consts import *
+from Credits import Credits
+from Farm import Farm
 from Player import Player
 from State import State
-from Farm import Farm
-from Credits import Credits
 
 
 class Menu(State):
@@ -29,7 +29,7 @@ class Menu(State):
 
     def render(self, display):
         display.fill((60, 60, 60))
-        self.game.draw_text(display, "Cock Digger", 150, WIDTH/2, 80, (180, 180, 180))
+        self.game.draw_text(display, "Cock Digger", 150, WIDTH / 2, 80, (180, 180, 180))
         self.new_game_btn.render(display)
         self.credit_btn.render(display)
 

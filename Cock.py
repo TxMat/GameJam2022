@@ -13,11 +13,12 @@ perk_dict = gen_perks()
 ritual_dict = gen_rituals()
 print(ritual_dict.keys())
 
+
 class Cock(pygame.sprite.Sprite):
     def __init__(self,
-                 player = None,
-                 id = -1,
-                 name = "debug_cock",
+                 player=None,
+                 id=-1,
+                 name="debug_cock",
                  scalex=1.5,
                  intelligence=1,
                  strength=1,
@@ -207,11 +208,11 @@ class Cock(pygame.sprite.Sprite):
 
     def add_perk(self, perk_name) -> None:
         self.perks.add(perk_name)
-        #perk_dict[perk_name].action(self)
+        # perk_dict[perk_name].action(self)
 
     def add_ritual(self, ritual_name) -> None:
         self.rituals.add(ritual_name)
-        #ritual_dict[ritual_name].action(self)
+        # ritual_dict[ritual_name].action(self)
 
     def lay_egg(self, new_id=0, new_name="", nb_cocks=1):
         if self.fertile and nb_cocks < MAX_COCKS:
@@ -238,7 +239,7 @@ class Cock(pygame.sprite.Sprite):
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN and hover:
                 self.ispressed = True
-                print("clicked") # debug
+                print("clicked")  # debug
 
     def animate(self, delta_time):
         if self.anim_mode == 0:

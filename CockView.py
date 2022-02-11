@@ -41,7 +41,7 @@ class CockView(State):
             print("nourrir")
             new_state = Feeding(self.game, self.cock, self.player)
             new_state.enter_state()
-        if actions["right"] or actions["ok"]: #DEBUG
+        if actions["right"] or actions["ok"]:  # DEBUG
             self.grid *= -1
         self.game.reset_keys()
 
@@ -66,7 +66,8 @@ class CockView(State):
         self.game.draw_text(surface, "Intelligence : " + str(self.cock.g_intel()), 40, x, 280, align="left")
         self.game.draw_text(surface, "Force : " + str(self.cock.g_strength()), 40, x, 320, align="left")
         self.game.draw_text(surface, "Endurance : " + str(self.cock.g_stamina()), 40, x, 360, align="left")
-        self.game.draw_text(surface, "Satiete : " + str(self.cock.hunger) + " / " + str(self.cock.max_hunger), 40, x, 430, align="left")
+        self.game.draw_text(surface, "Satiete : " + str(self.cock.hunger) + " / " + str(self.cock.max_hunger), 40, x,
+                            430, align="left")
         txt = "Enfant : Aucun"
         if self.cock.child:
             txt = str(self.cock.child)
@@ -79,6 +80,3 @@ class CockView(State):
         if self.cock.fertile:
             txt = "Fertile : Oui"
         self.game.draw_text(surface, txt, 40, x, 580, align="left")
-
-
-

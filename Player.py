@@ -1,4 +1,3 @@
-from unicodedata import name
 import Expedition
 from Cock import Cock
 from Consts import *
@@ -14,8 +13,8 @@ class Player():
                  inventory_dna={"adn 1": 33, "adn 2": 66, "adn 3": 99},
                  money=100,
                  relation_monsanto=1,
-                 last_exp = {},
-                 cock_id = 0):
+                 last_exp={},
+                 cock_id=0):
         self.name = name
         self.day = day
         self.cocks = cock_dict
@@ -75,4 +74,3 @@ class Player():
         # exped = Expedition(game,level,strat,cock_list)
         length = level.gen_len
         return Expedition.Expedition(strat=strat, level=level, cock_dic=cock_dic, length=length)
-

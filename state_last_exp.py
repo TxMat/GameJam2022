@@ -1,10 +1,12 @@
 import pygame.image
+
 import Utils
-from State import State
 from Button import Button
+from State import State
+
 
 class LastExp(State):
-    def __init__(self, game, player, summary = {'ores':[], 'dnas':[], 'level':[], 'party':[]}):
+    def __init__(self, game, player, summary={'ores': [], 'dnas': [], 'level': [], 'party': []}):
         super().__init__(game)
         self.debug_grid = pygame.image.load("Assets/alpha_grid.png")
         self.background_img = pygame.image.load("Assets/menubg.png")
@@ -34,10 +36,9 @@ class LastExp(State):
             self.game.draw_text(surface, "parti en expedition !", 40, 512, 335)
         else:
             # Niveau / dna / minerais / equipe
-            Utils.draw_line(surface, (512,300), (512,550), 2)
+            Utils.draw_line(surface, (512, 300), (512, 550), 2)
             self.game.draw_text(surface, "Minerais :", 35, 225, 350, align="left")
             self.game.draw_text(surface, "Adn :", 35, 600, 350, align="left")
-
 
             # DEBUG
             """self.summary = {"ores":{"alu":5,
@@ -54,19 +55,21 @@ class LastExp(State):
             # DEBUG
 
             self.game.draw_text(surface, self.summary["level"], 40, 512, 250)
-            if(len(self.summary['ores']) > 0):
+            if (len(self.summary['ores']) > 0):
                 i = 0
                 for name in self.summary['ores']:
-                    self.game.draw_text(surface, name + " : " + str(self.summary['ores'][name]), 30, 225, 400 + i, align="left")
+                    self.game.draw_text(surface, name + " : " + str(self.summary['ores'][name]), 30, 225, 400 + i,
+                                        align="left")
                     i += 50
-            if(len(self.summary['dnas']) > 0):
+            if (len(self.summary['dnas']) > 0):
                 i = 0
                 for name in self.summary['dnas']:
-                    self.game.draw_text(surface, name + " : " + str(self.summary['dnas'][name]), 30, 600, 400 + i, align="left")
+                    self.game.draw_text(surface, name + " : " + str(self.summary['dnas'][name]), 30, 600, 400 + i,
+                                        align="left")
                     i += 50
-            cock_names = "   ".join([str(name) for name in self.summary["party"]] )
+            cock_names = "   ".join([str(name) for name in self.summary["party"]])
             self.game.draw_text(surface, cock_names, 40, 512, 625)
         self.close_btn.render(surface)
-        if(self.grid > 0):
+        if (self.grid > 0):
             surface.blit(self.debug_grid, (0, 0))
         # surface.blit(self)

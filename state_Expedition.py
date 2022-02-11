@@ -1,9 +1,9 @@
 import pygame.image
 
-from Expedition import Expedition
 from Consts import *
-import Utils
+from Expedition import Expedition
 from State import State
+
 
 class ExpState(State):
     def __init__(self, game, level, strat, cock_dic, summary):
@@ -11,7 +11,7 @@ class ExpState(State):
         self.level = level
         self.strat = strat
         self.cock_dic = cock_dic
-        self.Expedition = Expedition(level = self.level, strat = self.strat, cock_dic = self.cock_dic)
+        self.Expedition = Expedition(level=self.level, strat=self.strat, cock_dic=self.cock_dic)
         self.background_img = pygame.image.load("Assets/map.png")
         self.s_case = pygame.image.load("Assets/case.png")
         self.s_rit = pygame.image.load("Assets/pentagramme.png")
@@ -27,7 +27,7 @@ class ExpState(State):
         self.summary = summary
 
     def update(self, delta_time, actions):
-        if(actions["esc"]):
+        if (actions["esc"]):
             self.summary.clear()
             summ = self.Expedition.gen_summary()
             for key in summ:
@@ -37,7 +37,7 @@ class ExpState(State):
         if actions["right"]:
             self.grid *= -1
         self.game.reset_keys()
-        if(self.ongoing):
+        if (self.ongoing):
             wait(2000)
             self.step()
 
@@ -45,8 +45,8 @@ class ExpState(State):
         surface.blit(self.background_img, self.background_rect)
         counter = 0
         for event in self.cases:
-            rows = int(counter/7)
-            pos = (50+counter*135 - 945*rows, 150 + rows*135)
+            rows = int(counter / 7)
+            pos = (50 + counter * 135 - 945 * rows, 150 + rows * 135)
             surface.blit(self.s_case, pos)
             if event == "ores":
                 surface.blit(self.s_ore, (pos))
@@ -57,22 +57,22 @@ class ExpState(State):
             elif event == "ritual":
                 surface.blit(self.s_rit, (pos))
             counter += 1
-        
+
         if self.cases:
             if not self.ongoing:
-                self.game.draw_text(surface,"Fin de l'expedition",40, 512, 540)
+                self.game.draw_text(surface, "Fin de l'expedition", 40, 512, 540)
             elif self.cases[-1] == "gas":
-                self.game.draw_text(surface,"vous etes tombes sur une poche de gaz",40, 512, 540)
+                self.game.draw_text(surface, "vous etes tombes sur une poche de gaz", 40, 512, 540)
             elif self.cases[-1] == "ritual":
-                self.game.draw_text(surface,"Vos poules font un rituel....",40, 512, 540)
+                self.game.draw_text(surface, "Vos poules font un rituel....", 40, 512, 540)
             elif self.cases[-1] == "dna":
-                self.game.draw_text(surface,"vous trouvez de L'ADN !!",40, 512, 540)
+                self.game.draw_text(surface, "vous trouvez de L'ADN !!", 40, 512, 540)
             elif self.cases[-1] == "none":
-                self.game.draw_text(surface,"Il ne se passe rien, le vide",40, 512, 540)
+                self.game.draw_text(surface, "Il ne se passe rien, le vide", 40, 512, 540)
             elif self.cases[-1] == "ores":
-                self.game.draw_text(surface,"vous trouvez un minerai",40, 512, 540 )
-            
-        if(self.grid > 0):
+                self.game.draw_text(surface, "vous trouvez un minerai", 40, 512, 540)
+
+        if (self.grid > 0):
             surface.blit(self.debug_grid, (0, 0))
 
     def step(self):
@@ -81,7 +81,6 @@ class ExpState(State):
             self.cases.append(resultat)
         else:
             self.ongoing = 0
-        
 
 
 def wait(delay):

@@ -1,10 +1,10 @@
 import pygame.image
 
-from Consts import *
-import Utils
 import Level
 from Button import Button
+from Consts import *
 from State import State
+
 
 class StateLevel(State):
     def __init__(self, game, exp_chosen):
@@ -23,10 +23,8 @@ class StateLevel(State):
         y = 150
         for level in self.levels:
             counter += 1
-            self.btn_dict[level] = Button(self.game, x, y+counter*100, level)
+            self.btn_dict[level] = Button(self.game, x, y + counter * 100, level)
 
-        
-        
     def update(self, delta_time, actions):
         if actions["esc"]:
             self.exit_state()
@@ -38,7 +36,7 @@ class StateLevel(State):
             # Dans la StateExpedition, on affiche et fait se dérouler pas à pas l'expédition, puis on finit par
             # renvoyer un récapitulatif, à partir duquel on change l'inventaire du joueur. Aussi, on affiche la vue du récap
             # ERRATUM : en fait non lol, mais c'est laid, mon dieu c'est laid. J'ai envie de vomir.
-        if(self.choice):
+        if (self.choice):
             self.exp_chosen.append(self.choice)
             self.exp_chosen.append(self.strat)
             self.prev_state.wantNight = True

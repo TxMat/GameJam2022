@@ -16,4 +16,3 @@ class State:
 
     def exit_state(self):
         self.game.state_stack.pop()
-

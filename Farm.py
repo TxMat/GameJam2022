@@ -48,7 +48,7 @@ class Farm(State):
             new_state = LastExp(self.game, self.player)
             new_state.enter_state()
         if self.HUD.inv.ispressed:
-            new_state = Inventory(self.game,self.player)
+            new_state = Inventory(self.game, self.player)
             new_state.enter_state()
         mosanto_hover = self.mosanto_collide.collidepoint(pygame.mouse.get_pos())
         cave_hover = self.cave_collide.collidepoint(pygame.mouse.get_pos())
@@ -60,17 +60,16 @@ class Farm(State):
                 new_state = StateLevel(self.game, self.exp_chosen)
                 new_state.enter_state()
                 print("cave")
-        if(self.exp_chosen):
-
+        if (self.exp_chosen):
 
             # DEBUG
             self.chosen_cocks = self.player.cocks
             # DEBUG
             if not self.wantNight:
-                new_state = ExpState(self.game, self.exp_chosen[0], self.exp_chosen[1], self.chosen_cocks, self.player.last_exp)
+                new_state = ExpState(self.game, self.exp_chosen[0], self.exp_chosen[1], self.chosen_cocks,
+                                     self.player.last_exp)
                 new_state.enter_state()
                 self.exp_chosen.clear()
-
 
     def render(self, surface):
         surface.blit(self.background_img, (0, 0))
@@ -90,18 +89,16 @@ class Farm(State):
             if self.pos_trans_x <= 0 and not self.isNight:
                 self.background_img = self.background_img_night
                 self.isNight = True
-            if self.pos_trans_x <= -WIDTH*2:
+            if self.pos_trans_x <= -WIDTH * 2:
                 self.wantNight = False
                 self.pos_trans_x = WIDTH
         elif self.wantDay:
             if self.pos_trans_x <= 0 and self.isNight:
                 self.background_img = self.background_img_day
                 self.isNight = False
-            if self.pos_trans_x <= -WIDTH*2:
+            if self.pos_trans_x <= -WIDTH * 2:
                 self.wantDay = False
                 self.pos_trans_x = WIDTH
-
-
 
 
 class Sun:

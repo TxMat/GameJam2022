@@ -1,13 +1,10 @@
-from multiprocessing.connection import wait
-import this
 import time
+
 import pygame
 
+import Grain
 from Consts import *
 from Menu import Menu
-from Farm import Farm
-import Grain
-from Expedition import Expedition
 
 
 class Game:
@@ -23,7 +20,7 @@ class Game:
         self.font_loc = FONT_LOC
         self.state_stack = []
         self.dt, self.prev_time = 0, 0
-        self.actions = {"left": False, "right": False, "up": False, "down": False, "ok": False, "esc":False}
+        self.actions = {"left": False, "right": False, "up": False, "down": False, "ok": False, "esc": False}
         self.BLACK, self.WHITE = BLACK, WHITE
         self.events = None
         self.music_player = pygame.mixer
@@ -40,16 +37,16 @@ class Game:
             self.update()
             self.draw()
 
-    def draw_text(self, surface, text, size, x, y, color=(79, 32, 15), align = "center"):
+    def draw_text(self, surface, text, size, x, y, color=(79, 32, 15), align="center"):
         font = pygame.font.Font(self.font_loc, size)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
-        if(align == "center"):
+        if (align == "center"):
             text_rect.center = (x, y)
-        elif(align == "left"):
+        elif (align == "left"):
             text_rect.left = x
             text_rect.centery = y
-        elif(align == "right"):
+        elif (align == "right"):
             text_rect.right = x
             text_rect.centery = y
         surface.blit(text_surface, text_rect)

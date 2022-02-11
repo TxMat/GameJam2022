@@ -1,4 +1,5 @@
 import pygame as pg
+
 from Consts import *
 
 pg.init()

@@ -1,5 +1,6 @@
 import pygame.image
 
+import Utils
 from Button import Button
 from Consts import *
 from State import State
@@ -46,6 +47,7 @@ class Feeding(State):
         #    self.game.draw_text(surface, grain + " : " + str(self.player.inv_grain[grain]), 30, 250, 200 + 50 * counter,
         #                        align="left")
         #    counter += 1
+        self.draw_text(surface)
         self.close_btn.render(surface)
         self.render_btns(surface)
         if self.grid > 0:
@@ -53,19 +55,15 @@ class Feeding(State):
 
     def init_btn(self):
         self.btn_array = []
-        x = 100
+        x = WIDTH / 2 - 100
         y = 180
         count = 0
         for grain in self.player.inv_grain:
             val = self.player.inv_grain[grain]
-            self.btn_array.append(Button(self.game, x + 85, y, str(grain) + " : " + str(val), 35))
+            self.btn_array.append(Button(self.game, x + 85, y, str(grain) + " : " + str(val), 45))
             self.btn_array[count].grain_name = grain
             count += 1
-            if not count % 4:
-                x += 215
-                y = 180
-            else:
-                y += 50
+            y += 30
 
     def render_btns(self, surface):
         for button in self.btn_array:
@@ -74,3 +72,7 @@ class Feeding(State):
     def update_btns(self):
         for button in self.btn_array:
             button.update(self.game.events)
+
+    def draw_text(self, surface):
+        self.game.draw_text(surface, "Choissisez du grain", 80, WIDTH / 2, 110)
+        Utils.draw_line(surface, (100, 150), (920, 150), 2)

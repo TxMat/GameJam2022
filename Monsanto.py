@@ -12,14 +12,12 @@ class Monsanto(State):
     def __init__(self, game, player):
         super().__init__(game)
         self.player = player
-        self.debug_grid = pygame.image.load("Assets/debug_grid.png")
         self.background_img = pygame.image.load("Assets/menubg.png")
         self.background_rect = self.background_img.get_rect()
         self.background_rect.center = (WIDTH / 2, HEIGHT / 2)
         self.btn_array = []
         self.init_btn()
         self.close_btn = Button(self.game, 910, 90, "X")
-        self.grid = -1
 
     def update(self, delta_time, actions):
         self.close_btn.update(self.game.events)
@@ -41,8 +39,6 @@ class Monsanto(State):
         self.render_cases(surface)
         self.render_btns(surface)
         self.close_btn.render(surface)
-        if self.grid > 0:
-            surface.blit(self.debug_grid, (0, 0))
 
     def draw_menu(self, surface):
         self.draw_text(surface)

@@ -17,12 +17,14 @@ class Game:
         self.HEIGHT = HEIGHT
         self.display = pygame.Surface((self.WIDTH, self.HEIGHT))
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+        pygame.display.set_caption("𝓒𝓸𝓬𝓴 𝓭𝓲𝓰𝓰𝓮𝓻")
         self.font_loc = FONT_LOC
         self.state_stack = []
         self.dt, self.prev_time = 0, 0
         self.actions = {"left": False, "right": False, "up": False, "down": False, "ok": False, "esc": False}
         self.BLACK, self.WHITE = BLACK, WHITE
         self.events = None
+
         self.music_player = pygame.mixer
         self.music_player.pre_init(44100, -16, 2, 2048)
         self.music_player.init()

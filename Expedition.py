@@ -89,7 +89,7 @@ class Expedition():
                 print("minerais")
                 print(Events.ore().action(self))
                 return "ores"
-            elif rand in range(80 - self.dna_luck * 10, 85):
+            elif rand in range(70 - self.dna_luck * 10, 93):
                 self.hunger_cost(4)
                 print("adn")
                 print(Events.dna().action(self))

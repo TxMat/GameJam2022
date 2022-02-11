@@ -2,7 +2,7 @@ import pygame
 
 
 class Button(pygame.sprite.Sprite):
-    def __init__(self, game, x, y, text="placeholder", size=50, color=(134, 62, 29)):
+    def __init__(self, game, x, y, text="placeholder", size=50, color=(134, 62, 29), hoover=(189, 77, 28)):
         super().__init__()
         self.hoover_btn = None
         self.base_btn = None
@@ -12,6 +12,7 @@ class Button(pygame.sprite.Sprite):
         self.y = y
         self.text = text
         self.color = color
+        self.hoover_color = hoover
         self.size = size
         self.refresh()
         self.btn = self.base_btn
@@ -37,5 +38,5 @@ class Button(pygame.sprite.Sprite):
         self.text_rect = text_surface.get_rect()
         self.text_rect.center = (self.x, self.y)
         self.base_btn = text_surface
-        text_surface = font.render(self.text, True, (189, 77, 28))
+        text_surface = font.render(self.text, True, self.hoover_color)
         self.hoover_btn = text_surface

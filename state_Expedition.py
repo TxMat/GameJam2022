@@ -12,6 +12,7 @@ class ExpState(State):
         self.strat = strat
         self.cock_dic = cock_dic
         self.Expedition = Expedition(level=self.level, strat=self.strat, cock_dic=self.cock_dic)
+        self.isMusicLoaded = False
         self.background_img = pygame.image.load("Assets/map.png")
         self.s_case = pygame.image.load("Assets/case.png")
         self.s_rit = pygame.image.load("Assets/pentagramme.png")
@@ -27,12 +28,17 @@ class ExpState(State):
         self.summary = summary
 
     def update(self, delta_time, actions):
+        if not self.isMusicLoaded:
+            self.bgm()
+            self.isMusicLoaded = True
         if (actions["esc"]):
             self.summary.clear()
             summ = self.Expedition.gen_summary()
             for key in summ:
                 self.summary[key] = summ[key]
             self.prev_state.wantDay = True
+            self.game.music_player.music.fadeout(1000)
+            self.isMusicLoaded = False
             self.exit_state()
         if actions["right"]:
             self.grid *= -1
@@ -82,6 +88,9 @@ class ExpState(State):
         else:
             self.ongoing = 0
 
+    def bgm(self):
+        self.game.music_player.music.load("Assets/Sounds/cave_music.ogg")
+        self.game.music_player.music.play(-1)
 
 def wait(delay):
     print("debut du wait")

@@ -4,6 +4,7 @@ from CockView import CockView
 from Consts import *
 from Monsanto import Monsanto
 from State import State
+from Sun import Sun
 from Utils import *
 from state_Expedition import ExpState
 from state_Inventory import Inventory
@@ -18,13 +19,14 @@ class Farm(State):
         self.player = player
         self.isNight = False
         self.wantNight = False
+        self.isMusicLoaded = False
         self.HUD = HUD(self.game, self.player)
         self.debug_grid = pygame.image.load("Assets/debug_grid.png")
         self.night_transition_background = pygame.image.load("Assets/transition.png")
         self.background_img_night = pygame.image.load("Assets/backgound_night.png")
         self.background_img_day = pygame.image.load("Assets/backgound_day.png").convert()
         self.background_img = self.background_img_day
-        self.sun = Sun(self.game)
+        self.sun = Sun(self.game, (900, 30), 0.9)
         self.mosanto_collide = pygame.rect.Rect((0, 150), (160, 270))
         self.cave_collide = pygame.rect.Rect((700, 220), (280, 200))
         self.exp_chosen = []
@@ -32,6 +34,9 @@ class Farm(State):
         self.pos_trans_x = WIDTH
 
     def update(self, delta_time, actions):
+        if not self.isMusicLoaded:
+            self.bgm()
+            self.isMusicLoaded = True
         events = self.game.events
         self.sun.update(delta_time)
         self.HUD.update()
@@ -41,7 +46,6 @@ class Farm(State):
                 new_state = CockView(self.game, cock, self.player)
                 new_state.enter_state()
         if self.HUD.cocks.ispressed:
-            self.player.money *= 2
             new_state = CockList(self.game, self.player)
             new_state.enter_state()
         if self.HUD.last_exp.ispressed:
@@ -68,6 +72,9 @@ class Farm(State):
             if not self.wantNight:
                 new_state = ExpState(self.game, self.exp_chosen[0], self.exp_chosen[1], self.chosen_cocks,
                                      self.player.last_exp)
+                self.player.day += 1
+                self.game.music_player.music.fadeout(1000)
+                self.isMusicLoaded = False
                 new_state.enter_state()
                 self.exp_chosen.clear()
 
@@ -100,27 +107,9 @@ class Farm(State):
                 self.wantDay = False
                 self.pos_trans_x = WIDTH
 
-
-class Sun:
-    def __init__(self, game):
-        self.game = game
-        self.curr_frame, self.last_frame_update = 0, 0
-        self.frame_list = frames_from_spritesheet("Assets/sun.png", 0, 0, 94, 94, 2)
-        self.frame_to_show = scale(self.frame_list[0], 0.9)
-
-    def update(self, delta_time):
-        self.animate(delta_time)
-
-    def render(self, surface):
-        surface.blit(self.frame_to_show, (900, 30))
-
-    def animate(self, delta_time):
-        self.last_frame_update += delta_time
-        if self.last_frame_update > 1:
-            self.curr_frame = (self.curr_frame + 1) % len(self.frame_list)
-            self.frame_to_show = self.frame_list[self.curr_frame]
-            self.frame_to_show = scale(self.frame_to_show, 0.9)
-            self.last_frame_update = 0
+    def bgm(self):
+        self.game.music_player.music.load("Assets/Sounds/day_music.ogg")
+        self.game.music_player.music.play(-1)
 
 
 class HUD:

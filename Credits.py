@@ -7,7 +7,7 @@ class Credits(State):
         self.looping = False
 
     def update(self, dt, actions):
-        if actions["ok"]:
+        if actions["ok"] or actions["esc"]:
             self.exit_state()
         self.game.reset_keys()
 

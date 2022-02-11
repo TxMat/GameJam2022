@@ -173,6 +173,8 @@ class Cock(pygame.sprite.Sprite):
                 self.stamina += grain.sta_bonus
             self.maturation += 1
             player.inv_grain[grain_name] -= quantity
+        else:
+            print("pas assez de grain")
 
     def g_intel(self):
         intel = self.intel

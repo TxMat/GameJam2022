@@ -4,7 +4,7 @@ import pygame
 from pygame.sprite import AbstractGroup
 
 from Consts import *
-from Events import ritual, gen_rituals
+from Events import Ritual, gen_rituals
 from Grain import Grain
 from Perks import Perks, gen_perks
 from Utils import frames_from_spritesheet, scale
@@ -37,7 +37,7 @@ class Cock(pygame.sprite.Sprite):
                  *groups: AbstractGroup,
                  perk_dict={"default perk": Perks(name="default perk")},
                  grain_dict={"default grain": Grain(name="default grain")},
-                 ritual_dict={"default ritual": ritual(name="default ritual")}) -> None:
+                 ritual_dict={"default ritual": Ritual(name="default ritual")}) -> None:
         super().__init__(*groups)
         self.anim_mode = 0
         self.scale = scalex

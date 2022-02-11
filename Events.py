@@ -12,7 +12,7 @@ class Events():
         pass
 
 
-class ritual(Events):
+class Ritual(Events):
     def __init__(self, name="", description="", e_type=""):
         super().__init__()
         self.type = "ritual"
@@ -24,7 +24,7 @@ class ritual(Events):
         self.sta_mult = 1
 
 
-class satanique(ritual):
+class satanique(Ritual):
     def __init__(self, name="", description="", e_type=""):
         super().__init__()
         self.int_mult = 2
@@ -41,7 +41,7 @@ class satanique(ritual):
         return str(cock.name) + " " + str(self.name)
 
 
-class luck_up(ritual):
+class luck_up(Ritual):
     def __init__(self, name="", description="", e_type=""):
         super().__init__()
         self.int_mult = 4
@@ -54,7 +54,7 @@ class luck_up(ritual):
         return str(cock.name) + " " + str(self.name)
 
 
-class cursed(ritual):
+class cursed(Ritual):
     def __init__(self, name="", description="", e_type=""):
         super().__init__()
         self.int_mult = 0.5
@@ -88,9 +88,7 @@ class inflammable(gaz):
             for y in i.perks:
                 if y == "fireproof":
                     resistance = True
-        if resistance == False:
-            # TODO
-            # expedition.end()
+        if not resistance:
             expedition.end = True
         return "inflammable"
 
@@ -108,7 +106,7 @@ class toxic(gaz):
             for y in i.perks:
                 if y == "gasproof":
                     resistance = True
-        if resistance == False:
+        if not resistance:
             expedition.stop()
         return "toxique"
 
@@ -169,8 +167,5 @@ class dna(Events):
 
 
 def gen_rituals():
-    rituals = {}
-    rituals["luck up"] = luck_up()
-    rituals["cursed"] = cursed()
-    rituals["satanique"] = satanique()
+    rituals = {"luck up": luck_up(), "cursed": cursed(), "satanique": satanique()}
     return rituals

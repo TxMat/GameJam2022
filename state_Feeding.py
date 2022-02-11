@@ -28,6 +28,10 @@ class Feeding(State):
             self.need_refresh = False
         if actions["esc"] or self.close_btn.ispressed:
             self.exit_state()
+        for btn in self.btn_array:
+            if btn.ispressed:
+                self.cock.feed(btn.grain_name, self.player)
+                self.need_refresh = True
         if actions["right"] or actions["ok"]:  # DEBUG
             self.grid *= -1
         self.update_btns()

@@ -230,12 +230,12 @@ class Cock(pygame.sprite.Sprite):
         self.rituals.add(ritual_name)
         # ritual_dict[ritual_name].action(self)
 
-    def lay_egg(self, new_id=0, new_name="", nb_cocks=1):
+    def lay_egg(self, player, new_id=0, new_name="", nb_cocks=1):
         if self.fertile and nb_cocks < MAX_COCKS:
             self.fertile = False
             self.child = new_name
             return Cock(id=new_id,
-                        player=None,
+                        player=player,
                         name=new_name,
                         intelligence=int(self.g_intel() * self.inheritance),
                         strength=int(self.g_strength() * self.inheritance),

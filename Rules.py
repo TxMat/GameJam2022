@@ -7,7 +7,7 @@ from State import State
 class Rules(State):
     def __init__(self, game):
         State.__init__(self, game)
-        self.img = pygame.image.load("Assets/panneaucredits.png")
+        self.img = pygame.image.load("Assets/regles.png")
         self.bg_rect = self.img.get_rect()
         self.bg_rect.center = (WIDTH / 2, HEIGHT / 2)
 
@@ -18,4 +18,3 @@ class Rules(State):
 
     def render(self, display):
         display.blit(self.img, self.bg_rect)
-        self.game.draw_text(display, "Demandez directement aux devloppeurs ;)", 40, WIDTH / 2, HEIGHT / 2 - 50)

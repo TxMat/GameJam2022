@@ -94,6 +94,7 @@ class ExpState(State):
         self.game.music_player.music.load("Assets/Sounds/cave_music.ogg")
         self.game.music_player.music.play(-1)
 
+
 def wait(delay):
     print("debut du wait")
     pygame.time.delay(delay)

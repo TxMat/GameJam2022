@@ -5,7 +5,7 @@ from pygame.sprite import AbstractGroup
 
 from Consts import *
 from Events import Ritual, gen_rituals
-from Grain import Grain, gen_grain
+from Grain import gen_grain
 from Perks import Perks, gen_perks
 from Utils import frames_from_spritesheet, scale
 
@@ -23,9 +23,9 @@ class Cock(pygame.sprite.Sprite):
                  intelligence=1,
                  strength=1,
                  stamina=1,
-                 perks=set(),
-                 traits=set(),
-                 rituals=set(),
+                 perks=None,
+                 traits=None,
+                 rituals=None,
                  fertile=True,
                  maturation=0,
                  child="",
@@ -35,10 +35,20 @@ class Cock(pygame.sprite.Sprite):
                  tree=None,
                  inheritance=STAT_INHERITANCE,
                  *groups: AbstractGroup,
-                 perk_dict={"default perk": Perks(name="default perk")},
+                 perk_dict=None,
                  grain_dict=gen_grain(),
-                 ritual_dict={"default ritual": Ritual(name="default ritual")}) -> None:
+                 ritual_dict=None) -> None:
         super().__init__(*groups)
+        if ritual_dict is None:
+            ritual_dict = {"default ritual": Ritual(name="default ritual")}
+        if perk_dict is None:
+            perk_dict = {"default perk": Perks(name="default perk")}
+        if rituals is None:
+            rituals = set()
+        if traits is None:
+            traits = set()
+        if perks is None:
+            perks = set()
         self.anim_mode = 0
         self.scale = scalex
         self.id = id
@@ -156,7 +166,7 @@ class Cock(pygame.sprite.Sprite):
         print("str(): " + str(self.g_strength()))
         print("sta(): " + str(self.g_stamina()))
 
-    def feed(self, grain_name, player, quantity = 1) -> None:
+    def feed(self, grain_name, player, quantity=1) -> None:
         if player.inv_grain[grain_name] > quantity:
             grain = self.grain_dict[grain_name]
             if grain_name not in self.fed:
@@ -220,15 +230,16 @@ class Cock(pygame.sprite.Sprite):
         self.rituals.add(ritual_name)
         # ritual_dict[ritual_name].action(self)
 
-    def lay_egg(self, new_id=0, new_name="", nb_cocks=1):
+    def lay_egg(self, player, new_id=0, new_name="", nb_cocks=1):
         if self.fertile and nb_cocks < MAX_COCKS:
             self.fertile = False
             self.child = new_name
-            return Cock(new_id,
-                        new_name,
-                        int(self.g_intel() * self.inheritance),
-                        int(self.g_strength() * self.inheritance),
-                        int(self.g_stamina() * self.inheritance),
+            return Cock(id=new_id,
+                        player=player,
+                        name=new_name,
+                        intelligence=int(self.g_intel() * self.inheritance),
+                        strength=int(self.g_strength() * self.inheritance),
+                        stamina=int(self.g_stamina() * self.inheritance),
                         parent=self.name)
         else:
             print("Conditions infavorables à la ponte")

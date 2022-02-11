@@ -6,13 +6,19 @@ class Level():
                  name: str = "",
                  background_img=None,
                  icon=None,
-                 ore_list: list = ["metal 1", "metal 2", "metal 3"],
-                 dna_list: list = ["adn 1", "adn 2", "adn 3"],
-                 encounters_list: list = ["rencontre 1", "rencontre 2", "rencontre 3", "rencontre 4", "rencontre 5"],
+                 ore_list=None,
+                 dna_list=None,
+                 encounters_list=None,
                  description: str = "Rien a voir ici",
                  danger_lvl: int = 1,
                  length_range: tuple = (5, 10),
                  requirement: int = 0):
+        if encounters_list is None:
+            encounters_list = ["rencontre 1", "rencontre 2", "rencontre 3", "rencontre 4", "rencontre 5"]
+        if dna_list is None:
+            dna_list = ["adn 1", "adn 2", "adn 3"]
+        if ore_list is None:
+            ore_list = ["metal 1", "metal 2", "metal 3"]
         self.name = name
         self.bg = background_img
         self.ico = icon
@@ -25,7 +31,7 @@ class Level():
         self.req = requirement
 
     def gen_len(self):
-        return randint(self.len_range(0), self.len_range(1))
+        return randint(self.len_range[0], self.len_range[1])
 
 
 def gen_level():
@@ -45,6 +51,7 @@ def gen_level():
                                      dna_list=["y2w3", "c0c5", "e9y5"], description="Elle brille meme de l'exterieur",
                                      danger_lvl=13, length_range=(3, 15))
     level["mine de l'extreme"] = Level(name="mine de l'extreme", ore_list=["rubis", "diamant", "francium"],
-                                       dna_list=["e8t1", "h8k3", "i2y4"], description="Vous etes sur de vouloir renter ?",
+                                       dna_list=["e8t1", "h8k3", "i2y4"],
+                                       description="Vous etes sur de vouloir renter ?",
                                        danger_lvl=67, length_range=(3, 15))
     return level

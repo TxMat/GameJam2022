@@ -1,10 +1,10 @@
 import pygame.image
 
 import Level
+import Utils
 from Button import Button
 from Consts import *
 from State import State
-import Utils
 
 
 class StateLevel(State):
@@ -54,7 +54,7 @@ class StateLevel(State):
         self.prev_state.render(surface)
         surface.fill((70, 70, 70, 100), None, pygame.BLEND_RGBA_MULT)
         surface.blit(self.background_img, self.background_rect)
-        Utils.draw_line(surface, (200,155), (830,155), 2)
+        Utils.draw_line(surface, (200, 155), (830, 155), 2)
         self.game.draw_text(surface, "Inventaire", 100, WIDTH / 2, 110)
         if self.cocknb <= 0:
             self.game.draw_text(surface, "Vous n'avez aucun coq !", 50, WIDTH / 2, HEIGHT / 2 - 40)
@@ -65,7 +65,7 @@ class StateLevel(State):
             x = WIDTH / 2
             for btn in self.btn_dict.values():
                 btn.render(surface)
-                self.game.draw_text(surface, self.descs[counter], 30, x, 230 + counter*100)
+                self.game.draw_text(surface, self.descs[counter], 30, x, 230 + counter * 100)
                 counter += 1
         if self.grid > 0:
             surface.blit(self.debug_grid, (0, 0))

@@ -6,12 +6,14 @@ import Utils
 from Button import Button
 from Consts import *
 from State import State
+from Grain import gen_grain
 
 
 class Monsanto(State):
     def __init__(self, game, player):
         super().__init__(game)
         self.player = player
+        print(player)
         self.debug_grid = pygame.image.load("Assets/debug_grid.png")
         self.background_img = pygame.image.load("Assets/menubg.png")
         self.background_rect = self.background_img.get_rect()
@@ -27,7 +29,12 @@ class Monsanto(State):
             self.exit_state()
         for btn in self.btn_array:
             if btn.ispressed:
-                pass
+                grains = gen_grain()
+                if self.player.money > grains[btn.grain_name].price:
+                    if btn.grain_name not in self.player.inv_grain:
+                        self.player.inv_grain[btn.grain_name] = 0
+                    self.player.inv_grain[btn.grain_name] += 1
+                    self.player.money -= grains[btn.grain_name].price
         if actions["right"] or actions["ok"]:  # DEBUG
             self.grid *= -1
         self.update_btns()
@@ -77,7 +84,7 @@ class Monsanto(State):
 
     def init_btn(self):
         self.btn_array = []
-        # key = name, val = obj
+        # key = name, val = obj        
         x = 100
         y = 180
         count = 0

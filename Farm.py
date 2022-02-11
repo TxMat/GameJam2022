@@ -60,7 +60,7 @@ class Farm(State):
             cave_hover = self.cave_collide.collidepoint(pygame.mouse.get_pos())
             for event in events:
                 if event.type == pygame.MOUSEBUTTONDOWN and mosanto_hover:
-                    new_state = Monsanto(self.game, self.exp_chosen)
+                    new_state = Monsanto(self.game, self.player)
                     new_state.enter_state()
                 if event.type == pygame.MOUSEBUTTONDOWN and cave_hover:
                     new_state = StateLevel(self.game, len(self.player.cocks), self.exp_chosen)

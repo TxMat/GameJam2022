@@ -66,7 +66,7 @@ class Monsanto(State):
             y += 20
             self.game.draw_text(display, "Cout : " + str(grain.price) + " $", 30, x, y, align="left")
             y += 20
-            self.game.draw_text(display, "Possedes : " + str(12), 30, x, y, align="left")
+            self.game.draw_text(display, "Possedes : " + str(0), 30, x, y, align="left")
             y += 30
             count += 1
             if not count % 4:

@@ -44,7 +44,7 @@ class ExpState(State):
             self.grid *= -1
         self.game.reset_keys()
         if (self.ongoing):
-            wait(0000)
+            wait(2000)
             self.step()
 
     def render(self, surface):

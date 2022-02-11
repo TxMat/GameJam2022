@@ -30,7 +30,7 @@ class Farm(State):
         self.mosanto_collide = pygame.rect.Rect((0, 150), (160, 270))
         self.cave_collide = pygame.rect.Rect((700, 220), (280, 200))
         self.exp_chosen = []
-        self.chosen_cocks = []
+        self.chosen_cocks = player.cocks
         self.pos_trans_x = WIDTH
 
     def update(self, delta_time, actions):

@@ -21,4 +21,5 @@ class Rules(State):
 
     def render(self, display):
         display.blit(self.img, self.bg_rect)
+        self.game.draw_text(display, "Regles", 100, WIDTH / 2, 55)
         self.close_btn.render(display)

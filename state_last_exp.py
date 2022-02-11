@@ -10,7 +10,6 @@ class LastExp(State):
         super().__init__(game)
         if summary is None:
             summary = {'ores': [], 'dnas': [], 'level': [], 'party': []}
-        self.debug_grid = pygame.image.load("Assets/alpha_grid.png")
         self.background_img = pygame.image.load("Assets/menubg.png")
         self.background_rect = self.background_img.get_rect()
         self.background_rect.center = (self.game.WIDTH / 2, self.game.HEIGHT / 2)

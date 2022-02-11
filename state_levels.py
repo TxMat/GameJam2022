@@ -11,7 +11,6 @@ class StateLevel(State):
     def __init__(self, game, cocknb, exp_chosen):
         super().__init__(game)
         self.cocknb = cocknb
-        self.debug_grid = pygame.image.load("Assets/debug_grid.png")
         self.background_img = pygame.image.load("Assets/menubg.png")
         self.background_rect = self.background_img.get_rect()
         self.background_rect.center = (WIDTH / 2, HEIGHT / 2)
@@ -22,7 +21,6 @@ class StateLevel(State):
         self.strat = 0
         self.exp_chosen = exp_chosen
         self.close_btn = Button(self.game, 910, 90, "X")
-        self.grid = -1
         counter = 0
         x = WIDTH / 2
         y = 200
@@ -65,6 +63,4 @@ class StateLevel(State):
                 btn.render(surface)
                 self.game.draw_text(surface, self.descs[counter], 30, x, 230 + counter * 100)
                 counter += 1
-        if self.grid > 0:
-            surface.blit(self.debug_grid, (0, 0))
         self.close_btn.render(surface)

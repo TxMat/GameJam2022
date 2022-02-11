@@ -11,13 +11,13 @@ class Expedition():
                  strat: int = 0,
                  cock_dic: dict = {},
                  level: Level = None,
-                 length: int = random.randint(3, 10),
+                 length: int = 1,
                  layout=None,
                  game=None,
                  background_img=pygame.image.load("Assets/backgound_day.png")) -> None:
         self.cock_dic = cock_dic
         self.level = level
-        self.length = length
+        self.length = random.randint(level.len_range[0], level.len_range[1])
         self.end = False
         self.layout = layout
         self.pos = 0

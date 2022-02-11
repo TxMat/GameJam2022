@@ -5,8 +5,8 @@ import pygame.image
 import Utils
 from Button import Button
 from Consts import *
-from State import State
 from Grain import gen_grain
+from State import State
 
 
 class Monsanto(State):
@@ -27,13 +27,11 @@ class Monsanto(State):
         for btn in self.btn_array:
             if btn.ispressed:
                 grains = gen_grain()
-                if self.player.money > grains[btn.grain_name].price:
+                if self.player.money >= grains[btn.grain_name].price:
                     if btn.grain_name not in self.player.inv_grain:
                         self.player.inv_grain[btn.grain_name] = 0
                     self.player.inv_grain[btn.grain_name] += 1
                     self.player.money -= grains[btn.grain_name].price
-        if actions["right"] or actions["ok"]:  # DEBUG
-            self.grid *= -1
         self.update_btns()
         self.game.reset_keys()
 
@@ -68,7 +66,10 @@ class Monsanto(State):
             y += 20
             self.game.draw_text(display, "Cout : " + str(grain.price) + " $", 30, x, y, align="left")
             y += 20
-            self.game.draw_text(display, "Possedes : " + str(0), 30, x, y, align="left")
+            grain_nb = 0
+            if i in self.player.inv_grain:
+                grain_nb = self.player.inv_grain[i]
+            self.game.draw_text(display, "Possedes : " + str(grain_nb), 30, x, y, align="left")
             y += 30
             count += 1
             if not count % 4:
@@ -79,7 +80,7 @@ class Monsanto(State):
 
     def init_btn(self):
         self.btn_array = []
-        # key = name, val = obj        
+        # key = name, val = obj
         x = 100
         y = 180
         count = 0

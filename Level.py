@@ -32,19 +32,19 @@ def gen_level():
     level = {}
     level["mine d'argent"] = Level(name="mine d'argent", ore_list=["cuivre", "argent", "emeraude"],
                                    dna_list=["h1n1", "b5r3", "d1c3"],
-                                   description="une mine d'argent, rien de plus... rien de moins", danger_lvl=1,
+                                   description="Une mine d'argent, rien de plus... rien de moins", danger_lvl=1,
                                    length_range=(3, 8))
     level["mine dangereuse"] = Level(name="mine dangereuse", ore_list=["columbite", "granit", "saphir"],
-                                     dna_list=["n1g8", "i8a5", "z9g1"], description="une mine pleine de ressources",
+                                     dna_list=["n1g8", "i8a5", "z9g1"], description="Une mine pleine de ressources",
                                      danger_lvl=3, length_range=(3, 15))
     level["mine d'or"] = Level(name="mine d'or", ore_list=["cuivre", "or", "emeraude"],
                                dna_list=["l5z5", "b1t4", "u8x1"],
-                               description="Surment une des plus vielle que la terre ait portée", danger_lvl=2,
+                               description="Surement une des plus vielle que la terre ait portee", danger_lvl=2,
                                length_range=(10, 15))
     level["mine de diamant"] = Level(name="mine de diamant", ore_list=["fer", "platine", "plomb"],
-                                     dna_list=["y2w3", "c0c5", "e9y5"], description="elle brille meme de l'exterieur",
+                                     dna_list=["y2w3", "c0c5", "e9y5"], description="Elle brille meme de l'exterieur",
                                      danger_lvl=13, length_range=(3, 15))
     level["mine de l'extreme"] = Level(name="mine de l'extreme", ore_list=["rubis", "diamant", "francium"],
-                                       dna_list=["e8t1", "h8k3", "i2y4"], description="vous etes sûr de vouloir renter",
+                                       dna_list=["e8t1", "h8k3", "i2y4"], description="Vous etes sur de vouloir renter ?",
                                        danger_lvl=67, length_range=(3, 15))
     return level

@@ -4,6 +4,7 @@ import Level
 from Button import Button
 from Consts import *
 from State import State
+import Utils
 
 
 class StateLevel(State):
@@ -16,16 +17,19 @@ class StateLevel(State):
         self.background_rect.center = (WIDTH / 2, HEIGHT / 2)
         self.btn_dict = {}
         self.levels = Level.gen_level()
+        self.descs = []
         self.choice = None
         self.strat = 0
         self.exp_chosen = exp_chosen
         self.close_btn = Button(self.game, 910, 90, "X")
+        self.grid = -1
         counter = 0
-        x = 300
-        y = 150
+        x = WIDTH / 2
+        y = 200
         for level in self.levels:
-            counter += 1
+            self.descs.append(self.levels[level].desc)
             self.btn_dict[level] = Button(self.game, x, y + counter * 100, level)
+            counter += 1
 
     def update(self, delta_time, actions):
         self.close_btn.update(self.game.events)
@@ -36,25 +40,33 @@ class StateLevel(State):
                 self.btn_dict[key].update(self.game.events)
                 if self.btn_dict[key].ispressed:
                     self.choice = self.levels[key]
-                # Il faut renvoyer un truc pour que la méthode où la StateLevel est créée dans farm s'occupe ensuite de créer une StateExpedition (après être passée à la nuit et avoir fait l'anim)
-                # Dans la StateExpedition, on affiche et fait se dérouler pas à pas l'expédition, puis on finit par
-                # renvoyer un récapitulatif, à partir duquel on change l'inventaire du joueur. Aussi, on affiche la vue du récap
-                # ERRATUM : en fait non lol, mais c'est laid, mon dieu c'est laid. J'ai envie de vomir.
+
             if (self.choice):
                 self.exp_chosen.append(self.choice)
                 self.exp_chosen.append(self.strat)
                 self.prev_state.wantNight = True
                 self.exit_state()
+        if actions["right"]:
+            self.grid *= -1
+        self.game.reset_keys()
 
     def render(self, surface):
         self.prev_state.render(surface)
         surface.fill((70, 70, 70, 100), None, pygame.BLEND_RGBA_MULT)
         surface.blit(self.background_img, self.background_rect)
-        self.close_btn.render(surface)
+        Utils.draw_line(surface, (200,155), (830,155), 2)
+        self.game.draw_text(surface, "Inventaire", 100, WIDTH / 2, 110)
         if self.cocknb <= 0:
-            self.game.draw_text(surface, "Vous n'avez aucun coqs !", 50, WIDTH / 2, HEIGHT / 2 - 40)
-            self.game.draw_text(surface, "Ajoutez en dans 'Liste des coqs' avant d'aller miner", 30, WIDTH / 2,
+            self.game.draw_text(surface, "Vous n'avez aucun coq !", 50, WIDTH / 2, HEIGHT / 2 - 40)
+            self.game.draw_text(surface, "Ajoutez-en dans 'Liste des coqs' avant d'aller miner", 30, WIDTH / 2,
                                 HEIGHT / 2 + 40)
         else:
+            counter = 0
+            x = WIDTH / 2
             for btn in self.btn_dict.values():
                 btn.render(surface)
+                self.game.draw_text(surface, self.descs[counter], 30, x, 230 + counter*100)
+                counter += 1
+        if self.grid > 0:
+            surface.blit(self.debug_grid, (0, 0))
+        self.close_btn.render(surface)

@@ -1,11 +1,12 @@
 import pygame.image
-import Utils
-from Consts import *
+
 from Button import Button
+from Consts import *
 from State import State
 
+
 class Feeding(State):
-    def __init__(self, game = None, cock = None, player = None):
+    def __init__(self, game, cock, player):
         super().__init__(game)
         self.game = game
         self.cock = cock

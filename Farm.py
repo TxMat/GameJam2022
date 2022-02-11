@@ -1,15 +1,14 @@
-import pygame
-
-from Consts import *
 from Button import Button
 from CockList import CockList
 from CockView import CockView
-from state_last_exp import LastExp
-from state_levels import StateLevel
-from state_Expedition import ExpState
-from state_Inventory import Inventory
+from Consts import *
+from Monsanto import Monsanto
 from State import State
 from Utils import *
+from state_Expedition import ExpState
+from state_Inventory import Inventory
+from state_last_exp import LastExp
+from state_levels import StateLevel
 
 
 class Farm(State):
@@ -55,7 +54,8 @@ class Farm(State):
         cave_hover = self.cave_collide.collidepoint(pygame.mouse.get_pos())
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN and mosanto_hover:
-                print("mosanto")
+                new_state = Monsanto(self.game, self.exp_chosen)
+                new_state.enter_state()
             if event.type == pygame.MOUSEBUTTONDOWN and cave_hover:
                 new_state = StateLevel(self.game, self.exp_chosen)
                 new_state.enter_state()

@@ -12,7 +12,7 @@ from state_Feeding import Feeding
 
 
 class CockView(State):
-    def __init__(self, game, cock, player = None):
+    def __init__(self, game, cock, player):
         super().__init__(game)
         self.game = game
         self.cock = cock

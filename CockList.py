@@ -2,11 +2,11 @@ from builtins import super
 
 import pygame.image
 
+import Utils
+from Button import Button
 from CockCreate import CockCreate
 from CockView import CockView
 from Consts import *
-import Utils
-from Button import Button
 from State import State
 
 
@@ -36,7 +36,7 @@ class CockList(State):
             new_state.enter_state()
         for btn in self.btn_array:
             if btn.ispressed:
-                new_state = CockView(self.game, self.player.cocks[btn.cock_id])
+                new_state = CockView(self.game, self.player.cocks[btn.cock_id], self.player)
                 new_state.enter_state()
         self.update_btns()
         self.game.reset_keys()

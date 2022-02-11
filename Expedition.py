@@ -1,28 +1,30 @@
-from pickle import NONE
-import pygame
 import random
-import Level
+
+import pygame
+
 import Events
+import Level
+
 
 class Expedition():
     def __init__(self,
-                strat: int = 0,
-                cock_dic: dict = {},
-                level: Level = None,
-                length: int = random.randint(3, 10),
-                layout = None,
-                game = None,
-                background_img = pygame.image.load("Assets/backgound_day.png")) -> None:
+                 strat: int = 0,
+                 cock_dic: dict = {},
+                 level: Level = None,
+                 length: int = random.randint(3, 10),
+                 layout=None,
+                 game=None,
+                 background_img=pygame.image.load("Assets/backgound_day.png")) -> None:
         self.cock_dic = cock_dic
         self.level = level
         self.length = length
         self.end = False
         self.layout = layout
         self.pos = 0
-        #self.game = game
-        #self.mid_w, self.mid_h = game.WIDTH / 2, game.HEIGHT / 2
-        #self.run_display = True
-        #self.bg_img = background_img
+        # self.game = game
+        # self.mid_w, self.mid_h = game.WIDTH / 2, game.HEIGHT / 2
+        # self.run_display = True
+        # self.bg_img = background_img
         self.loot_ores = {}
         self.loot_dna = {}
         self.ore_luck = 0
@@ -48,37 +50,38 @@ class Expedition():
         return summary
 
     def get_party_stats(self):
-        stats = {"strength":0, "intel":0, "stamina":0}
+        stats = {"strength": 0, "intel": 0, "stamina": 0}
         for cock in cock_dic.values():
             stats["strength"] += cock.g_strength()
             stats["intel"] += cock.g_intel()
             stats["stamina"] += cock.g_stamina()
         return stats
 
-    def stop(self): # stop l"expedition , retire les ressources si y a pas la perks
+    def stop(self):  # stop l"expedition , retire les ressources si y a pas la perks
         save_ressources = False
-        for cock in self.cock_dic.values() :
+        for cock in self.cock_dic.values():
             for perk in cock.perks:
                 if perk == "1up":
-                    save_ressources= True
+                    save_ressources = True
         if not save_ressources:
             for ore in self.loot_ores:
-                self.loot_ores[ore] = 0  
+                self.loot_ores[ore] = 0
             for dna in self.loot_dna:
                 self.loot_dna[dna] = 0
         self.end = True
 
     def hunger_cost(self, cost):
         for cock in self.cock_dic.values():
-            if cock.hunger == 0:
+            if cock.hunger <= 0:
                 self.end = 1
             else:
                 cock.hunger -= cost
+            cock.target_health = cock.hunger * 10
 
     def avancement(self):
         if self.pos < self.length and not self.end:
-            print("case : "+ str(self.pos))
-            self.pos += 1 
+            print("case : " + str(self.pos))
+            self.pos += 1
             rand = random.randint(0, 9)
             if rand in [1, 3 + self.ore_luck]:
                 self.hunger_cost(4)
@@ -98,8 +101,9 @@ class Expedition():
             elif rand == 9:
                 self.hunger_cost(8)
                 print("rituel")
-                if(self.cock_dic): #DEBUG
-                    print(random.choice(list(Events.gen_rituals().values())).action(random.choice(list(self.cock_dic.values()))))
+                if (self.cock_dic):  # DEBUG
+                    print(random.choice(list(Events.gen_rituals().values())).action(
+                        random.choice(list(self.cock_dic.values()))))
                 return "ritual"
             else:
                 self.hunger_cost(1)

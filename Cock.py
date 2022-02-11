@@ -1,13 +1,12 @@
 import random
 
 import pygame
-
-from Consts import *
-from Grain import Grain
-from Events import ritual, gen_rituals
-from Perks import Perks, gen_perks
 from pygame.sprite import AbstractGroup
 
+from Consts import *
+from Events import ritual, gen_rituals
+from Grain import Grain
+from Perks import Perks, gen_perks
 from Utils import frames_from_spritesheet, scale
 
 perk_dict = gen_perks()
@@ -126,11 +125,11 @@ class Cock(pygame.sprite.Sprite):
         if self.current_health > self.target_health:
             self.current_health -= self.health_change_speed
             transition_width = int((self.target_health - self.current_health) / self.health_ratio)
-            transition_color = (255, 255, 0)
+            transition_color = (0, 0, 0)
 
         health_bar_width = int(self.current_health / self.health_ratio)
-        health_bar = pygame.Rect(self.curr_x, self.curr_y, health_bar_width, 3)
-        transition_bar = pygame.Rect(health_bar.right, self.curr_y, transition_width, 3)
+        health_bar = pygame.Rect(self.curr_x, self.curr_y - 10, health_bar_width, 3)
+        transition_bar = pygame.Rect(health_bar.right, self.curr_y - 10, transition_width, 3)
 
         pygame.draw.rect(display, (230, 230, 100), health_bar)
         pygame.draw.rect(display, transition_color, transition_bar)

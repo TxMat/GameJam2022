@@ -70,7 +70,7 @@ class Farm(State):
             self.chosen_cocks = self.player.cocks
             # DEBUG
             if not self.wantNight:
-                new_state = ExpState(self.game, self.exp_chosen[0], self.exp_chosen[1], self.chosen_cocks,
+                new_state = ExpState(self.game, self.player, self.exp_chosen[0], self.exp_chosen[1], self.chosen_cocks,
                                      self.player.last_exp)
                 self.player.day += 1
                 self.game.music_player.music.fadeout(1000)

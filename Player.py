@@ -101,10 +101,10 @@ class Player():
         price["or"] = 6
         price["fer"] = 3
         price["platine"] = 5
-        price["diamant"] = 15
-        price["sable argileux"] = 20
-        price["plomb"] = 25
+        price["plomb"] = 15
+        price["rubis"] = 20
+        price["diamant"] = 25
         price["francium"] = 50
         for ore in self.inv_ore:
-            self.money += price[ore]*self.inv_ore[ore]
+            self.money += price[ore] * self.inv_ore[ore]
             self.inv_ore[ore] = 0

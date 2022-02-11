@@ -6,9 +6,10 @@ from State import State
 
 
 class ExpState(State):
-    def __init__(self, game, level, strat, cock_dic, summary):
+    def __init__(self, game, player, level, strat, cock_dic, summary):
         super().__init__(game)
         self.level = level
+        self.player = player
         self.strat = strat
         self.cock_dic = cock_dic
         self.Expedition = Expedition(level=self.level, strat=self.strat, cock_dic=self.cock_dic)
@@ -39,6 +40,7 @@ class ExpState(State):
             self.prev_state.wantDay = True
             self.game.music_player.music.fadeout(1000)
             self.isMusicLoaded = False
+            self.player.get_loot()
             self.exit_state()
         if actions["right"]:
             self.grid *= -1
